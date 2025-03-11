@@ -1,0 +1,76 @@
+# Visual Studio Specific
+.vs/
+*.vcxproj*
+*.vcxproj.user
+*.suo
+*.ncb
+*.pdb
+*.idb
+*.ipch
+*.obj
+*.log
+*.tlog
+*.lastbuildstate
+*.VC.db
+*.VC.opendb
+*.exe
+*.ilk
+*.iobj
+*.ipdb
+*.tlb
+*.tli
+*.tlh
+*.cache
+*.manifest
+*.manifest.res
+*.filters
+*.props
+*.sdf
+*.opendb
+*.user
+*.msbuild*
+
+# CMake Specific
+/build/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+*.cmake
+
+# Compiler generated files
+*.o
+*.obj
+*.so
+*.dylib
+*.lib
+*.a
+*.dll
+*.out
+
+# Debug files
+*.stackdump
+*.swp
+*.swo
+*.bak
+*.tmp
+*.d
+
+# Binary and log files
+*.log
+*.dat
+*.db
+*.sqlite
+
+# IDE configurations
+.idea/
+*.code-workspace
+
+# Miscellaneous
+*.DS_Store
+Thumbs.db
+*.~*
+
+# Git related
+*.orig
