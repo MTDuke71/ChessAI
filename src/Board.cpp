@@ -17,11 +17,16 @@ Board::Board() {
     blackBishops = 0x2400000000000000;
     blackQueens = 0x0800000000000000;
     blackKing = 0x1000000000000000;
+
+    // Initialize En Passant tracking
+    enPassantSquare = -1; // Default to -1 (invalid position)
 }
 
 void Board::clearBoard() {
     whitePawns = whiteKnights = whiteBishops = whiteRooks = whiteQueens = whiteKing = 0;
     blackPawns = blackKnights = blackBishops = blackRooks = blackQueens = blackKing = 0;
+    blackPawns = blackKnights = blackBishops = blackRooks = blackQueens = blackKing = 0;
+    enPassantSquare = -1;
 }
 
 void Board::printBoard() const {

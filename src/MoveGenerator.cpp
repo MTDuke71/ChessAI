@@ -1,7 +1,9 @@
-#include "MoveGenerator.h"
+﻿#include "MoveGenerator.h"
+#include "Board.h"
 #include <vector>
-#include <intrin.h>  // For MSVC's _BitScanForward64
+#include <intrin.h>  // For _tzcnt_u64 in Visual Studio
 #include <iostream>  // For printing moves
+#include <string>
 
 // Cross-platform bit scan (find least significant bit index)
 inline int popLSBIndex(uint64_t& bitboard) {
@@ -18,47 +20,117 @@ std::string squareToNotation(int square) {
     return std::string{ file } + rank;
 }
 
-std::vector<uint32_t> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
-    std::vector<uint32_t> moves;
-    uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
-    uint64_t allPieces = board.getWhitePieces() | board.getBlackPieces();
-    uint64_t emptySquares = ~allPieces;
-
-    std::cout << "Empty Squares Bitboard: " << std::hex << emptySquares << "\n";
-
-    if (isWhite) {
-        uint64_t singlePush = (pawns << 8) & emptySquares;
-        addMoves(moves, pawns, singlePush, 8);
-
-        uint64_t rank2Mask = 0x000000000000FF00;
-        uint64_t doublePush = ((pawns & rank2Mask) << 16) & emptySquares & (emptySquares << 8);
-        addMoves(moves, pawns, doublePush, 16);
-    }
-    else {
-        uint64_t singlePush = (pawns >> 8) & emptySquares;
-        addMoves(moves, pawns, singlePush, -8);
-
-        uint64_t rank7Mask = 0x00FF000000000000;
-        uint64_t doublePush = ((pawns & rank7Mask) >> 16) & emptySquares & (emptySquares >> 8);
-        addMoves(moves, pawns, doublePush, -16);
-    }
-
-    // Display moves in chess notation (e.g., e2-e4)
-    std::cout << "Pawn Moves: " << std::endl;
-    for (auto move : moves) {
-        int from = move & 0x3F;
-        int to = (move >> 6) & 0x3F;
-        std::cout << squareToNotation(from) << "-" << squareToNotation(to) << std::endl;
-    }
-
-    return moves;
+// Converts board index (0-63) to algebraic notation (e.g., e2, d4)
+ std::string indexToAlgebraic(int index) {
+    char file = 'a' + (index % 8);
+    int rank = (index / 8) + 1;
+    return std::string(1, file) + std::to_string(rank);
 }
 
-// Corrected Placement for addMoves()
-void MoveGenerator::addMoves(std::vector<uint32_t>& moves, uint64_t pawns, uint64_t targetSquares, int shift) {
-    while (targetSquares) {
-        int targetSquare = popLSBIndex(targetSquares);
-        int sourceSquare = targetSquare - shift;
-        moves.push_back(MOVE(sourceSquare, targetSquare));
+ void printBitboard(uint64_t bitboard, const std::string& label) {
+     std::cout << label << ":\n";
+     for (int rank = 7; rank >= 0; --rank) {
+         for (int file = 0; file < 8; ++file) {
+             int square = rank * 8 + file;
+             std::cout << ((bitboard & (1ULL << square)) ? " P " : " . ");
+         }
+         std::cout << "\n";
+     }
+     std::cout << "==========================\n";
+ }
+
+ void debugEnPassant(const Board& board, bool isWhite) {
+     std::cout << "=== En Passant Mask Debug Info ===\n";
+     std::cout << "En Passant Square Index: " << board.getEnPassantSquare() << "\n";
+     std::cout << "En Passant Square Bitboard: " << std::hex << (1ULL << board.getEnPassantSquare()) << "\n";
+
+     uint64_t whitePawns = board.getWhitePawns();
+     uint64_t blackPawns = board.getBlackPawns();
+     uint64_t enPassantSquareBitboard = 1ULL << board.getEnPassantSquare();
+
+     printBitboard(whitePawns, "White Pawns");
+     printBitboard(blackPawns, "Black Pawns");
+
+     uint64_t eligiblePawns = isWhite
+         ? ((whitePawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquareBitboard) |
+         ((whitePawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquareBitboard)
+         : ((blackPawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquareBitboard) |
+         ((blackPawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquareBitboard);
+
+     std::cout << "Eligible Pawns Bitboard: " << std::hex << eligiblePawns << "\n";
+     printBitboard(eligiblePawns, "Eligible Pawns");
+
+     uint64_t validEnPassantMask = isWhite
+         ? (enPassantSquareBitboard >> 8) & eligiblePawns
+         : (enPassantSquareBitboard << 8) & eligiblePawns;
+
+     std::cout << "Valid En Passant Mask: " << std::hex << validEnPassantMask << "\n";
+     printBitboard(validEnPassantMask, "Valid En Passant Mask");
+
+     if (validEnPassantMask) {
+         std::cout << "Valid En Passant Capture Found!\n";
+     }
+     else {
+         std::cout << "No valid en passant capture found.\n";
+     }
+
+     std::cout << "==================================\n";
+ }
+
+ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
+     std::vector<std::string> moves;
+     uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
+     uint64_t opponentPieces = isWhite ? board.getBlackPieces() : board.getWhitePieces();
+     uint64_t emptySquares = ~(board.getWhitePieces() | board.getBlackPieces());
+
+     // Pawn Promotion Logic
+     uint64_t promotionRank = isWhite ? 0xFF00000000000000 : 0x00000000000000FF;
+     uint64_t promotionPushes = (pawns << 8) & promotionRank & emptySquares;
+     for (int pos = 0; promotionPushes; promotionPushes &= promotionPushes - 1) {
+         pos = static_cast<int>(_tzcnt_u64(promotionPushes));
+         moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Promotes to Queen)");
+     }
+
+     // Pawn Capture Logic with Promotion Support
+     uint64_t captureMoves = (pawns << 7) & opponentPieces & promotionRank & 0x7F7F7F7F7F7F7F7F;
+     captureMoves |= (pawns << 9) & opponentPieces & promotionRank & 0xFEFEFEFEFEFEFEFE;
+     for (int pos = 0; captureMoves; captureMoves &= captureMoves - 1) {
+         pos = static_cast<int>(_tzcnt_u64(captureMoves));
+         moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Captures and Promotes)");
+     }
+
+     if (board.getEnPassantSquare() != -1) {
+         debugEnPassant(board, isWhite);
+
+         uint64_t enPassantSquare = 1ULL << board.getEnPassantSquare();
+         uint64_t eligiblePawns = isWhite
+             ? ((pawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquare) |
+             ((pawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquare)
+             : ((pawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquare) |
+             ((pawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquare);
+
+         uint64_t validEnPassantMask = isWhite
+             ? (enPassantSquare >> 8) & eligiblePawns
+             : (enPassantSquare << 8) & eligiblePawns;
+
+         if (validEnPassantMask) {
+             int from = static_cast<int>(_tzcnt_u64(validEnPassantMask));
+             int to = board.getEnPassantSquare();
+             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (En Passant)");
+         }
+     }
+
+     return moves;
+ }
+
+
+
+void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) {
+    for (int from = 0; moveBoard; moveBoard &= moveBoard - 1) {
+        int to = static_cast<int>(_tzcnt_u64(moveBoard)); // Target square
+        from = to - shift; // Calculate starting square
+        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
     }
 }
+
+
