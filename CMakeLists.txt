@@ -12,15 +12,22 @@ src/MoveGenerator.cpp
 src/PrintMoves.cpp)
 
 add_executable(KnightMoveTests
-src/KnightMoveTests.cpp
-src/Board.cpp
-src/MoveGenerator.cpp
-src/PrintMoves.cpp)
+    src/KnightMoveTests.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/PrintMoves.cpp)
+
+add_executable(SliderMoveTests
+    src/SliderMoveTests.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/PrintMoves.cpp)
 
 # Include directories
 target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PawnMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KnightMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(SliderMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 
 

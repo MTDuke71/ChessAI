@@ -20,6 +20,12 @@ public:
 
     uint64_t getWhiteKnights() const { return whiteKnights; }
     uint64_t getBlackKnights() const { return blackKnights; }
+    uint64_t getWhiteRooks()   const { return whiteRooks;   }
+    uint64_t getBlackRooks()   const { return blackRooks;   }
+    uint64_t getWhiteBishops() const { return whiteBishops; }
+    uint64_t getBlackBishops() const { return blackBishops; }
+    uint64_t getWhiteQueens()  const { return whiteQueens;  }
+    uint64_t getBlackQueens()  const { return blackQueens;  }
 
     // Setters for testing
     void setWhitePawns(uint64_t value) { whitePawns = value; }
@@ -27,6 +33,10 @@ public:
     void setWhiteKing(uint64_t value) { whiteKing = value; }
     void setBlackKing(uint64_t value) { blackKing = value; }
     void setWhiteRooks(uint64_t value) { whiteRooks = value; }
+    void setBlackRooks(uint64_t value) { blackRooks = value; }
+    void setWhiteBishops(uint64_t value) { whiteBishops = value; }
+    void setBlackBishops(uint64_t value) { blackBishops = value; }
+    void setWhiteQueens(uint64_t value) { whiteQueens = value; }
     void setBlackQueens(uint64_t value) { blackQueens = value; }
     void setWhiteKnights(uint64_t value) { whiteKnights = value; }
     void setBlackKnights(uint64_t value) { blackKnights = value; }
