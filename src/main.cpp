@@ -1,15 +1,11 @@
 #include <iostream>
 #include "Board.h"
-#include "MoveGenerator.h"
-#include "PrintMoves.h"
+#include "Engine.h"
 
 int main() {
     Board board;
-    MoveGenerator moveGenerator;
-
-    std::vector<std::string> moves = moveGenerator.generatePawnMoves(board, true); // Updated to std::string
-    std::cout << "Pawn Moves (Algebraic Notation):\n";
-    printMoves(moves);  // Updated to call the new print function for strings
-
+    Engine engine;
+    std::string best = engine.searchBestMove(board, 2);
+    std::cout << "Best move from starting position: " << best << "\n";
     return 0;
 }

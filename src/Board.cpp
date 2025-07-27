@@ -95,3 +95,37 @@ bool Board::loadFEN(const std::string& fen) {
 
     return true;
 }
+
+int algebraicToIndex(const std::string& sq) {
+    if (sq.size() < 2) return -1;
+    int file = sq[0] - 'a';
+    int rank = sq[1] - '1';
+    return rank * 8 + file;
+}
+
+void Board::makeMove(const std::string& move) {
+    auto dash = move.find('-');
+    if (dash == std::string::npos) return;
+    int from = algebraicToIndex(move.substr(0, 2));
+    int to = algebraicToIndex(move.substr(dash + 1, 2));
+    if (from < 0 || to < 0) return;
+    uint64_t fromMask = 1ULL << from;
+    uint64_t toMask = 1ULL << to;
+
+    auto movePiece = [&](uint64_t &bb) {
+        if (bb & fromMask) { bb &= ~fromMask; bb &= ~toMask; bb |= toMask; return true; } return false; };
+
+    if (!(movePiece(whitePawns) || movePiece(whiteKnights) || movePiece(whiteBishops) ||
+          movePiece(whiteRooks) || movePiece(whiteQueens) || movePiece(whiteKing) ||
+          movePiece(blackPawns) || movePiece(blackKnights) || movePiece(blackBishops) ||
+          movePiece(blackRooks) || movePiece(blackQueens) || movePiece(blackKing))) {
+        return;
+    }
+
+    // Remove captured piece
+    uint64_t mask = ~toMask;
+    whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
+    blackPawns &= mask; blackKnights &= mask; blackBishops &= mask; blackRooks &= mask; blackQueens &= mask; blackKing &= mask;
+
+    whiteToMove = !whiteToMove;
+}
