@@ -79,7 +79,7 @@ std::string squareToNotation(int square) {
      std::cout << "==================================\n";
  }
 
- std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
      std::vector<std::string> moves;
      uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
      uint64_t opponentPieces = isWhite ? board.getBlackPieces() : board.getWhitePieces();
@@ -150,6 +150,34 @@ void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, ui
         from = to - shift; // Calculate starting square
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
     }
+}
+
+std::vector<std::string> MoveGenerator::generateKnightMoves(const Board& board, bool isWhite) {
+    std::vector<std::string> moves;
+    uint64_t knights = isWhite ? board.getWhiteKnights() : board.getBlackKnights();
+    uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
+
+    const int offsets[8][2] = {
+        {1, 2}, {2, 1}, {-1, 2}, {-2, 1},
+        {1, -2}, {2, -1}, {-1, -2}, {-2, -1}
+    };
+
+    while (knights) {
+        int from = popLSBIndex(knights);
+        int fx = from % 8;
+        int fy = from / 8;
+        for (auto &o : offsets) {
+            int tx = fx + o[0];
+            int ty = fy + o[1];
+            if (tx < 0 || tx > 7 || ty < 0 || ty > 7) continue;
+            int to = ty * 8 + tx;
+            uint64_t targetMask = 1ULL << to;
+            if (targetMask & ownPieces) continue;
+            moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+    }
+
+    return moves;
 }
 
 
