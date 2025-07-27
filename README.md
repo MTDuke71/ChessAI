@@ -56,6 +56,7 @@ the API:
 - `generate_moves.cpp` – load a FEN string and list all legal moves.
 - `search_best_move.cpp` – use the engine to pick a move from a position.
 - `perft.cpp` – calculate move counts at a given depth.
+- `UCI` – command line interface implementing the UCI protocol.
 
 After building, run them from the `build` directory just like the main example:
 
@@ -64,6 +65,7 @@ After building, run them from the `build` directory just like the main example:
 ./GenerateMoves
 ./SearchBestMove
 ./Perft <FEN> <depth>
+./UCI
 ```
 
 

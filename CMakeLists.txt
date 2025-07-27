@@ -49,6 +49,9 @@ add_executable(SearchBestMove examples/search_best_move.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(Perft examples/perft.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp src/Perft.cpp ${ENGINE_SOURCES})
+add_executable(UCI
+    src/UCI.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 # Include directories
 target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -62,6 +65,7 @@ target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(UCI PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # Register tests with CTest
 add_test(NAME BoardTest COMMAND BoardTest)
