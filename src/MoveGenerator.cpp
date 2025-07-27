@@ -1,16 +1,26 @@
-﻿#include "MoveGenerator.h"
+#include "MoveGenerator.h"
 #include "Board.h"
 #include <vector>
-#include <intrin.h>  // For _tzcnt_u64 in Visual Studio
+#if defined(_MSC_VER)
+#  include <intrin.h>
+#else
+#  include <cstdint>
+#endif
 #include <iostream>  // For printing moves
 #include <string>
 
 // Cross-platform bit scan (find least significant bit index)
 inline int popLSBIndex(uint64_t& bitboard) {
+#if defined(_MSC_VER)
     unsigned long index;
     _BitScanForward64(&index, bitboard);
     bitboard &= bitboard - 1;
     return static_cast<int>(index);
+#else
+    int index = __builtin_ctzll(bitboard);
+    bitboard &= bitboard - 1;
+    return index;
+#endif
 }
 
 // Converts square index (0-63) to chess notation (e.g., 8 -> "e2")
@@ -51,28 +61,20 @@ std::string squareToNotation(int square) {
      printBitboard(whitePawns, "White Pawns");
      printBitboard(blackPawns, "Black Pawns");
 
-     uint64_t eligiblePawns = isWhite
-         ? ((whitePawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquareBitboard) |
-         ((whitePawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquareBitboard)
-         : ((blackPawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquareBitboard) |
-         ((blackPawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquareBitboard);
+    uint64_t fromMask = isWhite
+        ? ((enPassantSquareBitboard >> 9) & whitePawns & 0xFEFEFEFEFEFEFEFEULL) |
+          ((enPassantSquareBitboard >> 7) & whitePawns & 0x7F7F7F7F7F7F7F7FULL)
+        : ((enPassantSquareBitboard << 7) & blackPawns & 0xFEFEFEFEFEFEFEFEULL) |
+          ((enPassantSquareBitboard << 9) & blackPawns & 0x7F7F7F7F7F7F7F7FULL);
 
-     std::cout << "Eligible Pawns Bitboard: " << std::hex << eligiblePawns << "\n";
-     printBitboard(eligiblePawns, "Eligible Pawns");
+    std::cout << "Eligible Pawns Bitboard: " << std::hex << fromMask << "\n";
+    printBitboard(fromMask, "Eligible Pawns");
 
-     uint64_t validEnPassantMask = isWhite
-         ? (enPassantSquareBitboard >> 8) & eligiblePawns
-         : (enPassantSquareBitboard << 8) & eligiblePawns;
-
-     std::cout << "Valid En Passant Mask: " << std::hex << validEnPassantMask << "\n";
-     printBitboard(validEnPassantMask, "Valid En Passant Mask");
-
-     if (validEnPassantMask) {
-         std::cout << "Valid En Passant Capture Found!\n";
-     }
-     else {
-         std::cout << "No valid en passant capture found.\n";
-     }
+    if (fromMask) {
+        std::cout << "Valid En Passant Capture Found!\n";
+    } else {
+        std::cout << "No valid en passant capture found.\n";
+    }
 
      std::cout << "==================================\n";
  }
@@ -86,39 +88,51 @@ std::string squareToNotation(int square) {
      // Pawn Promotion Logic
      uint64_t promotionRank = isWhite ? 0xFF00000000000000 : 0x00000000000000FF;
      uint64_t promotionPushes = (pawns << 8) & promotionRank & emptySquares;
-     for (int pos = 0; promotionPushes; promotionPushes &= promotionPushes - 1) {
-         pos = static_cast<int>(_tzcnt_u64(promotionPushes));
-         moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Promotes to Queen)");
-     }
+    for (int pos = 0; promotionPushes; promotionPushes &= promotionPushes - 1) {
+#if defined(_MSC_VER)
+        pos = static_cast<int>(_tzcnt_u64(promotionPushes));
+#else
+        pos = __builtin_ctzll(promotionPushes);
+#endif
+        moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Promotes to Queen)");
+    }
 
      // Pawn Capture Logic with Promotion Support
      uint64_t captureMoves = (pawns << 7) & opponentPieces & promotionRank & 0x7F7F7F7F7F7F7F7F;
      captureMoves |= (pawns << 9) & opponentPieces & promotionRank & 0xFEFEFEFEFEFEFEFE;
-     for (int pos = 0; captureMoves; captureMoves &= captureMoves - 1) {
-         pos = static_cast<int>(_tzcnt_u64(captureMoves));
-         moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Captures and Promotes)");
-     }
+    for (int pos = 0; captureMoves; captureMoves &= captureMoves - 1) {
+#if defined(_MSC_VER)
+        pos = static_cast<int>(_tzcnt_u64(captureMoves));
+#else
+        pos = __builtin_ctzll(captureMoves);
+#endif
+        moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Captures and Promotes)");
+    }
 
-     if (board.getEnPassantSquare() != -1) {
-         debugEnPassant(board, isWhite);
+    if (board.getEnPassantSquare() != -1) {
+        debugEnPassant(board, isWhite);
 
-         uint64_t enPassantSquare = 1ULL << board.getEnPassantSquare();
-         uint64_t eligiblePawns = isWhite
-             ? ((pawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquare) |
-             ((pawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquare)
-             : ((pawns >> 1) & 0x7F7F7F7F7F7F7F7F & enPassantSquare) |
-             ((pawns << 1) & 0xFEFEFEFEFEFEFEFE & enPassantSquare);
+        uint64_t epSquare = 1ULL << board.getEnPassantSquare();
+        uint64_t fromMask;
+        if (isWhite) {
+            fromMask = ((epSquare >> 9) & pawns & 0xFEFEFEFEFEFEFEFEULL) |
+                       ((epSquare >> 7) & pawns & 0x7F7F7F7F7F7F7F7FULL);
+        } else {
+            fromMask = ((epSquare << 7) & pawns & 0xFEFEFEFEFEFEFEFEULL) |
+                       ((epSquare << 9) & pawns & 0x7F7F7F7F7F7F7F7FULL);
+        }
 
-         uint64_t validEnPassantMask = isWhite
-             ? (enPassantSquare >> 8) & eligiblePawns
-             : (enPassantSquare << 8) & eligiblePawns;
-
-         if (validEnPassantMask) {
-             int from = static_cast<int>(_tzcnt_u64(validEnPassantMask));
-             int to = board.getEnPassantSquare();
-             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (En Passant)");
-         }
-     }
+        for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
+            int from =
+#if defined(_MSC_VER)
+                static_cast<int>(_tzcnt_u64(mask));
+#else
+                __builtin_ctzll(mask);
+#endif
+            int to = board.getEnPassantSquare();
+            moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (En Passant)");
+        }
+    }
 
      return moves;
  }
@@ -127,7 +141,12 @@ std::string squareToNotation(int square) {
 
 void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) {
     for (int from = 0; moveBoard; moveBoard &= moveBoard - 1) {
-        int to = static_cast<int>(_tzcnt_u64(moveBoard)); // Target square
+        int to =
+#if defined(_MSC_VER)
+            static_cast<int>(_tzcnt_u64(moveBoard)); // Target square
+#else
+            __builtin_ctzll(moveBoard);
+#endif
         from = to - shift; // Calculate starting square
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
     }
