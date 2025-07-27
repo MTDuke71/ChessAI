@@ -14,6 +14,7 @@ public:
     std::vector<std::string> generateRookMoves(const Board& board, bool isWhite);
     std::vector<std::string> generateBishopMoves(const Board& board, bool isWhite);
     std::vector<std::string> generateQueenMoves(const Board& board, bool isWhite);
+    std::vector<std::string> generateKingMoves(const Board& board, bool isWhite);
     void addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift);
 };
 
