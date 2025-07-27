@@ -46,4 +46,21 @@ with success when all assertions pass.
 - `src/main.cpp` – simple example using the board and move generator
 - `src/*Tests.cpp` – small self-contained test programs for the above components
 
+## Usage Examples
+
+Several small programs in the `examples` directory demonstrate how to work with
+the API:
+
+- `create_position.cpp` – manually set up a board and print it.
+- `generate_moves.cpp` – load a FEN string and list all legal moves.
+- `search_best_move.cpp` – use the engine to pick a move from a position.
+
+After building, run them from the `build` directory just like the main example:
+
+```bash
+./CreatePosition
+./GenerateMoves
+./SearchBestMove
+```
+
 

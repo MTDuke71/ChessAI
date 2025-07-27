@@ -34,6 +34,14 @@ add_executable(KingMoveTests
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+# Example programs
+add_executable(CreatePosition examples/create_position.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+add_executable(GenerateMoves examples/generate_moves.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+add_executable(SearchBestMove examples/search_best_move.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+
 # Include directories
 target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(BoardTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -41,6 +49,9 @@ target_include_directories(PawnMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KnightMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SliderMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KingMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(CreatePosition PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # Register tests with CTest
 add_test(NAME BoardTest COMMAND BoardTest)
