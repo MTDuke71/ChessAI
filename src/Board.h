@@ -61,4 +61,7 @@ public:
     void clearBoard();  // Utility function to reset the board state
     void printBoard() const;
     bool loadFEN(const std::string& fen);
+    void makeMove(const std::string& move);
 };
+
+int algebraicToIndex(const std::string& sq);

@@ -464,4 +464,18 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bo
     return moves;
 }
 
+std::vector<std::string> MoveGenerator::generateAllMoves(const Board& board, bool isWhite) {
+    std::vector<std::string> all;
+    auto append = [&all](const std::vector<std::string>& mv) {
+        all.insert(all.end(), mv.begin(), mv.end());
+    };
+    append(generatePawnMoves(board, isWhite));
+    append(generateKnightMoves(board, isWhite));
+    append(generateBishopMoves(board, isWhite));
+    append(generateRookMoves(board, isWhite));
+    append(generateQueenMoves(board, isWhite));
+    append(generateKingMoves(board, isWhite));
+    return all;
+}
+
 
