@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(ChessAI)
 
+include(CTest)
+enable_testing()
+
 set(CMAKE_CXX_STANDARD 17)
 
 set(ENGINE_SOURCES src/Engine.cpp)
@@ -33,10 +36,18 @@ add_executable(KingMoveTests
 
 # Include directories
 target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(BoardTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PawnMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KnightMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SliderMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KingMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# Register tests with CTest
+add_test(NAME BoardTest COMMAND BoardTest)
+add_test(NAME PawnMoveTests COMMAND PawnMoveTests)
+add_test(NAME KnightMoveTests COMMAND KnightMoveTests)
+add_test(NAME SliderMoveTests COMMAND SliderMoveTests)
+add_test(NAME KingMoveTests COMMAND KingMoveTests)
 
 
 

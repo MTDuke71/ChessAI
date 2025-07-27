@@ -27,18 +27,16 @@ It will generate pawn moves for the initial board and print them.
 
 ## Running the Tests
 
-The build produces a test executable for each source file ending with `*Tests.cpp` and a `BoardTest`.
-Run them individually inside the `build` directory:
+Tests are registered with **CTest**, so once the project is built they can be
+executed all together:
 
 ```bash
-./BoardTest
-./PawnMoveTests
-./KnightMoveTests
-./SliderMoveTests
-./KingMoveTests
+ctest
 ```
 
-Each test binary prints diagnostic information and ends with a success message when all assertions pass.
+You can still run individual binaries (e.g. `./PawnMoveTests`) from the `build`
+directory if needed. Each test binary prints diagnostic information and exits
+with success when all assertions pass.
 
 ## Code Structure
 
