@@ -34,6 +34,12 @@ add_executable(KingMoveTests
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+add_executable(PerftTest
+    src/PerftTest.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/Perft.cpp ${ENGINE_SOURCES})
+
 # Example programs
 add_executable(CreatePosition examples/create_position.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
@@ -55,6 +61,7 @@ target_include_directories(CreatePosition PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # Register tests with CTest
 add_test(NAME BoardTest COMMAND BoardTest)
@@ -62,6 +69,7 @@ add_test(NAME PawnMoveTests COMMAND PawnMoveTests)
 add_test(NAME KnightMoveTests COMMAND KnightMoveTests)
 add_test(NAME SliderMoveTests COMMAND SliderMoveTests)
 add_test(NAME KingMoveTests COMMAND KingMoveTests)
+add_test(NAME PerftTest COMMAND PerftTest)
 
 
 
