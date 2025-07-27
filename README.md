@@ -45,6 +45,7 @@ with success when all assertions pass.
 - `src/PrintMoves.*` – helper to print generated move lists
 - `src/main.cpp` – simple example using the board and move generator
 - `src/*Tests.cpp` – small self-contained test programs for the above components
+- `src/Perft.*` – helper function to run perft node counts
 
 ## Usage Examples
 
@@ -54,6 +55,7 @@ the API:
 - `create_position.cpp` – manually set up a board and print it.
 - `generate_moves.cpp` – load a FEN string and list all legal moves.
 - `search_best_move.cpp` – use the engine to pick a move from a position.
+- `perft.cpp` – calculate move counts at a given depth.
 
 After building, run them from the `build` directory just like the main example:
 
@@ -61,6 +63,7 @@ After building, run them from the `build` directory just like the main example:
 ./CreatePosition
 ./GenerateMoves
 ./SearchBestMove
+./Perft <FEN> <depth>
 ```
 
 
