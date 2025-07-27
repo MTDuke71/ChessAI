@@ -416,4 +416,52 @@ std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, b
     return moves;
 }
 
+std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bool isWhite) {
+    std::vector<std::string> moves;
+    uint64_t king = isWhite ? board.getWhiteKing() : board.getBlackKing();
+    if (!king) return moves;
+    uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
+
+    int from = __builtin_ctzll(king);
+    int fx = from % 8; int fy = from / 8;
+    for (int dy = -1; dy <= 1; ++dy) {
+        for (int dx = -1; dx <= 1; ++dx) {
+            if (dx == 0 && dy == 0) continue;
+            int tx = fx + dx; int ty = fy + dy;
+            if (tx < 0 || tx > 7 || ty < 0 || ty > 7) continue;
+            int to = ty * 8 + tx;
+            uint64_t mask = 1ULL << to;
+            if (mask & ownPieces) continue;
+            moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+    }
+
+    uint64_t allPieces = board.getWhitePieces() | board.getBlackPieces();
+    if (isWhite) {
+        if (board.canCastleWK() && (from == 4) &&
+            !(allPieces & ((1ULL<<5) | (1ULL<<6))) &&
+            (board.getWhiteRooks() & (1ULL<<7))) {
+            moves.push_back("e1-g1 (Castle Kingside)");
+        }
+        if (board.canCastleWQ() && (from == 4) &&
+            !(allPieces & ((1ULL<<1)|(1ULL<<2)|(1ULL<<3))) &&
+            (board.getWhiteRooks() & (1ULL<<0))) {
+            moves.push_back("e1-c1 (Castle Queenside)");
+        }
+    } else {
+        if (board.canCastleBK() && (from == 60) &&
+            !(allPieces & ((1ULL<<61) | (1ULL<<62))) &&
+            (board.getBlackRooks() & (1ULL<<63))) {
+            moves.push_back("e8-g8 (Castle Kingside)");
+        }
+        if (board.canCastleBQ() && (from == 60) &&
+            !(allPieces & ((1ULL<<57)|(1ULL<<58)|(1ULL<<59))) &&
+            (board.getBlackRooks() & (1ULL<<56))) {
+            moves.push_back("e8-c8 (Castle Queenside)");
+        }
+    }
+
+    return moves;
+}
+
 

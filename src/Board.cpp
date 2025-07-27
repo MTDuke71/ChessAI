@@ -1,31 +1,18 @@
 #include "Board.h"
 #include <iostream>
+#include <sstream>
+#include <cctype>
 
 Board::Board() {
-    // Initialize board with default starting positions
-    whitePawns = 0x000000000000FF00;
-    blackPawns = 0x00FF000000000000;
-
-    whiteRooks = 0x0000000000000081;
-    whiteKnights = 0x0000000000000042;
-    whiteBishops = 0x0000000000000024;
-    whiteQueens = 0x0000000000000008;
-    whiteKing = 0x0000000000000010;
-
-    blackRooks = 0x8100000000000000;
-    blackKnights = 0x4200000000000000;
-    blackBishops = 0x2400000000000000;
-    blackQueens = 0x0800000000000000;
-    blackKing = 0x1000000000000000;
-
-    // Initialize En Passant tracking
-    enPassantSquare = -1; // Default to -1 (invalid position)
+    loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
 void Board::clearBoard() {
     whitePawns = whiteKnights = whiteBishops = whiteRooks = whiteQueens = whiteKing = 0;
     blackPawns = blackKnights = blackBishops = blackRooks = blackQueens = blackKing = 0;
     enPassantSquare = -1;
+    whiteToMove = true;
+    castleWK = castleWQ = castleBK = castleBQ = false;
 }
 
 void Board::printBoard() const {
@@ -56,4 +43,55 @@ void Board::printBoard() const {
 
     std::cout << "  +-----------------+\n";
     std::cout << "   a b c d e f g h\n\n";
+}
+
+bool Board::loadFEN(const std::string& fen) {
+    clearBoard();
+    std::stringstream ss(fen);
+    std::string boardPart, active, castling, ep;
+
+    if (!(ss >> boardPart >> active >> castling >> ep))
+        return false;
+
+    int rank = 7, file = 0;
+    for (char c : boardPart) {
+        if (c == '/') {
+            --rank; file = 0; continue;
+        }
+        if (std::isdigit(c)) { file += c - '0'; continue; }
+
+        int index = rank * 8 + file;
+        uint64_t bit = 1ULL << index;
+        switch (c) {
+            case 'P': whitePawns |= bit; break;
+            case 'N': whiteKnights |= bit; break;
+            case 'B': whiteBishops |= bit; break;
+            case 'R': whiteRooks |= bit; break;
+            case 'Q': whiteQueens |= bit; break;
+            case 'K': whiteKing |= bit; break;
+            case 'p': blackPawns |= bit; break;
+            case 'n': blackKnights |= bit; break;
+            case 'b': blackBishops |= bit; break;
+            case 'r': blackRooks |= bit; break;
+            case 'q': blackQueens |= bit; break;
+            case 'k': blackKing |= bit; break;
+        }
+        ++file;
+    }
+
+    whiteToMove = (active == "w");
+    castleWK = castling.find('K') != std::string::npos;
+    castleWQ = castling.find('Q') != std::string::npos;
+    castleBK = castling.find('k') != std::string::npos;
+    castleBQ = castling.find('q') != std::string::npos;
+
+    if (ep != "-") {
+        int f = ep[0] - 'a';
+        int r = ep[1] - '1';
+        enPassantSquare = r * 8 + f;
+    } else {
+        enPassantSquare = -1;
+    }
+
+    return true;
 }

@@ -1,15 +1,29 @@
 #pragma once
 #include <cstdint>
+#include <string>
 
 class Board {
 private:
     uint64_t whitePawns, whiteKnights, whiteBishops, whiteRooks, whiteQueens, whiteKing;
     uint64_t blackPawns, blackKnights, blackBishops, blackRooks, blackQueens, blackKing;
     int enPassantSquare;
+    bool whiteToMove;
+    bool castleWK, castleWQ, castleBK, castleBQ;
 
 
 public:
     Board();
+
+    bool isWhiteToMove() const { return whiteToMove; }
+    bool canCastleWK() const { return castleWK; }
+    bool canCastleWQ() const { return castleWQ; }
+    bool canCastleBK() const { return castleBK; }
+    bool canCastleBQ() const { return castleBQ; }
+    void setWhiteToMove(bool v) { whiteToMove = v; }
+    void setCastleWK(bool v) { castleWK = v; }
+    void setCastleWQ(bool v) { castleWQ = v; }
+    void setCastleBK(bool v) { castleBK = v; }
+    void setCastleBQ(bool v) { castleBQ = v; }
 
     // Getters for testing and internal logic
     uint64_t getWhitePawns() const { return whitePawns; }
@@ -26,6 +40,8 @@ public:
     uint64_t getBlackBishops() const { return blackBishops; }
     uint64_t getWhiteQueens()  const { return whiteQueens;  }
     uint64_t getBlackQueens()  const { return blackQueens;  }
+    uint64_t getWhiteKing() const { return whiteKing; }
+    uint64_t getBlackKing() const { return blackKing; }
 
     // Setters for testing
     void setWhitePawns(uint64_t value) { whitePawns = value; }
@@ -44,4 +60,5 @@ public:
 
     void clearBoard();  // Utility function to reset the board state
     void printBoard() const;
+    bool loadFEN(const std::string& fen);
 };
