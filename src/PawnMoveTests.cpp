@@ -32,7 +32,9 @@ void testEnPassant() {
     board.printBoard();
 
     // Simulate that Black Pawn just moved two squares forward to d5
-    board.setEnPassantSquare(35);  // Position d5 in bitboard notation
+    // The en passant square is the square passed over by the pawn.
+    // Black pawn moved from d7 to d5, so d6 (index 43) is the target.
+    board.setEnPassantSquare(43);  // Position d6 in bitboard notation
 
     MoveGenerator generator;
     std::vector<std::string> moves = generator.generatePawnMoves(board, true);

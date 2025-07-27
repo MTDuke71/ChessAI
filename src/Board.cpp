@@ -25,7 +25,6 @@ Board::Board() {
 void Board::clearBoard() {
     whitePawns = whiteKnights = whiteBishops = whiteRooks = whiteQueens = whiteKing = 0;
     blackPawns = blackKnights = blackBishops = blackRooks = blackQueens = blackKing = 0;
-    blackPawns = blackKnights = blackBishops = blackRooks = blackQueens = blackKing = 0;
     enPassantSquare = -1;
 }
 
