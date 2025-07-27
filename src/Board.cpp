@@ -112,8 +112,13 @@ void Board::makeMove(const std::string& move) {
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
 
+    // Remove captured piece first
+    uint64_t mask = ~toMask;
+    whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
+    blackPawns &= mask; blackKnights &= mask; blackBishops &= mask; blackRooks &= mask; blackQueens &= mask; blackKing &= mask;
+
     auto movePiece = [&](uint64_t &bb) {
-        if (bb & fromMask) { bb &= ~fromMask; bb &= ~toMask; bb |= toMask; return true; } return false; };
+        if (bb & fromMask) { bb &= ~fromMask; bb |= toMask; return true; } return false; };
 
     if (!(movePiece(whitePawns) || movePiece(whiteKnights) || movePiece(whiteBishops) ||
           movePiece(whiteRooks) || movePiece(whiteQueens) || movePiece(whiteKing) ||
@@ -121,11 +126,6 @@ void Board::makeMove(const std::string& move) {
           movePiece(blackRooks) || movePiece(blackQueens) || movePiece(blackKing))) {
         return;
     }
-
-    // Remove captured piece
-    uint64_t mask = ~toMask;
-    whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
-    blackPawns &= mask; blackKnights &= mask; blackBishops &= mask; blackRooks &= mask; blackQueens &= mask; blackKing &= mask;
 
     whiteToMove = !whiteToMove;
 }
