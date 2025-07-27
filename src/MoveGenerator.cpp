@@ -265,38 +265,103 @@ std::string squareToNotation(int square) {
  }
 
 std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
-     std::vector<std::string> moves;
-     uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
-     uint64_t opponentPieces = isWhite ? board.getBlackPieces() : board.getWhitePieces();
-     uint64_t emptySquares = ~(board.getWhitePieces() | board.getBlackPieces());
+    std::vector<std::string> moves;
+    uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
+    uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
+    uint64_t opponentPieces = isWhite ? board.getBlackPieces() : board.getWhitePieces();
+    uint64_t emptySquares = ~(board.getWhitePieces() | board.getBlackPieces());
 
-     // Pawn Promotion Logic
-     uint64_t promotionRank = isWhite ? 0xFF00000000000000 : 0x00000000000000FF;
-     uint64_t promotionPushes = (pawns << 8) & promotionRank & emptySquares;
-    for (int pos = 0; promotionPushes; promotionPushes &= promotionPushes - 1) {
-#if defined(_MSC_VER)
-        pos = static_cast<int>(_tzcnt_u64(promotionPushes));
-#else
-        pos = __builtin_ctzll(promotionPushes);
-#endif
-        moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Promotes to Queen)");
+    const uint64_t whiteStartRank = 0x000000000000FF00ULL;
+    const uint64_t blackStartRank = 0x00FF000000000000ULL;
+    const uint64_t whitePromRank  = 0xFF00000000000000ULL;
+    const uint64_t blackPromRank  = 0x00000000000000FFULL;
+
+    if (isWhite) {
+        // Single pushes
+        uint64_t one = (pawns << 8) & emptySquares;
+        for (uint64_t targets = one; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to - 8;
+            if ((1ULL << to) & whitePromRank)
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Promotes to Queen)");
+            else
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+
+        // Double pushes from starting rank
+        uint64_t two = (((pawns & whiteStartRank) << 8) & emptySquares) << 8;
+        two &= emptySquares;
+        for (uint64_t targets = two; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to - 16;
+            moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+
+        // Captures
+        uint64_t left = (pawns << 9) & opponentPieces & 0xFEFEFEFEFEFEFEFEULL;
+        for (uint64_t targets = left; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to - 9;
+            if ((1ULL << to) & whitePromRank)
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
+            else
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+
+        uint64_t right = (pawns << 7) & opponentPieces & 0x7F7F7F7F7F7F7F7FULL;
+        for (uint64_t targets = right; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to - 7;
+            if ((1ULL << to) & whitePromRank)
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
+            else
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+    } else {
+        // Single pushes
+        uint64_t one = (pawns >> 8) & emptySquares;
+        for (uint64_t targets = one; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to + 8;
+            if ((1ULL << to) & blackPromRank)
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Promotes to Queen)");
+            else
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+
+        // Double pushes from starting rank
+        uint64_t two = (((pawns & blackStartRank) >> 8) & emptySquares) >> 8;
+        two &= emptySquares;
+        for (uint64_t targets = two; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to + 16;
+            moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+
+        // Captures
+        uint64_t left = (pawns >> 7) & opponentPieces & 0xFEFEFEFEFEFEFEFEULL;
+        for (uint64_t targets = left; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to + 7;
+            if ((1ULL << to) & blackPromRank)
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
+            else
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
+
+        uint64_t right = (pawns >> 9) & opponentPieces & 0x7F7F7F7F7F7F7F7FULL;
+        for (uint64_t targets = right; targets; targets &= targets - 1) {
+            int to = __builtin_ctzll(targets);
+            int from = to + 9;
+            if ((1ULL << to) & blackPromRank)
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
+            else
+                moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        }
     }
 
-     // Pawn Capture Logic with Promotion Support
-     uint64_t captureMoves = (pawns << 7) & opponentPieces & promotionRank & 0x7F7F7F7F7F7F7F7F;
-     captureMoves |= (pawns << 9) & opponentPieces & promotionRank & 0xFEFEFEFEFEFEFEFE;
-    for (int pos = 0; captureMoves; captureMoves &= captureMoves - 1) {
-#if defined(_MSC_VER)
-        pos = static_cast<int>(_tzcnt_u64(captureMoves));
-#else
-        pos = __builtin_ctzll(captureMoves);
-#endif
-        moves.push_back(indexToAlgebraic(pos - 8) + "-" + indexToAlgebraic(pos) + " (Captures and Promotes)");
-    }
-
+    // En passant
     if (board.getEnPassantSquare() != -1) {
-        debugEnPassant(board, isWhite);
-
         uint64_t epSquare = 1ULL << board.getEnPassantSquare();
         uint64_t fromMask;
         if (isWhite) {
@@ -308,19 +373,14 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         }
 
         for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
-            int from =
-#if defined(_MSC_VER)
-                static_cast<int>(_tzcnt_u64(mask));
-#else
-                __builtin_ctzll(mask);
-#endif
+            int from = __builtin_ctzll(mask);
             int to = board.getEnPassantSquare();
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (En Passant)");
         }
     }
 
-     return moves;
- }
+    return moves;
+}
 
 
 
@@ -366,14 +426,13 @@ std::vector<std::string> MoveGenerator::generateKnightMoves(const Board& board, 
 }
 
 std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bool isWhite) {
-    Magic::init();
     std::vector<std::string> moves;
     uint64_t rooks = isWhite ? board.getWhiteRooks() : board.getBlackRooks();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
     uint64_t occupancy = board.getWhitePieces() | board.getBlackPieces();
     while (rooks) {
         int from = popLSBIndex(rooks);
-        uint64_t attacks = Magic::getRookAttacks(from, occupancy) & ~ownPieces;
+        uint64_t attacks = Magic::rookAttacksOnTheFly(from, occupancy) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
             int to = __builtin_ctzll(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
@@ -383,14 +442,13 @@ std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bo
 }
 
 std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, bool isWhite) {
-    Magic::init();
     std::vector<std::string> moves;
     uint64_t bishops = isWhite ? board.getWhiteBishops() : board.getBlackBishops();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
     uint64_t occupancy = board.getWhitePieces() | board.getBlackPieces();
     while (bishops) {
         int from = popLSBIndex(bishops);
-        uint64_t attacks = Magic::getBishopAttacks(from, occupancy) & ~ownPieces;
+        uint64_t attacks = Magic::bishopAttacksOnTheFly(from, occupancy) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
             int to = __builtin_ctzll(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
@@ -400,14 +458,13 @@ std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, 
 }
 
 std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, bool isWhite) {
-    Magic::init();
     std::vector<std::string> moves;
     uint64_t queens = isWhite ? board.getWhiteQueens() : board.getBlackQueens();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
     uint64_t occupancy = board.getWhitePieces() | board.getBlackPieces();
     while (queens) {
         int from = popLSBIndex(queens);
-        uint64_t attacks = (Magic::getRookAttacks(from, occupancy) | Magic::getBishopAttacks(from, occupancy)) & ~ownPieces;
+        uint64_t attacks = (Magic::rookAttacksOnTheFly(from, occupancy) | Magic::bishopAttacksOnTheFly(from, occupancy)) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
             int to = __builtin_ctzll(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
