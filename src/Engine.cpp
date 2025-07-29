@@ -186,6 +186,32 @@ int Engine::evaluate(const Board& b) const {
         score -= king + kingTable[mirror(sq)];
     }
 
+    // Mobility bonus
+    const int mobilityWeight = 5;
+    int whiteMobility = static_cast<int>(generator.generateAllMoves(b, true).size());
+    int blackMobility = static_cast<int>(generator.generateAllMoves(b, false).size());
+    score += mobilityWeight * (whiteMobility - blackMobility);
+
+    // Development bonus for minor pieces leaving their starting squares
+    const int developBonus = 15;
+    auto countDeveloped = [](uint64_t pieces, const std::initializer_list<int>& starts) {
+        int developed = 0;
+        for (uint64_t bb = pieces; bb; bb &= bb - 1) {
+            int sq = lsbIndex(bb);
+            bool onStart = false;
+            for (int s : starts) if (sq == s) { onStart = true; break; }
+            if (!onStart) ++developed;
+        }
+        return developed;
+    };
+
+    int whiteDevelop = 0, blackDevelop = 0;
+    whiteDevelop += countDeveloped(b.getWhiteKnights(), {1,6});
+    whiteDevelop += countDeveloped(b.getWhiteBishops(), {2,5});
+    blackDevelop += countDeveloped(b.getBlackKnights(), {57,62});
+    blackDevelop += countDeveloped(b.getBlackBishops(), {58,61});
+    score += developBonus * (whiteDevelop - blackDevelop);
+
     return score;
 }
 

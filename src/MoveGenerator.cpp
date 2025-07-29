@@ -279,7 +279,7 @@ MoveGenerator::MoveGenerator() {
     Magic::init();
 }
 
-std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> moves;
     uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -399,7 +399,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
 
 
 
-void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) {
+void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) const {
     for (int from = 0; moveBoard; moveBoard &= moveBoard - 1) {
         int to = lsbIndex(moveBoard);
         from = to - shift; // Calculate starting square
@@ -407,7 +407,7 @@ void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, ui
     }
 }
 
-std::vector<std::string> MoveGenerator::generateKnightMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generateKnightMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> moves;
     uint64_t knights = isWhite ? board.getWhiteKnights() : board.getBlackKnights();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -435,7 +435,7 @@ std::vector<std::string> MoveGenerator::generateKnightMoves(const Board& board, 
     return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> moves;
     uint64_t rooks = isWhite ? board.getWhiteRooks() : board.getBlackRooks();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -451,7 +451,7 @@ std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bo
     return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> moves;
     uint64_t bishops = isWhite ? board.getWhiteBishops() : board.getBlackBishops();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -467,7 +467,7 @@ std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, 
     return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> moves;
     uint64_t queens = isWhite ? board.getWhiteQueens() : board.getBlackQueens();
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -483,7 +483,7 @@ std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, b
     return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> moves;
     uint64_t king = isWhite ? board.getWhiteKing() : board.getBlackKing();
     if (!king) return moves;
@@ -531,7 +531,7 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bo
     return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateAllMoves(const Board& board, bool isWhite) {
+std::vector<std::string> MoveGenerator::generateAllMoves(const Board& board, bool isWhite) const {
     std::vector<std::string> all;
     auto append = [&all](const std::vector<std::string>& mv) {
         all.insert(all.end(), mv.begin(), mv.end());
