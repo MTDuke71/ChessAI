@@ -8,6 +8,9 @@
 
 class Engine {
 public:
+    enum class GamePhase { Opening, Middlegame, Endgame };
+
+    GamePhase getGamePhase(const Board& board) const;
     int evaluate(const Board& board) const;
     std::pair<int, std::string>
     minimax(Board& board, int depth, int alpha, int beta, bool maximizing,
