@@ -110,7 +110,11 @@ bool Board::isMoveLegal(const std::string& move) const {
     auto moves = gen.generateAllMoves(*this, whiteToMove);
     std::string check = move.substr(0,5);
     for (const auto& m : moves) {
-        if (m.substr(0,5) == check) return true;
+        if (m.substr(0,5) == check) {
+            Board copy = *this;
+            copy.applyMove(move);
+            return !gen.isKingInCheck(copy, !copy.isWhiteToMove());
+        }
     }
     return false;
 }
@@ -120,6 +124,10 @@ void Board::makeMove(const std::string& move) {
         std::cerr << "Illegal move attempted: " << move << "\n";
         return;
     }
+    applyMove(move);
+}
+
+void Board::applyMove(const std::string& move) {
     auto dash = move.find('-');
     if (dash == std::string::npos) return;
     int from = algebraicToIndex(move.substr(0, 2));
@@ -128,7 +136,6 @@ void Board::makeMove(const std::string& move) {
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
 
-    // Update castling rights when capturing rooks
     if (toMask & whiteRooks) {
         if (to == 0) castleWQ = false;
         if (to == 7) castleWK = false;
@@ -138,13 +145,11 @@ void Board::makeMove(const std::string& move) {
         if (to == 63) castleBK = false;
     }
 
-    // Remove captured piece first
     uint64_t mask = ~toMask;
     whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
     blackPawns &= mask; blackKnights &= mask; blackBishops &= mask; blackRooks &= mask; blackQueens &= mask; blackKing &= mask;
 
-    auto movePiece = [&](uint64_t &bb) {
-        if (bb & fromMask) { bb &= ~fromMask; bb |= toMask; return true; } return false; };
+    auto movePiece = [&](uint64_t &bb) { if (bb & fromMask) { bb &= ~fromMask; bb |= toMask; return true; } return false; };
 
     bool movedWhiteKing = (whiteKing & fromMask);
     bool movedBlackKing = (blackKing & fromMask);
@@ -158,7 +163,6 @@ void Board::makeMove(const std::string& move) {
         return;
     }
 
-    // Handle castling rook moves and update rights
     if (movedWhiteKing) {
         castleWK = castleWQ = false;
         if (from == 4 && to == 6) {
