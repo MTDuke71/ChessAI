@@ -63,6 +63,8 @@ public:
     bool loadFEN(const std::string& fen);
     bool isMoveLegal(const std::string& move) const;
     void makeMove(const std::string& move);
+private:
+    void applyMove(const std::string& move);
 };
 
 int algebraicToIndex(const std::string& sq);
