@@ -4,6 +4,14 @@
 #include <chrono>
 #include <atomic>
 #include <iostream>
+#include <sstream>
+
+static std::string toUCIMove(const std::string& move) {
+    std::string uci = move;
+    auto dash = uci.find('-');
+    if (dash != std::string::npos) uci.erase(dash, 1);
+    return uci;
+}
 
 // Helper to remove and get index of least significant bit
 static int popLSBIndex(uint64_t &bb) {
@@ -181,36 +189,50 @@ int Engine::evaluate(const Board& b) const {
     return score;
 }
 
-int Engine::minimax(Board& board, int depth, int alpha, int beta, bool maximizing,
-                    const std::chrono::steady_clock::time_point& end,
-                    const std::atomic<bool>& stop) {
-    if (stop || std::chrono::steady_clock::now() >= end) return evaluate(board);
+std::pair<int, std::string> Engine::minimax(
+        Board& board, int depth, int alpha, int beta, bool maximizing,
+        const std::chrono::steady_clock::time_point& end,
+        const std::atomic<bool>& stop) {
+    if (stop || std::chrono::steady_clock::now() >= end)
+        return {evaluate(board), ""};
     nodes++;
-    if (depth == 0) return evaluate(board);
+    if (depth == 0) return {evaluate(board), ""};
     auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
-    if (moves.empty()) return evaluate(board);
+    if (moves.empty()) return {evaluate(board), ""};
     if (maximizing) {
         int maxEval = -1000000;
+        std::string bestPV;
         for (const auto& m : moves) {
             Board copy = board;
             copy.makeMove(m);
-            int eval = minimax(copy, depth - 1, alpha, beta, false, end, stop);
-            maxEval = std::max(maxEval, eval);
+            auto child = minimax(copy, depth - 1, alpha, beta, false, end, stop);
+            int eval = child.first;
+            if (eval > maxEval) {
+                maxEval = eval;
+                bestPV = m;
+                if (!child.second.empty()) bestPV += " " + child.second;
+            }
             alpha = std::max(alpha, eval);
             if (beta <= alpha) break;
         }
-        return maxEval;
+        return {maxEval, bestPV};
     } else {
         int minEval = 1000000;
+        std::string bestPV;
         for (const auto& m : moves) {
             Board copy = board;
             copy.makeMove(m);
-            int eval = minimax(copy, depth - 1, alpha, beta, true, end, stop);
-            minEval = std::min(minEval, eval);
+            auto child = minimax(copy, depth - 1, alpha, beta, true, end, stop);
+            int eval = child.first;
+            if (eval < minEval) {
+                minEval = eval;
+                bestPV = m;
+                if (!child.second.empty()) bestPV += " " + child.second;
+            }
             beta = std::min(beta, eval);
             if (beta <= alpha) break;
         }
-        return minEval;
+        return {minEval, bestPV};
     }
 }
 
@@ -222,10 +244,11 @@ std::string Engine::searchBestMove(Board& board, int depth) {
     for (const auto& m : moves) {
         Board copy = board;
         copy.makeMove(m);
-        int score = minimax(copy, depth - 1, -1000000, 1000000,
-                            !board.isWhiteToMove(),
-                            std::chrono::steady_clock::time_point::max(),
-                            dummyStop);
+        auto res = minimax(copy, depth - 1, -1000000, 1000000,
+                           !board.isWhiteToMove(),
+                           std::chrono::steady_clock::time_point::max(),
+                           dummyStop);
+        int score = res.first;
         if (board.isWhiteToMove()) {
             if (score > bestScore) { bestScore = score; bestMove = m; }
         } else {
@@ -246,29 +269,46 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         endTime = start + std::chrono::milliseconds(timeLimitMs);
 
     std::string bestMove;
+    std::string bestPV;
     int bestScore = 0;
     for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
         nodes = 0;
         auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
+        bestPV.clear();
         for (const auto& m : moves) {
             Board copy = board;
             copy.makeMove(m);
-            int score = minimax(copy, depth - 1, -1000000, 1000000,
-                                !board.isWhiteToMove(), endTime, stopFlag);
+            auto res = minimax(copy, depth - 1, -1000000, 1000000,
+                               !board.isWhiteToMove(), endTime, stopFlag);
+            int score = res.first;
+            std::string pvCandidate = m;
+            if (!res.second.empty()) pvCandidate += " " + res.second;
             if (board.isWhiteToMove()) {
-                if (score > bestScore) { bestScore = score; bestMove = m; }
+                if (score > bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
             } else {
-                if (score < bestScore) { bestScore = score; bestMove = m; }
+                if (score < bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
             }
             if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
         }
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                           std::chrono::steady_clock::now() - start)
                           .count();
+        std::string pvUCI;
+        {
+            std::istringstream iss(bestPV);
+            std::string token;
+            while (iss >> token) {
+                if (!pvUCI.empty()) pvUCI += " ";
+                pvUCI += toUCIMove(token);
+            }
+        }
         std::cout << "info depth " << depth << " score cp "
                   << (board.isWhiteToMove() ? bestScore : -bestScore)
-                  << " nodes " << nodes << " time " << elapsed << '\n';
+                  << " nodes " << nodes << " time " << elapsed;
+        if (!pvUCI.empty())
+            std::cout << " pv " << pvUCI;
+        std::cout << '\n';
         if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
     }
     return bestMove;
