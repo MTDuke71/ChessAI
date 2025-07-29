@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "MoveGenerator.h"
 #include <iostream>
 #include <sstream>
 #include <cctype>
@@ -103,7 +104,22 @@ int algebraicToIndex(const std::string& sq) {
     return rank * 8 + file;
 }
 
+bool Board::isMoveLegal(const std::string& move) const {
+    if (move.size() < 5) return false;
+    MoveGenerator gen;
+    auto moves = gen.generateAllMoves(*this, whiteToMove);
+    std::string check = move.substr(0,5);
+    for (const auto& m : moves) {
+        if (m.substr(0,5) == check) return true;
+    }
+    return false;
+}
+
 void Board::makeMove(const std::string& move) {
+    if (!isMoveLegal(move)) {
+        std::cerr << "Illegal move attempted: " << move << "\n";
+        return;
+    }
     auto dash = move.find('-');
     if (dash == std::string::npos) return;
     int from = algebraicToIndex(move.substr(0, 2));
