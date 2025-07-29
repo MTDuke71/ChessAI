@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <atomic>
+#include <future>
 #include <iostream>
 #include <sstream>
 
@@ -188,14 +189,24 @@ std::string Engine::searchBestMove(Board& board, int depth) {
     std::string bestMove;
     int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
     std::atomic<bool> dummyStop(false);
+
+    std::vector<std::future<std::pair<int, std::string>>> futures;
+    futures.reserve(moves.size());
     for (const auto& m : moves) {
-        Board copy = board;
-        copy.makeMove(m);
-        auto res = minimax(copy, depth - 1, -1000000, 1000000,
+        futures.emplace_back(std::async(std::launch::async, [&, m]() {
+            Board copy = board;
+            copy.makeMove(m);
+            return minimax(copy, depth - 1, -1000000, 1000000,
                            !board.isWhiteToMove(),
                            std::chrono::steady_clock::time_point::max(),
                            dummyStop);
+        }));
+    }
+
+    for (size_t i = 0; i < moves.size(); ++i) {
+        auto res = futures[i].get();
         int score = res.first;
+        const auto& m = moves[i];
         if (board.isWhiteToMove()) {
             if (score > bestScore) { bestScore = score; bestMove = m; }
         } else {
@@ -236,11 +247,19 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
         lastDepthComplete = true;
+        std::vector<std::future<std::pair<int, std::string>>> futures;
+        futures.reserve(moves.size());
         for (const auto& m : moves) {
-            Board copy = board;
-            copy.makeMove(m);
-            auto res = minimax(copy, depth - 1, -1000000, 1000000,
+            futures.emplace_back(std::async(std::launch::async, [&, m]() {
+                Board copy = board;
+                copy.makeMove(m);
+                return minimax(copy, depth - 1, -1000000, 1000000,
                                !board.isWhiteToMove(), endTime, stopFlag);
+            }));
+        }
+        for (size_t i = 0; i < moves.size(); ++i) {
+            auto res = futures[i].get();
+            const auto& m = moves[i];
             int score = res.first;
             std::string pvCandidate = m;
             if (!res.second.empty()) pvCandidate += " " + res.second;
@@ -249,10 +268,8 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
             } else {
                 if (score < bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
             }
-            if (stopFlag || std::chrono::steady_clock::now() >= endTime) {
+            if (stopFlag || std::chrono::steady_clock::now() >= endTime)
                 lastDepthComplete = false;
-                break;
-            }
         }
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                           std::chrono::steady_clock::now() - start)

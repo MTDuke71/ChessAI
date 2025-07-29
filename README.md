@@ -79,5 +79,6 @@ After building, run them from the `build` directory just like the main example:
 - Quiescence search to reduce horizon effects in tactical positions.
 - Opening book integration for common starting positions.
 - Endgame tablebase lookup for perfect play in simplified endings.
+- Parallel root search to utilize multiple CPU cores during move calculation.
 
 

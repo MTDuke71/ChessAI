@@ -34,7 +34,7 @@ private:
                    const std::chrono::steady_clock::time_point& end,
                    const std::atomic<bool>& stop);
     MoveGenerator generator;
-    uint64_t nodes = 0;
+    std::atomic<uint64_t> nodes = 0;
     TranspositionTable tt;
     OpeningBook book;
     Tablebase tablebase;
