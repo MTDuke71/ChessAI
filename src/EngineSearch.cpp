@@ -13,9 +13,67 @@ static std::string toUCIMove(const std::string& move) {
     return uci;
 }
 
+static bool isCaptureMove(const Board& board, const std::string& move) {
+    auto dash = move.find('-');
+    if (dash == std::string::npos) return false;
+    int from = algebraicToIndex(move.substr(0,2));
+    int to = algebraicToIndex(move.substr(dash+1,2));
+    if (from < 0 || to < 0) return false;
+    Board::Color colorAtTo = board.pieceColorAt(to);
+    if (board.isWhiteToMove()) {
+        if (colorAtTo == Board::Color::Black) return true;
+    } else {
+        if (colorAtTo == Board::Color::White) return true;
+    }
+    if (board.getEnPassantSquare() == to) {
+        uint64_t fromMask = 1ULL << from;
+        if (board.isWhiteToMove()) {
+            if (board.getWhitePawns() & fromMask) return true;
+        } else {
+            if (board.getBlackPawns() & fromMask) return true;
+        }
+    }
+    return false;
+}
+
 Engine::Engine() {
     static bool init = false;
     if (!init) { Zobrist::init(); init = true; }
+}
+
+int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
+                       const std::chrono::steady_clock::time_point& end,
+                       const std::atomic<bool>& stop) {
+    if (stop || std::chrono::steady_clock::now() >= end)
+        return evaluate(board);
+    nodes++;
+    int standPat = evaluate(board);
+    if (maximizing) {
+        if (standPat >= beta) return standPat;
+        if (standPat > alpha) alpha = standPat;
+    } else {
+        if (standPat <= alpha) return standPat;
+        if (standPat < beta) beta = standPat;
+    }
+
+    auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+    std::vector<std::string> moves;
+    for (const auto& mv : pseudoMoves)
+        if (board.isMoveLegal(mv) && isCaptureMove(board, mv))
+            moves.push_back(mv);
+
+    for (const auto& m : moves) {
+        Board copy = board;
+        copy.makeMove(m);
+        int score = quiescence(copy, alpha, beta, !maximizing, end, stop);
+        if (maximizing) {
+            if (score > alpha) alpha = score;
+        } else {
+            if (score < beta) beta = score;
+        }
+        if (beta <= alpha) break;
+    }
+    return maximizing ? alpha : beta;
 }
 
 std::pair<int, std::string> Engine::minimax(
@@ -36,7 +94,8 @@ std::pair<int, std::string> Engine::minimax(
     }
     nodes++;
     int alphaOrig = alpha;
-    if (depth == 0) return {evaluate(board), ""};
+    if (depth == 0)
+        return {quiescence(board, alpha, beta, maximizing, end, stop), ""};
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
     std::vector<std::string> moves;
     for (const auto& mv : pseudoMoves) {
