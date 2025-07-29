@@ -8,7 +8,7 @@ enable_testing()
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(ENGINE_SOURCES src/Engine.cpp)
+set(ENGINE_SOURCES src/Engine.cpp src/Zobrist.cpp)
 
 add_executable(Example src/Example.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(BoardTest test/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})
