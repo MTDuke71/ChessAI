@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(ENGINE_SOURCES src/Engine.cpp)
 
-add_executable(ChessAI src/main.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+add_executable(Example src/Example.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(BoardTest src/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})
 add_executable(PawnMoveTests
 src/PawnMoveTests.cpp
@@ -57,12 +57,12 @@ add_executable(SearchBestMove examples/search_best_move.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(Perft examples/perft.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp src/Perft.cpp ${ENGINE_SOURCES})
-add_executable(UCI
+add_executable(ChessAI
     src/UCI.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 # Include directories
-target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(Example PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(BoardTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PawnMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KnightMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -74,9 +74,9 @@ target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_include_directories(UCI PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
-target_link_libraries(UCI PRIVATE Threads::Threads)
+target_link_libraries(ChessAI PRIVATE Threads::Threads)
 
 # Register tests with CTest
 add_test(NAME BoardTest COMMAND BoardTest)
