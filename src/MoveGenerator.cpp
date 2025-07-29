@@ -25,6 +25,17 @@ inline int popLSBIndex(uint64_t& bitboard) {
 #endif
 }
 
+// Get index of least significant bit without modifying the bitboard
+inline int lsbIndex(uint64_t bitboard) {
+#if defined(_MSC_VER)
+    unsigned long index;
+    _BitScanForward64(&index, bitboard);
+    return static_cast<int>(index);
+#else
+    return __builtin_ctzll(bitboard);
+#endif
+}
+
 namespace Magic {
     using U64 = uint64_t;
 
@@ -124,7 +135,7 @@ namespace Magic {
         std::vector<int> squares;
         U64 mask = bishop ? maskBishop(sq) : maskRook(sq);
         for (U64 m = mask; m; m &= m - 1)
-            squares.push_back(__builtin_ctzll(m));
+            squares.push_back(lsbIndex(m));
 
         int size = 1 << bits;
         std::vector<U64> occupancies(size), attacks(size);
@@ -177,8 +188,8 @@ namespace Magic {
             int rBits = popcount(rookMasks[sq]);
             int bBits = popcount(bishopMasks[sq]);
             std::vector<int> rSquares, bSquares;
-            for (U64 m = rookMasks[sq]; m; m &= m - 1) rSquares.push_back(__builtin_ctzll(m));
-            for (U64 m = bishopMasks[sq]; m; m &= m - 1) bSquares.push_back(__builtin_ctzll(m));
+            for (U64 m = rookMasks[sq]; m; m &= m - 1) rSquares.push_back(lsbIndex(m));
+            for (U64 m = bishopMasks[sq]; m; m &= m - 1) bSquares.push_back(lsbIndex(m));
 
             for (int i = 0; i < (1 << rBits); ++i) {
                 U64 occ = setOccupancy(i, rBits, rSquares);
@@ -284,7 +295,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         // Single pushes
         uint64_t one = (pawns << 8) & emptySquares;
         for (uint64_t targets = one; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to - 8;
             if ((1ULL << to) & whitePromRank)
                 moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Promotes to Queen)");
@@ -296,7 +307,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         uint64_t two = (((pawns & whiteStartRank) << 8) & emptySquares) << 8;
         two &= emptySquares;
         for (uint64_t targets = two; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to - 16;
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
         }
@@ -304,7 +315,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         // Captures
         uint64_t left = (pawns << 9) & opponentPieces & 0xFEFEFEFEFEFEFEFEULL;
         for (uint64_t targets = left; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to - 9;
             if ((1ULL << to) & whitePromRank)
                 moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
@@ -314,7 +325,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
 
         uint64_t right = (pawns << 7) & opponentPieces & 0x7F7F7F7F7F7F7F7FULL;
         for (uint64_t targets = right; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to - 7;
             if ((1ULL << to) & whitePromRank)
                 moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
@@ -325,7 +336,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         // Single pushes
         uint64_t one = (pawns >> 8) & emptySquares;
         for (uint64_t targets = one; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to + 8;
             if ((1ULL << to) & blackPromRank)
                 moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Promotes to Queen)");
@@ -337,7 +348,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         uint64_t two = (((pawns & blackStartRank) >> 8) & emptySquares) >> 8;
         two &= emptySquares;
         for (uint64_t targets = two; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to + 16;
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
         }
@@ -345,7 +356,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         // Captures
         uint64_t left = (pawns >> 7) & opponentPieces & 0xFEFEFEFEFEFEFEFEULL;
         for (uint64_t targets = left; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to + 7;
             if ((1ULL << to) & blackPromRank)
                 moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
@@ -355,7 +366,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
 
         uint64_t right = (pawns >> 9) & opponentPieces & 0x7F7F7F7F7F7F7F7FULL;
         for (uint64_t targets = right; targets; targets &= targets - 1) {
-            int to = __builtin_ctzll(targets);
+            int to = lsbIndex(targets);
             int from = to + 9;
             if ((1ULL << to) & blackPromRank)
                 moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (Captures and Promotes)");
@@ -377,7 +388,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
         }
 
         for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
-            int from = __builtin_ctzll(mask);
+            int from = lsbIndex(mask);
             int to = board.getEnPassantSquare();
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + " (En Passant)");
         }
@@ -390,12 +401,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bo
 
 void MoveGenerator::addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) {
     for (int from = 0; moveBoard; moveBoard &= moveBoard - 1) {
-        int to =
-#if defined(_MSC_VER)
-            static_cast<int>(_tzcnt_u64(moveBoard)); // Target square
-#else
-            __builtin_ctzll(moveBoard);
-#endif
+        int to = lsbIndex(moveBoard);
         from = to - shift; // Calculate starting square
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
     }
@@ -438,7 +444,7 @@ std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bo
         int from = popLSBIndex(rooks);
         uint64_t attacks = Magic::getRookAttacks(from, occupancy) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
-            int to = __builtin_ctzll(m);
+            int to = lsbIndex(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
         }
     }
@@ -454,7 +460,7 @@ std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, 
         int from = popLSBIndex(bishops);
         uint64_t attacks = Magic::getBishopAttacks(from, occupancy) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
-            int to = __builtin_ctzll(m);
+            int to = lsbIndex(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
         }
     }
@@ -470,7 +476,7 @@ std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, b
         int from = popLSBIndex(queens);
         uint64_t attacks = (Magic::getRookAttacks(from, occupancy) | Magic::getBishopAttacks(from, occupancy)) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
-            int to = __builtin_ctzll(m);
+            int to = lsbIndex(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
         }
     }
@@ -483,7 +489,7 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bo
     if (!king) return moves;
     uint64_t ownPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
 
-    int from = __builtin_ctzll(king);
+    int from = lsbIndex(king);
     int fx = from % 8; int fy = from / 8;
     for (int dy = -1; dy <= 1; ++dy) {
         for (int dx = -1; dx <= 1; ++dx) {
