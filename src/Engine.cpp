@@ -39,6 +39,23 @@ static int lsbIndex(uint64_t bb) {
 #endif
 }
 
+// Cross-platform population count
+static int popcount64(uint64_t bb) {
+#if defined(_MSC_VER)
+    return static_cast<int>(__popcnt64(bb));
+#else
+    return __builtin_popcountll(bb);
+#endif
+}
+
+Engine::GamePhase Engine::getGamePhase(const Board& b) const {
+    uint64_t all = b.getWhitePieces() | b.getBlackPieces();
+    int pieces = popcount64(all);
+    if (pieces > 24) return GamePhase::Opening;
+    if (pieces > 12) return GamePhase::Middlegame;
+    return GamePhase::Endgame;
+}
+
 // Mirror a square for black piece-square tables
 static int mirror(int sq) {
     return ((7 - (sq / 8)) * 8) + (sq % 8);
@@ -111,11 +128,23 @@ const std::array<int, 64> kingTable = {
     20, 20,  0,  0,  0,  0, 20, 20,
     20, 30, 10,  0,  0, 10, 30, 20
 };
+
+const std::array<int, 64> kingTableEndgame = {
+   -50,-40,-30,-20,-20,-30,-40,-50,
+   -30,-20,-10,  0,  0,-10,-20,-30,
+   -30,-10, 20, 30, 30, 20,-10,-30,
+   -30,-10, 30, 40, 40, 30,-10,-30,
+   -30,-10, 30, 40, 40, 30,-10,-30,
+   -30,-10, 20, 30, 30, 20,-10,-30,
+   -30,-30,  0,  0,  0,  0,-30,-30,
+   -50,-30,-30,-30,-30,-30,-30,-50
+};
 }
 
 
 int Engine::evaluate(const Board& b) const {
     const int pawn = 100, knight = 320, bishop = 330, rook = 500, queen = 900, king = 20000;
+    GamePhase phase = getGamePhase(b);
     int score = 0;
 
     uint64_t pieces;
@@ -175,25 +204,33 @@ int Engine::evaluate(const Board& b) const {
         score -= queen + queenTable[mirror(sq)];
     }
 
+    const std::array<int,64>* kingTablePtr =
+            (phase == GamePhase::Endgame) ? &kingTableEndgame : &kingTable;
     pieces = b.getWhiteKing();
     if (pieces) {
         int sq = lsbIndex(pieces);
-        score += king + kingTable[sq];
+        score += king + (*kingTablePtr)[sq];
     }
     pieces = b.getBlackKing();
     if (pieces) {
         int sq = lsbIndex(pieces);
-        score -= king + kingTable[mirror(sq)];
+        score -= king + (*kingTablePtr)[mirror(sq)];
     }
 
     // Mobility bonus
-    const int mobilityWeight = 5;
+    int mobilityWeight = 5;
+    int developBonus = 15;
+    if (phase == GamePhase::Opening) {
+        developBonus = 20;
+    } else if (phase == GamePhase::Endgame) {
+        mobilityWeight = 2;
+        developBonus = 0;
+    }
     int whiteMobility = static_cast<int>(generator.generateAllMoves(b, true).size());
     int blackMobility = static_cast<int>(generator.generateAllMoves(b, false).size());
     score += mobilityWeight * (whiteMobility - blackMobility);
 
     // Development bonus for minor pieces leaving their starting squares
-    const int developBonus = 15;
     auto countDeveloped = [](uint64_t pieces, const std::initializer_list<int>& starts) {
         int developed = 0;
         for (uint64_t bb = pieces; bb; bb &= bb - 1) {
