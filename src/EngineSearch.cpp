@@ -37,7 +37,12 @@ std::pair<int, std::string> Engine::minimax(
     nodes++;
     int alphaOrig = alpha;
     if (depth == 0) return {evaluate(board), ""};
-    auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
+    auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+    std::vector<std::string> moves;
+    for (const auto& mv : pseudoMoves) {
+        if (board.isMoveLegal(mv))
+            moves.push_back(mv);
+    }
     if (moves.empty()) return {evaluate(board), ""};
     if (maximizing) {
         int bestEval = -1000000;
@@ -111,7 +116,12 @@ std::pair<int, std::string> Engine::minimax(
 }
 
 std::string Engine::searchBestMove(Board& board, int depth) {
-    auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
+    auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+    std::vector<std::string> moves;
+    for (const auto& mv : pseudoMoves) {
+        if (board.isMoveLegal(mv))
+            moves.push_back(mv);
+    }
     std::string bestMove;
     int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
     std::atomic<bool> dummyStop(false);
@@ -149,7 +159,12 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
     bool lastDepthComplete = true;
     for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
         nodes = 0;
-        auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
+        auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+        std::vector<std::string> moves;
+        for (const auto& mv : pseudoMoves) {
+            if (board.isMoveLegal(mv))
+                moves.push_back(mv);
+        }
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
         lastDepthComplete = true;
