@@ -61,7 +61,9 @@ public:
     void clearBoard();  // Utility function to reset the board state
     void printBoard() const;
     bool loadFEN(const std::string& fen);
-    void makeMove(const std::string& move);
+    // Makes a move in "e2-e4" style notation if it is legal.
+    // Returns true on success and false if the move is illegal.
+    bool makeMove(const std::string& move);
 };
 
 int algebraicToIndex(const std::string& sq);

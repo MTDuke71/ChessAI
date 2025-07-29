@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "MoveGenerator.h"
 #include <iostream>
 #include <sstream>
 #include <cctype>
@@ -103,12 +104,22 @@ int algebraicToIndex(const std::string& sq) {
     return rank * 8 + file;
 }
 
-void Board::makeMove(const std::string& move) {
+bool Board::makeMove(const std::string& move) {
     auto dash = move.find('-');
-    if (dash == std::string::npos) return;
+    if (dash == std::string::npos) return false;
     int from = algebraicToIndex(move.substr(0, 2));
     int to = algebraicToIndex(move.substr(dash + 1, 2));
-    if (from < 0 || to < 0) return;
+    if (from < 0 || to < 0) return false;
+
+    // Verify the move is legal using the move generator
+    MoveGenerator gen;
+    auto legal = gen.generateAllMoves(*this, isWhiteToMove());
+    std::string prefix = move.substr(0,5);
+    bool found = false;
+    for (auto &m : legal) {
+        if (m.substr(0,5) == prefix) { found = true; break; }
+    }
+    if (!found) return false;
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
 
@@ -124,8 +135,9 @@ void Board::makeMove(const std::string& move) {
           movePiece(whiteRooks) || movePiece(whiteQueens) || movePiece(whiteKing) ||
           movePiece(blackPawns) || movePiece(blackKnights) || movePiece(blackBishops) ||
           movePiece(blackRooks) || movePiece(blackQueens) || movePiece(blackKing))) {
-        return;
+        return false;
     }
 
     whiteToMove = !whiteToMove;
+    return true;
 }

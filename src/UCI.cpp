@@ -51,7 +51,9 @@ int main() {
             }
             if (iss >> token && token == "moves") {
                 while (iss >> token) {
-                    board.makeMove(toInternalMove(token));
+                    if (!board.makeMove(toInternalMove(token))) {
+                        std::cerr << "Illegal move ignored: " << token << '\n';
+                    }
                 }
             }
         } else if (line.rfind("go",0) == 0) {
