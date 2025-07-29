@@ -44,7 +44,7 @@ with success when all assertions pass.
 - `src/MoveGenerator.*` – move generation for all pieces
 - `src/PrintMoves.*` – helper to print generated move lists
 - `src/Example.cpp` – simple example using the board and move generator
-- `src/*Tests.cpp` – small self-contained test programs for the above components
+- `test/*.cpp` – small self-contained test programs for the above components
 - `src/Perft.*` – helper function to run perft node counts
 
 ## Usage Examples
