@@ -76,5 +76,6 @@ After building, run them from the `build` directory just like the main example:
 - Minimax search with alpha-beta pruning, principal variation search and basic time management.
 - Transposition tables with Zobrist hashing for reusing evaluated positions.
 - Command-line UCI engine along with example programs for move generation and search.
+- Quiescence search to reduce horizon effects in tactical positions.
 
 

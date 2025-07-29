@@ -14,6 +14,9 @@ private:
 public:
     Board();
 
+    enum class Color { None, White, Black };
+    Color pieceColorAt(int index) const;
+
     bool isWhiteToMove() const { return whiteToMove; }
     bool canCastleWK() const { return castleWK; }
     bool canCastleWQ() const { return castleWQ; }

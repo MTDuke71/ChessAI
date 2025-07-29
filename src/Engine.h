@@ -28,6 +28,9 @@ public:
                                     std::atomic<bool>& stopFlag);
 
 private:
+    int quiescence(Board& board, int alpha, int beta, bool maximizing,
+                   const std::chrono::steady_clock::time_point& end,
+                   const std::atomic<bool>& stop);
     MoveGenerator generator;
     uint64_t nodes = 0;
     TranspositionTable tt;

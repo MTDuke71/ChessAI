@@ -104,6 +104,13 @@ int algebraicToIndex(const std::string& sq) {
     return rank * 8 + file;
 }
 
+Board::Color Board::pieceColorAt(int index) const {
+    uint64_t mask = 1ULL << index;
+    if (getWhitePieces() & mask) return Color::White;
+    if (getBlackPieces() & mask) return Color::Black;
+    return Color::None;
+}
+
 bool Board::isMoveLegal(const std::string& move) const {
     if (move.size() < 5) return false;
     MoveGenerator gen;
