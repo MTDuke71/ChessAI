@@ -11,39 +11,39 @@ set(CMAKE_CXX_STANDARD 17)
 set(ENGINE_SOURCES src/Engine.cpp)
 
 add_executable(Example src/Example.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
-add_executable(BoardTest src/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})
+add_executable(BoardTest test/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})
 add_executable(PawnMoveTests
-src/PawnMoveTests.cpp
-src/Board.cpp
-src/MoveGenerator.cpp
-src/PrintMoves.cpp ${ENGINE_SOURCES})
+    test/PawnMoveTests.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 add_executable(KnightMoveTests
-    src/KnightMoveTests.cpp
+    test/KnightMoveTests.cpp
     src/Board.cpp
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 add_executable(SliderMoveTests
-    src/SliderMoveTests.cpp
+    test/SliderMoveTests.cpp
     src/Board.cpp
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 add_executable(KingMoveTests
-    src/KingMoveTests.cpp
+    test/KingMoveTests.cpp
     src/Board.cpp
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 add_executable(IllegalMoveTests
-    src/IllegalMoveTests.cpp
+    test/IllegalMoveTests.cpp
     src/Board.cpp
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 add_executable(PerftTest
-    src/PerftTest.cpp
+    test/PerftTest.cpp
     src/Board.cpp
     src/MoveGenerator.cpp
     src/Perft.cpp ${ENGINE_SOURCES})
