@@ -14,7 +14,9 @@ set(ENGINE_SOURCES
     src/EngineSearch.cpp
     src/Zobrist.cpp
     src/Magic.cpp
-    src/MoveGeneratorUtils.cpp)
+    src/MoveGeneratorUtils.cpp
+    src/OpeningBook.cpp
+    src/Tablebase.cpp)
 
 add_executable(Example src/Example.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(BoardTest test/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})

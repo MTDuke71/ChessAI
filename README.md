@@ -77,5 +77,7 @@ After building, run them from the `build` directory just like the main example:
 - Transposition tables with Zobrist hashing for reusing evaluated positions.
 - Command-line UCI engine along with example programs for move generation and search.
 - Quiescence search to reduce horizon effects in tactical positions.
+- Opening book integration for common starting positions.
+- Endgame tablebase lookup for perfect play in simplified endings.
 
 
