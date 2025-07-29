@@ -263,39 +263,65 @@ std::pair<int, std::string> Engine::minimax(
     auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
     if (moves.empty()) return {evaluate(board), ""};
     if (maximizing) {
-        int maxEval = -1000000;
+        int bestEval = -1000000;
         std::string bestPV;
+        bool first = true;
         for (const auto& m : moves) {
             Board copy = board;
             copy.makeMove(m);
-            auto child = minimax(copy, depth - 1, alpha, beta, false, end, stop);
+            std::pair<int, std::string> child;
+            if (first) {
+                child = minimax(copy, depth - 1, alpha, beta, false, end, stop);
+            } else {
+                child = minimax(copy, depth - 1, alpha, alpha + 1,
+                                false, end, stop);
+                int eval = child.first;
+                if (eval > alpha && eval < beta) {
+                    child = minimax(copy, depth - 1, eval, beta,
+                                    false, end, stop);
+                }
+            }
             int eval = child.first;
-            if (eval > maxEval) {
-                maxEval = eval;
+            if (eval > bestEval) {
+                bestEval = eval;
                 bestPV = m;
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
             alpha = std::max(alpha, eval);
             if (beta <= alpha) break;
+            first = false;
         }
-        return {maxEval, bestPV};
+        return {bestEval, bestPV};
     } else {
-        int minEval = 1000000;
+        int bestEval = 1000000;
         std::string bestPV;
+        bool first = true;
         for (const auto& m : moves) {
             Board copy = board;
             copy.makeMove(m);
-            auto child = minimax(copy, depth - 1, alpha, beta, true, end, stop);
+            std::pair<int, std::string> child;
+            if (first) {
+                child = minimax(copy, depth - 1, alpha, beta, true, end, stop);
+            } else {
+                child = minimax(copy, depth - 1, beta - 1, beta,
+                                true, end, stop);
+                int eval = child.first;
+                if (eval < beta && eval > alpha) {
+                    child = minimax(copy, depth - 1, alpha, eval,
+                                    true, end, stop);
+                }
+            }
             int eval = child.first;
-            if (eval < minEval) {
-                minEval = eval;
+            if (eval < bestEval) {
+                bestEval = eval;
                 bestPV = m;
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
             beta = std::min(beta, eval);
             if (beta <= alpha) break;
+            first = false;
         }
-        return {minEval, bestPV};
+        return {bestEval, bestPV};
     }
 }
 
