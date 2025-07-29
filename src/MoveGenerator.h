@@ -9,6 +9,7 @@
 
 class MoveGenerator {
 public:
+    MoveGenerator();
     std::vector<std::string> generatePawnMoves(const Board& board, bool isWhite);
     std::vector<std::string> generateKnightMoves(const Board& board, bool isWhite);
     std::vector<std::string> generateRookMoves(const Board& board, bool isWhite);
