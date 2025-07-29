@@ -13,14 +13,14 @@ cmake ..
 make
 ```
 
-This will create several executables such as `ChessAI` (the example program) and the various test programs.
+This will create several executables such as `Example` (a demo program) and `ChessAI` (the UCI engine) along with the various test programs.
 
 ## Running the Example
 
 After building, run the main example from the `build` directory:
 
 ```bash
-./ChessAI
+./Example
 ```
 
 It will generate pawn moves for the initial board and print them.
@@ -43,7 +43,7 @@ with success when all assertions pass.
 - `src/Board.*` – board representation, FEN loading and printing utilities
 - `src/MoveGenerator.*` – move generation for all pieces
 - `src/PrintMoves.*` – helper to print generated move lists
-- `src/main.cpp` – simple example using the board and move generator
+- `src/Example.cpp` – simple example using the board and move generator
 - `src/*Tests.cpp` – small self-contained test programs for the above components
 - `src/Perft.*` – helper function to run perft node counts
 
@@ -56,7 +56,7 @@ the API:
 - `generate_moves.cpp` – load a FEN string and list all legal moves.
 - `search_best_move.cpp` – use the engine to pick a move from a position.
 - `perft.cpp` – calculate move counts at a given depth.
-- `UCI` – command line interface implementing the UCI protocol.
+- `ChessAI` – command line interface implementing the UCI protocol.
 
 After building, run them from the `build` directory just like the main example:
 
@@ -65,7 +65,7 @@ After building, run them from the `build` directory just like the main example:
 ./GenerateMoves
 ./SearchBestMove
 ./Perft <FEN> <depth>
-./UCI
+./ChessAI
 ```
 
 
