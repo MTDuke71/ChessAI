@@ -1,4 +1,4 @@
-# ChessAI
+# Aphelion
 
 A simple C++ project exploring chess board representation and move generation.
 
@@ -13,7 +13,7 @@ cmake ..
 make
 ```
 
-This will create several executables such as `Example` (a demo program) and `ChessAI` (the UCI engine) along with the various test programs.
+This will create several executables such as `Example` (a demo program) and `Aphelion` (the UCI engine) along with the various test programs.
 
 ## Running the Example
 
@@ -56,7 +56,7 @@ the API:
 - `generate_moves.cpp` – load a FEN string and list all legal moves.
 - `search_best_move.cpp` – use the engine to pick a move from a position.
 - `perft.cpp` – calculate move counts at a given depth.
-- `ChessAI` – command line interface implementing the UCI protocol.
+- `Aphelion` – command line interface implementing the UCI protocol.
 
 After building, run them from the `build` directory just like the main example:
 
@@ -65,7 +65,7 @@ After building, run them from the `build` directory just like the main example:
 ./GenerateMoves
 ./SearchBestMove
 ./Perft <FEN> <depth>
-./ChessAI
+./Aphelion
 ```
 
 
