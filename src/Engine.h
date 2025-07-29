@@ -3,6 +3,8 @@
 #include "MoveGenerator.h"
 #include "TranspositionTable.h"
 #include "Zobrist.h"
+#include "OpeningBook.h"
+#include "Tablebase.h"
 #include <string>
 #include <chrono>
 #include <atomic>
@@ -34,4 +36,6 @@ private:
     MoveGenerator generator;
     uint64_t nodes = 0;
     TranspositionTable tt;
+    OpeningBook book;
+    Tablebase tablebase;
 };

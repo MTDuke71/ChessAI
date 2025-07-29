@@ -97,6 +97,55 @@ bool Board::loadFEN(const std::string& fen) {
     return true;
 }
 
+std::string Board::getFEN() const {
+    std::string fen;
+    for (int rank = 7; rank >= 0; --rank) {
+        int empty = 0;
+        for (int file = 0; file < 8; ++file) {
+            int index = rank * 8 + file;
+            uint64_t mask = 1ULL << index;
+            char piece = 0;
+            if (whitePawns & mask) piece = 'P';
+            else if (whiteKnights & mask) piece = 'N';
+            else if (whiteBishops & mask) piece = 'B';
+            else if (whiteRooks & mask) piece = 'R';
+            else if (whiteQueens & mask) piece = 'Q';
+            else if (whiteKing & mask) piece = 'K';
+            else if (blackPawns & mask) piece = 'p';
+            else if (blackKnights & mask) piece = 'n';
+            else if (blackBishops & mask) piece = 'b';
+            else if (blackRooks & mask) piece = 'r';
+            else if (blackQueens & mask) piece = 'q';
+            else if (blackKing & mask) piece = 'k';
+            if (piece) {
+                if (empty) { fen += std::to_string(empty); empty = 0; }
+                fen += piece;
+            } else {
+                ++empty;
+            }
+        }
+        if (empty) fen += std::to_string(empty);
+        if (rank > 0) fen += '/';
+    }
+    fen += whiteToMove ? " w " : " b ";
+    std::string castling;
+    if (castleWK) castling += 'K';
+    if (castleWQ) castling += 'Q';
+    if (castleBK) castling += 'k';
+    if (castleBQ) castling += 'q';
+    if (castling.empty()) castling = "-";
+    fen += castling + " ";
+    if (enPassantSquare >= 0) {
+        int f = enPassantSquare % 8;
+        int r = enPassantSquare / 8;
+        fen += std::string{static_cast<char>('a'+f), static_cast<char>('1'+r)};
+    } else {
+        fen += "-";
+    }
+    fen += " 0 1";
+    return fen;
+}
+
 int algebraicToIndex(const std::string& sq) {
     if (sq.size() < 2) return -1;
     int file = sq[0] - 'a';

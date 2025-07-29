@@ -175,6 +175,10 @@ std::pair<int, std::string> Engine::minimax(
 }
 
 std::string Engine::searchBestMove(Board& board, int depth) {
+    if (auto tb = tablebase.lookupMove(board))
+        return *tb;
+    if (auto bm = book.getBookMove(board))
+        return *bm;
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
     std::vector<std::string> moves;
     for (const auto& mv : pseudoMoves) {
@@ -210,6 +214,11 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         endTime = std::chrono::steady_clock::time_point::max();
     else
         endTime = start + std::chrono::milliseconds(timeLimitMs);
+
+    if (auto tb = tablebase.lookupMove(board))
+        return *tb;
+    if (auto bm = book.getBookMove(board))
+        return *bm;
 
     std::string bestMove;
     std::string bestPV;
