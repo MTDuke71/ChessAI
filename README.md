@@ -68,4 +68,13 @@ After building, run them from the `build` directory just like the main example:
 ./Aphelion
 ```
 
+## Implemented Features
+
+- Board representation with FEN parsing/printing and comprehensive move generation.
+- Perft utilities and unit tests for move generation correctness.
+- Evaluation function using piece-square tables, mobility and development bonuses, with game-phase awareness.
+- Minimax search with alpha-beta pruning, principal variation search and basic time management.
+- Transposition tables with Zobrist hashing for reusing evaluated positions.
+- Command-line UCI engine along with example programs for move generation and search.
+
 

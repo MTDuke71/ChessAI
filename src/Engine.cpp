@@ -48,6 +48,11 @@ static int popcount64(uint64_t bb) {
 #endif
 }
 
+Engine::Engine() {
+    static bool init = false;
+    if (!init) { Zobrist::init(); init = true; }
+}
+
 Engine::GamePhase Engine::getGamePhase(const Board& b) const {
     uint64_t all = b.getWhitePieces() | b.getBlackPieces();
     int pieces = popcount64(all);
@@ -258,7 +263,18 @@ std::pair<int, std::string> Engine::minimax(
         const std::atomic<bool>& stop) {
     if (stop || std::chrono::steady_clock::now() >= end)
         return {evaluate(board), ""};
+    uint64_t key = Zobrist::hashBoard(board);
+    TTEntry entry;
+    if (tt.probe(key, entry) && entry.depth >= depth) {
+        if (entry.flag == 0)
+            return {entry.value, ""};
+        if (entry.flag == 1 && entry.value >= beta)
+            return {entry.value, ""};
+        if (entry.flag == -1 && entry.value <= alpha)
+            return {entry.value, ""};
+    }
     nodes++;
+    int alphaOrig = alpha;
     if (depth == 0) return {evaluate(board), ""};
     auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
     if (moves.empty()) return {evaluate(board), ""};
@@ -291,6 +307,10 @@ std::pair<int, std::string> Engine::minimax(
             if (beta <= alpha) break;
             first = false;
         }
+        TTEntry save{depth, bestEval, 0};
+        if (bestEval <= alphaOrig) save.flag = -1;
+        else if (bestEval >= beta) save.flag = 1;
+        tt.store(key, save);
         return {bestEval, bestPV};
     } else {
         int bestEval = 1000000;
@@ -321,6 +341,10 @@ std::pair<int, std::string> Engine::minimax(
             if (beta <= alpha) break;
             first = false;
         }
+        TTEntry save{depth, bestEval, 0};
+        if (bestEval <= alphaOrig) save.flag = -1;
+        else if (bestEval >= beta) save.flag = 1;
+        tt.store(key, save);
         return {bestEval, bestPV};
     }
 }

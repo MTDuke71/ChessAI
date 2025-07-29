@@ -1,13 +1,17 @@
 #pragma once
 #include "Board.h"
 #include "MoveGenerator.h"
+#include "TranspositionTable.h"
+#include "Zobrist.h"
 #include <string>
 #include <chrono>
 #include <atomic>
 #include <utility>
+#include <unordered_map>
 
 class Engine {
 public:
+    Engine();
     enum class GamePhase { Opening, Middlegame, Endgame };
 
     GamePhase getGamePhase(const Board& board) const;
@@ -26,4 +30,5 @@ public:
 private:
     MoveGenerator generator;
     uint64_t nodes = 0;
+    TranspositionTable tt;
 };
