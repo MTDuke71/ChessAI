@@ -1,29 +1,168 @@
 #include "Engine.h"
 #include <algorithm>
+#include <array>
 
-static int popcount(uint64_t x) {
+// Helper to remove and get index of least significant bit
+static int popLSBIndex(uint64_t &bb) {
 #if defined(_MSC_VER)
-    return static_cast<int>(__popcnt64(x));
+    unsigned long index;
+    _BitScanForward64(&index, bb);
+    bb &= bb - 1;
+    return static_cast<int>(index);
 #else
-    return __builtin_popcountll(x);
+    int index = __builtin_ctzll(bb);
+    bb &= bb - 1;
+    return index;
 #endif
 }
+
+// Mirror a square for black piece-square tables
+static int mirror(int sq) {
+    return ((7 - (sq / 8)) * 8) + (sq % 8);
+}
+
+namespace {
+// Simple piece-square tables for a slightly better evaluation
+const std::array<int, 64> pawnTable = {
+     0,  0,  0,  0,  0,  0,  0,  0,
+     5, 10, 10,-20,-20, 10, 10,  5,
+     5, -5,-10,  0,  0,-10, -5,  5,
+     0,  0,  0, 20, 20,  0,  0,  0,
+     5,  5, 10, 25, 25, 10,  5,  5,
+    10, 10, 20, 30, 30, 20, 10, 10,
+    50, 50, 50, 50, 50, 50, 50, 50,
+     0,  0,  0,  0,  0,  0,  0,  0
+};
+
+const std::array<int, 64> knightTable = {
+   -50,-40,-30,-30,-30,-30,-40,-50,
+   -40,-20,  0,  0,  0,  0,-20,-40,
+   -30,  0, 10, 15, 15, 10,  0,-30,
+   -30,  5, 15, 20, 20, 15,  5,-30,
+   -30,  0, 15, 20, 20, 15,  0,-30,
+   -30,  5, 10, 15, 15, 10,  5,-30,
+   -40,-20,  0,  5,  5,  0,-20,-40,
+   -50,-40,-30,-30,-30,-30,-40,-50
+};
+
+const std::array<int, 64> bishopTable = {
+   -20,-10,-10,-10,-10,-10,-10,-20,
+   -10,  0,  0,  0,  0,  0,  0,-10,
+   -10,  0,  5, 10, 10,  5,  0,-10,
+   -10,  5,  5, 10, 10,  5,  5,-10,
+   -10,  0, 10, 10, 10, 10,  0,-10,
+   -10, 10, 10, 10, 10, 10, 10,-10,
+   -10,  5,  0,  0,  0,  0,  5,-10,
+   -20,-10,-10,-10,-10,-10,-10,-20
+};
+
+const std::array<int, 64> rookTable = {
+     0,  0,  0,  5,  5,  0,  0,  0,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+     5, 10, 10, 10, 10, 10, 10,  5,
+     0,  0,  0,  0,  0,  0,  0,  0
+};
+
+const std::array<int, 64> queenTable = {
+   -20,-10,-10, -5, -5,-10,-10,-20,
+   -10,  0,  0,  0,  0,  0,  0,-10,
+   -10,  0,  5,  5,  5,  5,  0,-10,
+    -5,  0,  5,  5,  5,  5,  0, -5,
+     0,  0,  5,  5,  5,  5,  0, -5,
+   -10,  5,  5,  5,  5,  5,  0,-10,
+   -10,  0,  5,  0,  0,  0,  0,-10,
+   -20,-10,-10, -5, -5,-10,-10,-20
+};
+
+const std::array<int, 64> kingTable = {
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -20,-30,-30,-40,-40,-30,-30,-20,
+   -10,-20,-20,-20,-20,-20,-20,-10,
+    20, 20,  0,  0,  0,  0, 20, 20,
+    20, 30, 10,  0,  0, 10, 30, 20
+};
+}
+
 
 int Engine::evaluate(const Board& b) const {
     const int pawn = 100, knight = 320, bishop = 330, rook = 500, queen = 900, king = 20000;
     int score = 0;
-    score += popcount(b.getWhitePawns()) * pawn;
-    score -= popcount(b.getBlackPawns()) * pawn;
-    score += popcount(b.getWhiteKnights()) * knight;
-    score -= popcount(b.getBlackKnights()) * knight;
-    score += popcount(b.getWhiteBishops()) * bishop;
-    score -= popcount(b.getBlackBishops()) * bishop;
-    score += popcount(b.getWhiteRooks()) * rook;
-    score -= popcount(b.getBlackRooks()) * rook;
-    score += popcount(b.getWhiteQueens()) * queen;
-    score -= popcount(b.getBlackQueens()) * queen;
-    score += popcount(b.getWhiteKing()) * king;
-    score -= popcount(b.getBlackKing()) * king;
+
+    uint64_t pieces;
+
+    pieces = b.getWhitePawns();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score += pawn + pawnTable[sq];
+    }
+    pieces = b.getBlackPawns();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score -= pawn + pawnTable[mirror(sq)];
+    }
+
+    pieces = b.getWhiteKnights();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score += knight + knightTable[sq];
+    }
+    pieces = b.getBlackKnights();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score -= knight + knightTable[mirror(sq)];
+    }
+
+    pieces = b.getWhiteBishops();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score += bishop + bishopTable[sq];
+    }
+    pieces = b.getBlackBishops();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score -= bishop + bishopTable[mirror(sq)];
+    }
+
+    pieces = b.getWhiteRooks();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score += rook + rookTable[sq];
+    }
+    pieces = b.getBlackRooks();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score -= rook + rookTable[mirror(sq)];
+    }
+
+    pieces = b.getWhiteQueens();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score += queen + queenTable[sq];
+    }
+    pieces = b.getBlackQueens();
+    while (pieces) {
+        int sq = popLSBIndex(pieces);
+        score -= queen + queenTable[mirror(sq)];
+    }
+
+    pieces = b.getWhiteKing();
+    if (pieces) {
+        int sq = __builtin_ctzll(pieces);
+        score += king + kingTable[sq];
+    }
+    pieces = b.getBlackKing();
+    if (pieces) {
+        int sq = __builtin_ctzll(pieces);
+        score -= king + kingTable[mirror(sq)];
+    }
+
     return score;
 }
 
