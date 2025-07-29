@@ -296,12 +296,15 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
 
     std::string bestMove;
     std::string bestPV;
+    std::string completedMove; // best move from the last fully searched depth
     int bestScore = 0;
+    bool lastDepthComplete = true;
     for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
         nodes = 0;
         auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
+        lastDepthComplete = true;
         for (const auto& m : moves) {
             Board copy = board;
             copy.makeMove(m);
@@ -315,7 +318,10 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
             } else {
                 if (score < bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
             }
-            if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
+            if (stopFlag || std::chrono::steady_clock::now() >= endTime) {
+                lastDepthComplete = false;
+                break;
+            }
         }
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                           std::chrono::steady_clock::now() - start)
@@ -335,7 +341,12 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         if (!pvUCI.empty())
             std::cout << " pv " << pvUCI;
         std::cout << '\n';
+        if (lastDepthComplete) {
+            completedMove = bestMove;
+        }
         if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
     }
+    if (!completedMove.empty())
+        return completedMove;
     return bestMove;
 }
