@@ -61,6 +61,7 @@ public:
     void clearBoard();  // Utility function to reset the board state
     void printBoard() const;
     bool loadFEN(const std::string& fen);
+    bool isMoveLegal(const std::string& move) const;
     void makeMove(const std::string& move);
 };
 
