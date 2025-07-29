@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(ChessAI)
 
+find_package(Threads REQUIRED)
+
 include(CTest)
 enable_testing()
 
@@ -66,6 +68,8 @@ target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(UCI PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+target_link_libraries(UCI PRIVATE Threads::Threads)
 
 # Register tests with CTest
 add_test(NAME BoardTest COMMAND BoardTest)
