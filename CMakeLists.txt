@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(ChessAI)
+project(Aphelion)
 
 find_package(Threads REQUIRED)
 
@@ -57,7 +57,7 @@ add_executable(SearchBestMove examples/search_best_move.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(Perft examples/perft.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp src/Perft.cpp ${ENGINE_SOURCES})
-add_executable(ChessAI
+add_executable(Aphelion
     src/UCI.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 
@@ -74,9 +74,9 @@ target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_include_directories(ChessAI PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(Aphelion PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
-target_link_libraries(ChessAI PRIVATE Threads::Threads)
+target_link_libraries(Aphelion PRIVATE Threads::Threads)
 
 # Register tests with CTest
 add_test(NAME BoardTest COMMAND BoardTest)
