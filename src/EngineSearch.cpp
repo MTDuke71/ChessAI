@@ -37,6 +37,33 @@ static bool isCaptureMove(const Board& board, const std::string& move) {
     return false;
 }
 
+static int pieceValueAt(const Board& board, int index) {
+    uint64_t mask = 1ULL << index;
+    if (board.getWhitePawns() & mask || board.getBlackPawns() & mask) return 100;
+    if (board.getWhiteKnights() & mask || board.getBlackKnights() & mask) return 320;
+    if (board.getWhiteBishops() & mask || board.getBlackBishops() & mask) return 330;
+    if (board.getWhiteRooks() & mask || board.getBlackRooks() & mask) return 500;
+    if (board.getWhiteQueens() & mask || board.getBlackQueens() & mask) return 900;
+    if (board.getWhiteKing() & mask || board.getBlackKing() & mask) return 20000;
+    return 0;
+}
+
+static int moveScore(const Board& board, const std::string& move) {
+    auto dash = move.find('-');
+    if (dash == std::string::npos) return 0;
+    int from = algebraicToIndex(move.substr(0,2));
+    int to = algebraicToIndex(move.substr(dash+1,2));
+    if (from < 0 || to < 0) return 0;
+    int captured = pieceValueAt(board, to);
+    if (!captured && board.getEnPassantSquare() == to)
+        captured = 100; // en passant captures a pawn
+    if (captured) {
+        int attacker = pieceValueAt(board, from);
+        return captured * 10 - attacker; // MVV/LVA style ordering
+    }
+    return 0;
+}
+
 Engine::Engine() {
     static bool init = false;
     if (!init) { Zobrist::init(); init = true; }
@@ -103,6 +130,9 @@ std::pair<int, std::string> Engine::minimax(
         if (board.isMoveLegal(mv))
             moves.push_back(mv);
     }
+    std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+        return moveScore(board, a) > moveScore(board, b);
+    });
     if (moves.empty()) return {evaluate(board), ""};
     if (maximizing) {
         int bestEval = -1000000;
@@ -186,6 +216,9 @@ std::string Engine::searchBestMove(Board& board, int depth) {
         if (board.isMoveLegal(mv))
             moves.push_back(mv);
     }
+    std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+        return moveScore(board, a) > moveScore(board, b);
+    });
     std::string bestMove;
     int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
     std::atomic<bool> dummyStop(false);
@@ -244,6 +277,9 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
             if (board.isMoveLegal(mv))
                 moves.push_back(mv);
         }
+        std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+            return moveScore(board, a) > moveScore(board, b);
+        });
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
         lastDepthComplete = true;
