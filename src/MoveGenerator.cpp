@@ -507,23 +507,35 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board& board, bo
     if (isWhite) {
         if (board.canCastleWK() && (from == 4) &&
             !(allPieces & ((1ULL<<5) | (1ULL<<6))) &&
-            (board.getWhiteRooks() & (1ULL<<7))) {
+            (board.getWhiteRooks() & (1ULL<<7)) &&
+            !isKingInCheck(board, true) &&
+            !isSquareAttacked(board, 5, false) &&
+            !isSquareAttacked(board, 6, false)) {
             moves.push_back("e1-g1 (Castle Kingside)");
         }
         if (board.canCastleWQ() && (from == 4) &&
             !(allPieces & ((1ULL<<1)|(1ULL<<2)|(1ULL<<3))) &&
-            (board.getWhiteRooks() & (1ULL<<0))) {
+            (board.getWhiteRooks() & (1ULL<<0)) &&
+            !isKingInCheck(board, true) &&
+            !isSquareAttacked(board, 3, false) &&
+            !isSquareAttacked(board, 2, false)) {
             moves.push_back("e1-c1 (Castle Queenside)");
         }
     } else {
         if (board.canCastleBK() && (from == 60) &&
             !(allPieces & ((1ULL<<61) | (1ULL<<62))) &&
-            (board.getBlackRooks() & (1ULL<<63))) {
+            (board.getBlackRooks() & (1ULL<<63)) &&
+            !isKingInCheck(board, false) &&
+            !isSquareAttacked(board, 61, true) &&
+            !isSquareAttacked(board, 62, true)) {
             moves.push_back("e8-g8 (Castle Kingside)");
         }
         if (board.canCastleBQ() && (from == 60) &&
             !(allPieces & ((1ULL<<57)|(1ULL<<58)|(1ULL<<59))) &&
-            (board.getBlackRooks() & (1ULL<<56))) {
+            (board.getBlackRooks() & (1ULL<<56)) &&
+            !isKingInCheck(board, false) &&
+            !isSquareAttacked(board, 59, true) &&
+            !isSquareAttacked(board, 58, true)) {
             moves.push_back("e8-c8 (Castle Queenside)");
         }
     }
@@ -543,6 +555,70 @@ std::vector<std::string> MoveGenerator::generateAllMoves(const Board& board, boo
     append(generateQueenMoves(board, isWhite));
     append(generateKingMoves(board, isWhite));
     return all;
+}
+
+bool MoveGenerator::isSquareAttacked(const Board& board, int square, bool byWhite) const {
+    uint64_t occ = board.getWhitePieces() | board.getBlackPieces();
+    uint64_t mask = 1ULL << square;
+
+    if (byWhite) {
+        uint64_t pawns = board.getWhitePawns();
+        if (((pawns << 7) & 0x7F7F7F7F7F7F7F7FULL) & mask) return true;
+        if (((pawns << 9) & 0xFEFEFEFEFEFEFEFEULL) & mask) return true;
+    } else {
+        uint64_t pawns = board.getBlackPawns();
+        if (((pawns >> 7) & 0xFEFEFEFEFEFEFEFEULL) & mask) return true;
+        if (((pawns >> 9) & 0x7F7F7F7F7F7F7F7FULL) & mask) return true;
+    }
+
+    uint64_t knights = byWhite ? board.getWhiteKnights() : board.getBlackKnights();
+    const int kOffsets[8][2] = {{1,2},{2,1},{-1,2},{-2,1},{1,-2},{2,-1},{-1,-2},{-2,-1}};
+    while (knights) {
+        int from = popLSBIndex(knights);
+        int fx = from % 8, fy = from / 8;
+        for (auto &o : kOffsets) {
+            int tx = fx + o[0], ty = fy + o[1];
+            if (tx < 0 || tx > 7 || ty < 0 || ty > 7) continue;
+            if (ty * 8 + tx == square) return true;
+        }
+    }
+
+    uint64_t bishops = (byWhite ? board.getWhiteBishops() : board.getBlackBishops()) |
+                       (byWhite ? board.getWhiteQueens() : board.getBlackQueens());
+    while (bishops) {
+        int from = popLSBIndex(bishops);
+        if (Magic::getBishopAttacks(from, occ) & mask) return true;
+    }
+
+    uint64_t rooks = (byWhite ? board.getWhiteRooks() : board.getBlackRooks()) |
+                     (byWhite ? board.getWhiteQueens() : board.getBlackQueens());
+    while (rooks) {
+        int from = popLSBIndex(rooks);
+        if (Magic::getRookAttacks(from, occ) & mask) return true;
+    }
+
+    uint64_t king = byWhite ? board.getWhiteKing() : board.getBlackKing();
+    if (king) {
+        int from = lsbIndex(king);
+        int fx = from % 8, fy = from / 8;
+        for (int dy = -1; dy <= 1; ++dy) {
+            for (int dx = -1; dx <= 1; ++dx) {
+                if (dx == 0 && dy == 0) continue;
+                int tx = fx + dx, ty = fy + dy;
+                if (tx < 0 || tx > 7 || ty < 0 || ty > 7) continue;
+                if (ty * 8 + tx == square) return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool MoveGenerator::isKingInCheck(const Board& board, bool white) const {
+    uint64_t king = white ? board.getWhiteKing() : board.getBlackKing();
+    if (!king) return false;
+    int sq = lsbIndex(king);
+    return isSquareAttacked(board, sq, !white);
 }
 
 

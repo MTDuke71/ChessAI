@@ -37,9 +37,54 @@ void testCastling() {
     assert(bK && bQ);
 }
 
+void testNoCastlingWhileInCheck() {
+    Board b;
+    b.clearBoard();
+    b.setWhiteKing(1ULL << 4);   // e1
+    b.setWhiteRooks((1ULL<<0) | (1ULL<<7));
+    b.setBlackRooks(1ULL << 12); // e2 giving check
+    b.setBlackKing(1ULL << 60);
+    b.setCastleWK(true);
+    b.setCastleWQ(true);
+    MoveGenerator g;
+    auto moves = g.generateKingMoves(b, true);
+    for (auto &m : moves) {
+        assert(m.find("Castle") == std::string::npos);
+    }
+}
+
+void testNoCastlingThroughCheck() {
+    Board b;
+    b.clearBoard();
+    b.setWhiteKing(1ULL << 4);
+    b.setWhiteRooks((1ULL<<0) | (1ULL<<7));
+    b.setBlackRooks(1ULL << 21); // f3 attacking f1
+    b.setBlackKing(1ULL << 60);
+    b.setCastleWK(true);
+    MoveGenerator g;
+    auto moves = g.generateKingMoves(b, true);
+    for (auto &m : moves) {
+        assert(m.find("Castle Kingside") == std::string::npos);
+    }
+}
+
+void testRookMoveDisablesCastling() {
+    Board b;
+    b.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
+    b.makeMove("h1-h2");
+    MoveGenerator g;
+    auto moves = g.generateKingMoves(b, true);
+    for (auto &m : moves) {
+        assert(m.find("Castle Kingside") == std::string::npos);
+    }
+}
+
 int main() {
     testBasicKingMoves();
     testCastling();
+    testNoCastlingWhileInCheck();
+    testNoCastlingThroughCheck();
+    testRookMoveDisablesCastling();
     std::cout << "\nAll king move tests passed!" << std::endl;
     return 0;
 }

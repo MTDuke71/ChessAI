@@ -128,6 +128,16 @@ void Board::makeMove(const std::string& move) {
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
 
+    // Update castling rights when capturing rooks
+    if (toMask & whiteRooks) {
+        if (to == 0) castleWQ = false;
+        if (to == 7) castleWK = false;
+    }
+    if (toMask & blackRooks) {
+        if (to == 56) castleBQ = false;
+        if (to == 63) castleBK = false;
+    }
+
     // Remove captured piece first
     uint64_t mask = ~toMask;
     whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
@@ -136,11 +146,47 @@ void Board::makeMove(const std::string& move) {
     auto movePiece = [&](uint64_t &bb) {
         if (bb & fromMask) { bb &= ~fromMask; bb |= toMask; return true; } return false; };
 
+    bool movedWhiteKing = (whiteKing & fromMask);
+    bool movedBlackKing = (blackKing & fromMask);
+    bool movedWhiteRook = (whiteRooks & fromMask);
+    bool movedBlackRook = (blackRooks & fromMask);
+
     if (!(movePiece(whitePawns) || movePiece(whiteKnights) || movePiece(whiteBishops) ||
           movePiece(whiteRooks) || movePiece(whiteQueens) || movePiece(whiteKing) ||
           movePiece(blackPawns) || movePiece(blackKnights) || movePiece(blackBishops) ||
           movePiece(blackRooks) || movePiece(blackQueens) || movePiece(blackKing))) {
         return;
+    }
+
+    // Handle castling rook moves and update rights
+    if (movedWhiteKing) {
+        castleWK = castleWQ = false;
+        if (from == 4 && to == 6) {
+            whiteRooks &= ~(1ULL<<7);
+            whiteRooks |= (1ULL<<5);
+        } else if (from == 4 && to == 2) {
+            whiteRooks &= ~(1ULL<<0);
+            whiteRooks |= (1ULL<<3);
+        }
+    }
+    if (movedBlackKing) {
+        castleBK = castleBQ = false;
+        if (from == 60 && to == 62) {
+            blackRooks &= ~(1ULL<<63);
+            blackRooks |= (1ULL<<61);
+        } else if (from == 60 && to == 58) {
+            blackRooks &= ~(1ULL<<56);
+            blackRooks |= (1ULL<<59);
+        }
+    }
+
+    if (movedWhiteRook) {
+        if (from == 0) castleWQ = false;
+        if (from == 7) castleWK = false;
+    }
+    if (movedBlackRook) {
+        if (from == 56) castleBQ = false;
+        if (from == 63) castleBK = false;
     }
 
     whiteToMove = !whiteToMove;
