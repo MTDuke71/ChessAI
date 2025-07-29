@@ -124,7 +124,7 @@ namespace Magic {
         std::vector<int> squares;
         U64 mask = bishop ? maskBishop(sq) : maskRook(sq);
         for (U64 m = mask; m; m &= m - 1)
-            squares.push_back(popLSBIndex(m));
+            squares.push_back(__builtin_ctzll(m));
 
         int size = 1 << bits;
         std::vector<U64> occupancies(size), attacks(size);
@@ -177,8 +177,8 @@ namespace Magic {
             int rBits = popcount(rookMasks[sq]);
             int bBits = popcount(bishopMasks[sq]);
             std::vector<int> rSquares, bSquares;
-            for (U64 m = rookMasks[sq]; m; m &= m - 1) rSquares.push_back(popLSBIndex(m));
-            for (U64 m = bishopMasks[sq]; m; m &= m - 1) bSquares.push_back(popLSBIndex(m));
+            for (U64 m = rookMasks[sq]; m; m &= m - 1) rSquares.push_back(__builtin_ctzll(m));
+            for (U64 m = bishopMasks[sq]; m; m &= m - 1) bSquares.push_back(__builtin_ctzll(m));
 
             for (int i = 0; i < (1 << rBits); ++i) {
                 U64 occ = setOccupancy(i, rBits, rSquares);
@@ -234,7 +234,7 @@ std::string squareToNotation(int square) {
      std::cout << "==========================\n";
  }
 
- void debugEnPassant(const Board& board, bool isWhite) {
+void debugEnPassant(const Board& board, bool isWhite) {
      std::cout << "=== En Passant Mask Debug Info ===\n";
      std::cout << "En Passant Square Index: " << board.getEnPassantSquare() << "\n";
      std::cout << "En Passant Square Bitboard: " << std::hex << (1ULL << board.getEnPassantSquare()) << "\n";
@@ -262,7 +262,11 @@ std::string squareToNotation(int square) {
     }
 
      std::cout << "==================================\n";
- }
+}
+
+MoveGenerator::MoveGenerator() {
+    Magic::init();
+}
 
 std::vector<std::string> MoveGenerator::generatePawnMoves(const Board& board, bool isWhite) {
     std::vector<std::string> moves;
@@ -432,7 +436,7 @@ std::vector<std::string> MoveGenerator::generateRookMoves(const Board& board, bo
     uint64_t occupancy = board.getWhitePieces() | board.getBlackPieces();
     while (rooks) {
         int from = popLSBIndex(rooks);
-        uint64_t attacks = Magic::rookAttacksOnTheFly(from, occupancy) & ~ownPieces;
+        uint64_t attacks = Magic::getRookAttacks(from, occupancy) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
             int to = __builtin_ctzll(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
@@ -448,7 +452,7 @@ std::vector<std::string> MoveGenerator::generateBishopMoves(const Board& board, 
     uint64_t occupancy = board.getWhitePieces() | board.getBlackPieces();
     while (bishops) {
         int from = popLSBIndex(bishops);
-        uint64_t attacks = Magic::bishopAttacksOnTheFly(from, occupancy) & ~ownPieces;
+        uint64_t attacks = Magic::getBishopAttacks(from, occupancy) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
             int to = __builtin_ctzll(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
@@ -464,7 +468,7 @@ std::vector<std::string> MoveGenerator::generateQueenMoves(const Board& board, b
     uint64_t occupancy = board.getWhitePieces() | board.getBlackPieces();
     while (queens) {
         int from = popLSBIndex(queens);
-        uint64_t attacks = (Magic::rookAttacksOnTheFly(from, occupancy) | Magic::bishopAttacksOnTheFly(from, occupancy)) & ~ownPieces;
+        uint64_t attacks = (Magic::getRookAttacks(from, occupancy) | Magic::getBishopAttacks(from, occupancy)) & ~ownPieces;
         for (uint64_t m = attacks; m; m &= m - 1) {
             int to = __builtin_ctzll(m);
             moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
