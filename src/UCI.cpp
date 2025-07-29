@@ -31,8 +31,8 @@ int main() {
 
     while (std::getline(std::cin, line)) {
         if (line == "uci") {
-            std::cout << "id name ChessAI" << '\n';
-            std::cout << "id author Unknown" << '\n';
+            std::cout << "id name ChessAI 0.1" << '\n';
+            std::cout << "id author Matt LaDuke and ChatGPT" << '\n';
             std::cout << "uciok" << '\n';
         } else if (line == "isready") {
             std::cout << "readyok" << '\n';
