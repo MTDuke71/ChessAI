@@ -16,6 +16,18 @@ static int popLSBIndex(uint64_t &bb) {
 #endif
 }
 
+// Cross-platform helper to get index of least significant bit without
+// modifying the input bitboard
+static int lsbIndex(uint64_t bb) {
+#if defined(_MSC_VER)
+    unsigned long index;
+    _BitScanForward64(&index, bb);
+    return static_cast<int>(index);
+#else
+    return __builtin_ctzll(bb);
+#endif
+}
+
 // Mirror a square for black piece-square tables
 static int mirror(int sq) {
     return ((7 - (sq / 8)) * 8) + (sq % 8);
@@ -154,12 +166,12 @@ int Engine::evaluate(const Board& b) const {
 
     pieces = b.getWhiteKing();
     if (pieces) {
-        int sq = __builtin_ctzll(pieces);
+        int sq = lsbIndex(pieces);
         score += king + kingTable[sq];
     }
     pieces = b.getBlackKing();
     if (pieces) {
-        int sq = __builtin_ctzll(pieces);
+        int sq = lsbIndex(pieces);
         score -= king + kingTable[mirror(sq)];
     }
 
