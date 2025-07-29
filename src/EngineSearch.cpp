@@ -1,0 +1,200 @@
+#include "Engine.h"
+#include "BitUtils.h"
+#include <algorithm>
+#include <chrono>
+#include <atomic>
+#include <iostream>
+#include <sstream>
+
+static std::string toUCIMove(const std::string& move) {
+    std::string uci = move;
+    auto dash = uci.find('-');
+    if (dash != std::string::npos) uci.erase(dash, 1);
+    return uci;
+}
+
+Engine::Engine() {
+    static bool init = false;
+    if (!init) { Zobrist::init(); init = true; }
+}
+
+std::pair<int, std::string> Engine::minimax(
+        Board& board, int depth, int alpha, int beta, bool maximizing,
+        const std::chrono::steady_clock::time_point& end,
+        const std::atomic<bool>& stop) {
+    if (stop || std::chrono::steady_clock::now() >= end)
+        return {evaluate(board), ""};
+    uint64_t key = Zobrist::hashBoard(board);
+    TTEntry entry;
+    if (tt.probe(key, entry) && entry.depth >= depth) {
+        if (entry.flag == 0)
+            return {entry.value, ""};
+        if (entry.flag == 1 && entry.value >= beta)
+            return {entry.value, ""};
+        if (entry.flag == -1 && entry.value <= alpha)
+            return {entry.value, ""};
+    }
+    nodes++;
+    int alphaOrig = alpha;
+    if (depth == 0) return {evaluate(board), ""};
+    auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
+    if (moves.empty()) return {evaluate(board), ""};
+    if (maximizing) {
+        int bestEval = -1000000;
+        std::string bestPV;
+        bool first = true;
+        for (const auto& m : moves) {
+            Board copy = board;
+            copy.makeMove(m);
+            std::pair<int, std::string> child;
+            if (first) {
+                child = minimax(copy, depth - 1, alpha, beta, false, end, stop);
+            } else {
+                child = minimax(copy, depth - 1, alpha, alpha + 1,
+                                false, end, stop);
+                int eval = child.first;
+                if (eval > alpha && eval < beta) {
+                    child = minimax(copy, depth - 1, eval, beta,
+                                    false, end, stop);
+                }
+            }
+            int eval = child.first;
+            if (eval > bestEval) {
+                bestEval = eval;
+                bestPV = m;
+                if (!child.second.empty()) bestPV += " " + child.second;
+            }
+            alpha = std::max(alpha, eval);
+            if (beta <= alpha) break;
+            first = false;
+        }
+        TTEntry save{depth, bestEval, 0};
+        if (bestEval <= alphaOrig) save.flag = -1;
+        else if (bestEval >= beta) save.flag = 1;
+        tt.store(key, save);
+        return {bestEval, bestPV};
+    } else {
+        int bestEval = 1000000;
+        std::string bestPV;
+        bool first = true;
+        for (const auto& m : moves) {
+            Board copy = board;
+            copy.makeMove(m);
+            std::pair<int, std::string> child;
+            if (first) {
+                child = minimax(copy, depth - 1, alpha, beta, true, end, stop);
+            } else {
+                child = minimax(copy, depth - 1, beta - 1, beta,
+                                true, end, stop);
+                int eval = child.first;
+                if (eval < beta && eval > alpha) {
+                    child = minimax(copy, depth - 1, alpha, eval,
+                                    true, end, stop);
+                }
+            }
+            int eval = child.first;
+            if (eval < bestEval) {
+                bestEval = eval;
+                bestPV = m;
+                if (!child.second.empty()) bestPV += " " + child.second;
+            }
+            beta = std::min(beta, eval);
+            if (beta <= alpha) break;
+            first = false;
+        }
+        TTEntry save{depth, bestEval, 0};
+        if (bestEval <= alphaOrig) save.flag = -1;
+        else if (bestEval >= beta) save.flag = 1;
+        tt.store(key, save);
+        return {bestEval, bestPV};
+    }
+}
+
+std::string Engine::searchBestMove(Board& board, int depth) {
+    auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
+    std::string bestMove;
+    int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
+    std::atomic<bool> dummyStop(false);
+    for (const auto& m : moves) {
+        Board copy = board;
+        copy.makeMove(m);
+        auto res = minimax(copy, depth - 1, -1000000, 1000000,
+                           !board.isWhiteToMove(),
+                           std::chrono::steady_clock::time_point::max(),
+                           dummyStop);
+        int score = res.first;
+        if (board.isWhiteToMove()) {
+            if (score > bestScore) { bestScore = score; bestMove = m; }
+        } else {
+            if (score < bestScore) { bestScore = score; bestMove = m; }
+        }
+    }
+    return bestMove;
+}
+
+std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
+                                        int timeLimitMs,
+                                        std::atomic<bool>& stopFlag) {
+    auto start = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point endTime;
+    if (timeLimitMs <= 0)
+        endTime = std::chrono::steady_clock::time_point::max();
+    else
+        endTime = start + std::chrono::milliseconds(timeLimitMs);
+
+    std::string bestMove;
+    std::string bestPV;
+    std::string completedMove; // best move from the last fully searched depth
+    int bestScore = 0;
+    bool lastDepthComplete = true;
+    for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
+        nodes = 0;
+        auto moves = generator.generateAllMoves(board, board.isWhiteToMove());
+        bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
+        bestPV.clear();
+        lastDepthComplete = true;
+        for (const auto& m : moves) {
+            Board copy = board;
+            copy.makeMove(m);
+            auto res = minimax(copy, depth - 1, -1000000, 1000000,
+                               !board.isWhiteToMove(), endTime, stopFlag);
+            int score = res.first;
+            std::string pvCandidate = m;
+            if (!res.second.empty()) pvCandidate += " " + res.second;
+            if (board.isWhiteToMove()) {
+                if (score > bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
+            } else {
+                if (score < bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
+            }
+            if (stopFlag || std::chrono::steady_clock::now() >= endTime) {
+                lastDepthComplete = false;
+                break;
+            }
+        }
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+                          std::chrono::steady_clock::now() - start)
+                          .count();
+        std::string pvUCI;
+        {
+            std::istringstream iss(bestPV);
+            std::string token;
+            while (iss >> token) {
+                if (!pvUCI.empty()) pvUCI += " ";
+                pvUCI += toUCIMove(token);
+            }
+        }
+        std::cout << "info depth " << depth << " score cp "
+                  << (board.isWhiteToMove() ? bestScore : -bestScore)
+                  << " nodes " << nodes << " time " << elapsed;
+        if (!pvUCI.empty())
+            std::cout << " pv " << pvUCI;
+        std::cout << '\n';
+        if (lastDepthComplete) {
+            completedMove = bestMove;
+        }
+        if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
+    }
+    if (!completedMove.empty())
+        return completedMove;
+    return bestMove;
+}
