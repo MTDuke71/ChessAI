@@ -204,7 +204,13 @@ std::pair<int, std::string> Engine::minimax(
     std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
         return moveScore(board, a, generator) > moveScore(board, b, generator);
     });
-    if (moves.empty()) return {evaluate(board), ""};
+    if (moves.empty()) {
+        if (generator.isKingInCheck(board, board.isWhiteToMove())) {
+            int mateScore = board.isWhiteToMove() ? -1000000 : 1000000;
+            return {mateScore, ""};
+        }
+        return {0, ""}; // stalemate
+    }
     if (maximizing) {
         int bestEval = -1000000;
         std::string bestPV;
