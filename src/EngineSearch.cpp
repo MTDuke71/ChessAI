@@ -170,6 +170,31 @@ std::pair<int, std::string> Engine::minimax(
     int alphaOrig = alpha;
     if (depth == 0)
         return {quiescence(board, alpha, beta, maximizing, end, stop), ""};
+
+    const int NULL_REDUCTION = 2;
+    uint64_t otherPieces =
+            ((board.getWhitePieces() | board.getBlackPieces()) &
+             ~(board.getWhiteKing() | board.getBlackKing()));
+    if (depth >= 3 && otherPieces &&
+        !generator.isKingInCheck(board, board.isWhiteToMove())) {
+        Board nullBoard = board;
+        nullBoard.setWhiteToMove(!board.isWhiteToMove());
+        nullBoard.setEnPassantSquare(-1);
+        int rDepth = depth - 1 - NULL_REDUCTION;
+        if (rDepth < 0) rDepth = 0;
+        std::pair<int, std::string> nullRes;
+        if (maximizing) {
+            nullRes = minimax(nullBoard, rDepth, beta - 1, beta,
+                              false, end, stop);
+            if (nullRes.first >= beta)
+                return {nullRes.first, ""};
+        } else {
+            nullRes = minimax(nullBoard, rDepth, alpha, alpha + 1,
+                              true, end, stop);
+            if (nullRes.first <= alpha)
+                return {nullRes.first, ""};
+        }
+    }
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
     std::vector<std::string> moves;
     for (const auto& mv : pseudoMoves) {
