@@ -110,6 +110,8 @@ std::pair<int, std::string> Engine::minimax(
         const std::atomic<bool>& stop) {
     if (stop || std::chrono::steady_clock::now() >= end)
         return {evaluate(board), ""};
+    if (board.isFiftyMoveDraw() || board.isThreefoldRepetition())
+        return {0, ""};
     uint64_t key = Zobrist::hashBoard(board);
     TTEntry entry;
     if (tt.probe(key, entry) && entry.depth >= depth) {

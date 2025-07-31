@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "MoveGenerator.h"
+#include "Zobrist.h"
 #include <iostream>
 #include <sstream>
 #include <cctype>
@@ -14,6 +15,9 @@ void Board::clearBoard() {
     enPassantSquare = -1;
     whiteToMove = true;
     castleWK = castleWQ = castleBK = castleBQ = false;
+    halfmoveClock = 0;
+    fullmoveNumber = 1;
+    repetitionTable.clear();
 }
 
 void Board::printBoard() const {
@@ -50,9 +54,11 @@ bool Board::loadFEN(const std::string& fen) {
     clearBoard();
     std::stringstream ss(fen);
     std::string boardPart, active, castling, ep;
+    int half = 0, full = 1;
 
     if (!(ss >> boardPart >> active >> castling >> ep))
         return false;
+    ss >> half >> full;
 
     int rank = 7, file = 0;
     for (char c : boardPart) {
@@ -93,6 +99,11 @@ bool Board::loadFEN(const std::string& fen) {
     } else {
         enPassantSquare = -1;
     }
+
+    halfmoveClock = half;
+    fullmoveNumber = full;
+    repetitionTable.clear();
+    repetitionTable[Zobrist::hashBoard(*this)] = 1;
 
     return true;
 }
@@ -142,7 +153,7 @@ std::string Board::getFEN() const {
     } else {
         fen += "-";
     }
-    fen += " 0 1";
+    fen += " " + std::to_string(halfmoveClock) + " " + std::to_string(fullmoveNumber);
     return fen;
 }
 
@@ -191,6 +202,8 @@ void Board::applyMove(const std::string& move) {
     if (from < 0 || to < 0) return;
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
+    bool capture = ((getWhitePieces() | getBlackPieces()) & toMask);
+    bool pawnMove = (whitePawns & fromMask) || (blackPawns & fromMask);
 
     if (toMask & whiteRooks) {
         if (to == 0) castleWQ = false;
@@ -250,4 +263,24 @@ void Board::applyMove(const std::string& move) {
     }
 
     whiteToMove = !whiteToMove;
+    if (pawnMove || capture)
+        halfmoveClock = 0;
+    else
+        ++halfmoveClock;
+    if (!whiteToMove)
+        ++fullmoveNumber;
+    uint64_t key = Zobrist::hashBoard(*this);
+    repetitionTable[key]++;
+}
+
+bool Board::isThreefoldRepetition() const {
+    uint64_t key = Zobrist::hashBoard(*this);
+    auto it = repetitionTable.find(key);
+    return it != repetitionTable.end() && it->second >= 3;
+}
+
+int Board::repetitionCount() const {
+    uint64_t key = Zobrist::hashBoard(*this);
+    auto it = repetitionTable.find(key);
+    return it != repetitionTable.end() ? it->second : 0;
 }
