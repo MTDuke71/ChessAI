@@ -26,6 +26,7 @@ int main() {
     std::atomic<bool> stopFlag(false);
     std::thread searchThread;
     std::string bestMove;
+    bool pondering = false;
 
     std::cout.setf(std::ios::unitbuf);
 
@@ -36,6 +37,13 @@ int main() {
             std::cout << "uciok" << '\n';
         } else if (line == "isready") {
             std::cout << "readyok" << '\n';
+        } else if (line == "ucinewgame") {
+            if (searchThread.joinable()) {
+                stopFlag = true;
+                searchThread.join();
+            }
+            board = Board();
+            engine.clearTranspositionTable();
         } else if (line.rfind("position", 0) == 0) {
             std::istringstream iss(line);
             std::string token;
@@ -62,6 +70,7 @@ int main() {
             int depth = 0;
             int wtime = 0, btime = 0, winc = 0, binc = 0;
             bool infinite = false;
+            bool ponder = false;
             std::istringstream iss(line);
             std::string token;
             iss >> token; // go
@@ -72,6 +81,7 @@ int main() {
                 else if (token == "winc" && iss >> winc) {}
                 else if (token == "binc" && iss >> binc) {}
                 else if (token == "infinite") infinite = true;
+                else if (token == "ponder") ponder = true;
             }
 
             int timeLimit = 0;
@@ -82,21 +92,34 @@ int main() {
             }
 
             stopFlag = false;
+            pondering = ponder;
             searchThread = std::thread([&]() {
                 bestMove = engine.searchBestMoveTimed(board, depth, timeLimit, stopFlag);
             });
 
-            if (!infinite) {
+            if (!infinite && !ponder) {
                 searchThread.join();
                 std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
                 std::cout << "bestmove " << uci << '\n';
+            }
+        } else if (line == "ponderhit") {
+            if (searchThread.joinable() && pondering) {
+                stopFlag = true;
+                searchThread.join();
+                std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
+                std::cout << "bestmove " << uci << '\n';
+                pondering = false;
             }
         } else if (line == "stop") {
             if (searchThread.joinable()) {
                 stopFlag = true;
                 searchThread.join();
-                std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
-                std::cout << "bestmove " << uci << '\n';
+                if (!pondering) {
+                    std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
+                    std::cout << "bestmove " << uci << '\n';
+                } else {
+                    pondering = false;
+                }
             }
         } else if (line == "quit") {
             if (searchThread.joinable()) {
