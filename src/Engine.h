@@ -22,7 +22,7 @@ public:
     std::pair<int, std::string>
     minimax(Board& board, int depth, int alpha, int beta, bool maximizing,
             const std::chrono::steady_clock::time_point& end,
-            const std::atomic<bool>& stop);
+            const std::atomic<bool>& stop, int ply = 0);
 
     std::string searchBestMove(Board& board, int depth);
 
