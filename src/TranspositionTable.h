@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <mutex>
+#include <atomic>
 #include <vector>
 
 struct TTEntry {
@@ -10,8 +10,10 @@ struct TTEntry {
 };
 
 struct TTSlot {
-    uint64_t key = 0;
-    TTEntry entry{ -1, 0, 0 };
+    std::atomic<uint64_t> key{0};
+    std::atomic<int> depth{-1};
+    std::atomic<int> value{0};
+    std::atomic<int> flag{0};
 };
 
 class TranspositionTable {
@@ -20,30 +22,32 @@ public:
         : table(size) {}
 
     void store(uint64_t key, const TTEntry& entry) {
-        std::lock_guard<std::mutex> lock(mtx);
         auto& slot = table[key % table.size()];
-        if (slot.entry.depth <= entry.depth) {
-            slot.key = key;
-            slot.entry = entry;
+        int curDepth = slot.depth.load(std::memory_order_relaxed);
+        if (curDepth <= entry.depth) {
+            slot.key.store(key, std::memory_order_relaxed);
+            slot.depth.store(entry.depth, std::memory_order_relaxed);
+            slot.value.store(entry.value, std::memory_order_relaxed);
+            slot.flag.store(entry.flag, std::memory_order_relaxed);
         }
     }
 
     bool probe(uint64_t key, TTEntry& entry) const {
-        std::lock_guard<std::mutex> lock(mtx);
         const auto& slot = table[key % table.size()];
-        if (slot.entry.depth == -1 || slot.key != key) return false;
-        entry = slot.entry;
+        if (slot.depth.load(std::memory_order_relaxed) == -1 ||
+            slot.key.load(std::memory_order_relaxed) != key) return false;
+        entry.depth = slot.depth.load(std::memory_order_relaxed);
+        entry.value = slot.value.load(std::memory_order_relaxed);
+        entry.flag = slot.flag.load(std::memory_order_relaxed);
         return true;
     }
 
     void clear() {
-        std::lock_guard<std::mutex> lock(mtx);
         for (auto& s : table) {
-            s.entry.depth = -1;
+            s.depth.store(-1, std::memory_order_relaxed);
         }
     }
 private:
     static constexpr size_t DEFAULT_SIZE = 1 << 20;
     std::vector<TTSlot> table;
-    mutable std::mutex mtx;
 };
