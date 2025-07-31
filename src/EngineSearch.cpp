@@ -48,18 +48,61 @@ static int pieceValueAt(const Board& board, int index) {
     return 0;
 }
 
-static int moveScore(const Board& board, const std::string& move) {
+static int seeRec(const MoveGenerator& gen, Board& board, int square) {
+    bool side = board.isWhiteToMove();
+    auto pseudo = gen.generateAllMoves(board, side);
+    int best = -1000000;
+    bool any = false;
+    for (const auto& mv : pseudo) {
+        auto dash = mv.find('-');
+        if (dash == std::string::npos) continue;
+        int to = algebraicToIndex(mv.substr(dash + 1, 2));
+        if (to != square) continue;
+        if (!board.isMoveLegal(mv)) continue;
+        any = true;
+        int from = algebraicToIndex(mv.substr(0, 2));
+        int val = pieceValueAt(board, from);
+        Board copy = board;
+        copy.makeMove(mv);
+        int gain = val - seeRec(gen, copy, square);
+        if (gain > best) best = gain;
+    }
+    if (!any) return 0;
+    return best;
+}
+
+static int staticExchangeEval(const MoveGenerator& gen,
+                              const Board& board,
+                              const std::string& move) {
     auto dash = move.find('-');
     if (dash == std::string::npos) return 0;
-    int from = algebraicToIndex(move.substr(0,2));
-    int to = algebraicToIndex(move.substr(dash+1,2));
+    int from = algebraicToIndex(move.substr(0, 2));
+    int to = algebraicToIndex(move.substr(dash + 1, 2));
+    if (from < 0 || to < 0) return 0;
+    if (!isCaptureMove(board, move)) return 0;
+    int captured = pieceValueAt(board, to);
+    if (!captured && board.getEnPassantSquare() == to)
+        captured = 100;
+    Board copy = board;
+    copy.makeMove(move);
+    return captured - seeRec(gen, copy, to);
+}
+
+static int moveScore(const Board& board,
+                     const std::string& move,
+                     const MoveGenerator& gen) {
+    auto dash = move.find('-');
+    if (dash == std::string::npos) return 0;
+    int from = algebraicToIndex(move.substr(0, 2));
+    int to = algebraicToIndex(move.substr(dash + 1, 2));
     if (from < 0 || to < 0) return 0;
     int captured = pieceValueAt(board, to);
     if (!captured && board.getEnPassantSquare() == to)
         captured = 100; // en passant captures a pawn
     if (captured) {
         int attacker = pieceValueAt(board, from);
-        return captured * 10 - attacker; // MVV/LVA style ordering
+        int seeVal = staticExchangeEval(gen, board, move);
+        return captured * 10 - attacker + seeVal; // MVV/LVA + SEE
     }
     return 0;
 }
@@ -87,7 +130,8 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
     std::vector<std::string> moves;
     for (const auto& mv : pseudoMoves)
-        if (board.isMoveLegal(mv) && isCaptureMove(board, mv))
+        if (board.isMoveLegal(mv) && isCaptureMove(board, mv) &&
+            staticExchangeEval(generator, board, mv) >= 0)
             moves.push_back(mv);
 
     for (const auto& m : moves) {
@@ -133,7 +177,7 @@ std::pair<int, std::string> Engine::minimax(
             moves.push_back(mv);
     }
     std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
-        return moveScore(board, a) > moveScore(board, b);
+        return moveScore(board, a, generator) > moveScore(board, b, generator);
     });
     if (moves.empty()) return {evaluate(board), ""};
     if (maximizing) {
@@ -224,7 +268,7 @@ std::string Engine::searchBestMove(Board& board, int depth) {
                 moves.push_back(mv);
         }
         std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
-            return moveScore(board, a) > moveScore(board, b);
+            return moveScore(board, a, generator) > moveScore(board, b, generator);
         });
         if (d > 1 && !bestMove.empty()) {
             auto it = std::find(moves.begin(), moves.end(), bestMove);
@@ -291,7 +335,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
                 moves.push_back(mv);
         }
         std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
-            return moveScore(board, a) > moveScore(board, b);
+            return moveScore(board, a, generator) > moveScore(board, b, generator);
         });
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
