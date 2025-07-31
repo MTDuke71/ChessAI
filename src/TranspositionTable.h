@@ -22,6 +22,10 @@ public:
         entry = it->second;
         return true;
     }
+    void clear() {
+        std::lock_guard<std::mutex> lock(mtx);
+        table.clear();
+    }
 private:
     std::unordered_map<uint64_t, TTEntry> table;
     mutable std::mutex mtx;
