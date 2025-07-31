@@ -127,11 +127,15 @@ int Engine::evaluate(const Board& b) const {
         int sq = popLSBIndex(pieces);
         score += bishop + bishopTable[sq];
     }
+    if (popcount64(b.getWhiteBishops()) >= 2)
+        score += 50; // bishop pair bonus
     pieces = b.getBlackBishops();
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score -= bishop + bishopTable[mirror(sq)];
     }
+    if (popcount64(b.getBlackBishops()) >= 2)
+        score -= 50; // bishop pair bonus
 
     pieces = b.getWhiteRooks();
     while (pieces) {
