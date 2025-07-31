@@ -19,23 +19,18 @@ struct TTSlot {
 class TranspositionTable {
 public:
     explicit TranspositionTable(size_t size = DEFAULT_SIZE)
-        : table(size) {}
+        : table(size), usedSlots(0) {}
 
     size_t size() const { return table.size(); }
 
-    size_t used() const {
-        size_t count = 0;
-        for (const auto& slot : table) {
-            if (slot.depth.load(std::memory_order_relaxed) != -1)
-                ++count;
-        }
-        return count;
-    }
+    size_t used() const { return usedSlots.load(std::memory_order_relaxed); }
 
     void store(uint64_t key, const TTEntry& entry) {
         auto& slot = table[key % table.size()];
         int curDepth = slot.depth.load(std::memory_order_relaxed);
         if (curDepth <= entry.depth) {
+            if (curDepth == -1)
+                usedSlots.fetch_add(1, std::memory_order_relaxed);
             slot.key.store(key, std::memory_order_relaxed);
             slot.depth.store(entry.depth, std::memory_order_relaxed);
             slot.value.store(entry.value, std::memory_order_relaxed);
@@ -57,8 +52,10 @@ public:
         for (auto& s : table) {
             s.depth.store(-1, std::memory_order_relaxed);
         }
+        usedSlots.store(0, std::memory_order_relaxed);
     }
 private:
     static constexpr size_t DEFAULT_SIZE = 1 << 20;
     std::vector<TTSlot> table;
+    std::atomic<size_t> usedSlots;
 };
