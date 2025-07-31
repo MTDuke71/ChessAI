@@ -81,6 +81,7 @@ After building, run them from the `build` directory just like the main example:
 - Endgame tablebase lookup for perfect play in simplified endings.
 - Parallel root search to utilize multiple CPU cores during move calculation.
 - Move ordering using capture heuristics for faster alpha-beta pruning.
+- Iterative deepening for improved move ordering and controllable search time.
 - Supports `go infinite` and `stop` commands for indefinite search sessions.
 
 

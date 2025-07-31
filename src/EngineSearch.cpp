@@ -212,42 +212,53 @@ std::string Engine::searchBestMove(Board& board, int depth) {
         return *tb;
     if (auto bm = book.getBookMove(board))
         return *bm;
-    auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
-    std::vector<std::string> moves;
-    for (const auto& mv : pseudoMoves) {
-        if (board.isMoveLegal(mv))
-            moves.push_back(mv);
-    }
-    std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
-        return moveScore(board, a) > moveScore(board, b);
-    });
-    std::string bestMove;
-    int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
+
     std::atomic<bool> dummyStop(false);
+    std::string bestMove;
 
-    std::vector<std::future<std::pair<int, std::string>>> futures;
-    futures.reserve(moves.size());
-    for (const auto& m : moves) {
-        futures.emplace_back(std::async(std::launch::async, [&, m]() {
-            Board copy = board;
-            copy.makeMove(m);
-            return minimax(copy, depth - 1, -1000000, 1000000,
-                           !board.isWhiteToMove(),
-                           std::chrono::steady_clock::time_point::max(),
-                           dummyStop);
-        }));
-    }
+    for (int d = 1; d <= depth; ++d) {
+        auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+        std::vector<std::string> moves;
+        for (const auto& mv : pseudoMoves) {
+            if (board.isMoveLegal(mv))
+                moves.push_back(mv);
+        }
+        std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+            return moveScore(board, a) > moveScore(board, b);
+        });
+        if (d > 1 && !bestMove.empty()) {
+            auto it = std::find(moves.begin(), moves.end(), bestMove);
+            if (it != moves.end()) {
+                std::rotate(moves.begin(), it, it + 1);
+            }
+        }
 
-    for (size_t i = 0; i < moves.size(); ++i) {
-        auto res = futures[i].get();
-        int score = res.first;
-        const auto& m = moves[i];
-        if (board.isWhiteToMove()) {
-            if (score > bestScore) { bestScore = score; bestMove = m; }
-        } else {
-            if (score < bestScore) { bestScore = score; bestMove = m; }
+        int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
+        std::vector<std::future<std::pair<int, std::string>>> futures;
+        futures.reserve(moves.size());
+        for (const auto& m : moves) {
+            futures.emplace_back(std::async(std::launch::async, [&, m, d]() {
+                Board copy = board;
+                copy.makeMove(m);
+                return minimax(copy, d - 1, -1000000, 1000000,
+                               !board.isWhiteToMove(),
+                               std::chrono::steady_clock::time_point::max(),
+                               dummyStop);
+            }));
+        }
+
+        for (size_t i = 0; i < moves.size(); ++i) {
+            auto res = futures[i].get();
+            int score = res.first;
+            const auto& m = moves[i];
+            if (board.isWhiteToMove()) {
+                if (score > bestScore) { bestScore = score; bestMove = m; }
+            } else {
+                if (score < bestScore) { bestScore = score; bestMove = m; }
+            }
         }
     }
+
     return bestMove;
 }
 
