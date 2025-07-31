@@ -55,6 +55,10 @@ int main() {
                 }
             }
         } else if (line.rfind("go",0) == 0) {
+            if (searchThread.joinable()) {
+                stopFlag = true;
+                searchThread.join();
+            }
             int depth = 0;
             int wtime = 0, btime = 0, winc = 0, binc = 0;
             bool infinite = false;
