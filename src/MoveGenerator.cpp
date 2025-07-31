@@ -298,6 +298,16 @@ std::vector<std::string> MoveGenerator::generateAllMoves(const Board& board, boo
     return all;
 }
 
+std::vector<std::string> MoveGenerator::generateLegalMoves(const Board& board, bool isWhite) const {
+    auto pseudo = generateAllMoves(board, isWhite);
+    std::vector<std::string> legal;
+    for (const auto& mv : pseudo) {
+        if (board.isMoveLegal(mv))
+            legal.push_back(mv);
+    }
+    return legal;
+}
+
 bool MoveGenerator::isSquareAttacked(const Board& board, int square, bool byWhite) const {
     uint64_t occ = board.getWhitePieces() | board.getBlackPieces();
     uint64_t mask = 1ULL << square;

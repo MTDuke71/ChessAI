@@ -17,6 +17,7 @@ public:
     std::vector<std::string> generateQueenMoves(const Board& board, bool isWhite) const;
     std::vector<std::string> generateKingMoves(const Board& board, bool isWhite) const;
     std::vector<std::string> generateAllMoves(const Board& board, bool isWhite) const;
+    std::vector<std::string> generateLegalMoves(const Board& board, bool isWhite) const;
     void addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) const;
 
     bool isSquareAttacked(const Board& board, int square, bool byWhite) const;
