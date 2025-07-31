@@ -312,7 +312,7 @@ std::string Engine::searchBestMove(Board& board, int depth) {
         std::vector<std::future<std::pair<int, std::string>>> futures;
         futures.reserve(moves.size());
         for (const auto& m : moves) {
-            futures.emplace_back(std::async(std::launch::async, [&, m, d]() {
+            futures.emplace_back(pool.enqueue([&, m, d]() {
                 Board copy = board;
                 copy.makeMove(m);
                 return minimax(copy, d - 1, -1000000, 1000000,
@@ -374,7 +374,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         std::vector<std::future<std::pair<int, std::string>>> futures;
         futures.reserve(moves.size());
         for (const auto& m : moves) {
-            futures.emplace_back(std::async(std::launch::async, [&, m]() {
+            futures.emplace_back(pool.enqueue([&, m]() {
                 Board copy = board;
                 copy.makeMove(m);
                 return minimax(copy, depth - 1, -1000000, 1000000,

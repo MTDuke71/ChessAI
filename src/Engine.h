@@ -5,6 +5,7 @@
 #include "Zobrist.h"
 #include "OpeningBook.h"
 #include "Tablebase.h"
+#include "ThreadPool.h"
 #include <string>
 #include <chrono>
 #include <atomic>
@@ -40,4 +41,5 @@ private:
     TranspositionTable tt;
     OpeningBook book;
     Tablebase tablebase;
+    ThreadPool pool;
 };
