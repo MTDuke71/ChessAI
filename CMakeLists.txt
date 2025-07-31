@@ -56,6 +56,12 @@ add_executable(GamePhaseTests
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+add_executable(LegalMoveGenerationTest
+    test/LegalMoveGenerationTest.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/PrintMoves.cpp ${ENGINE_SOURCES})
+
 add_executable(PerftTest
     test/PerftTest.cpp
     src/Board.cpp
@@ -84,6 +90,7 @@ target_include_directories(SliderMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KingMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(IllegalMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(GamePhaseTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(LegalMoveGenerationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(CreatePosition PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -102,6 +109,7 @@ add_test(NAME KingMoveTests COMMAND KingMoveTests)
 add_test(NAME PerftTest COMMAND PerftTest)
 add_test(NAME IllegalMoveTests COMMAND IllegalMoveTests)
 add_test(NAME GamePhaseTests COMMAND GamePhaseTests)
+add_test(NAME LegalMoveGenerationTest COMMAND LegalMoveGenerationTest)
 
 
 
