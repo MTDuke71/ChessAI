@@ -359,6 +359,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
     bool lastDepthComplete = true;
     for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
         nodes = 0;
+        auto depthStart = std::chrono::steady_clock::now();
         auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
         std::vector<std::string> moves;
         for (const auto& mv : pseudoMoves) {
@@ -368,6 +369,12 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
             return moveScore(board, a, generator) > moveScore(board, b, generator);
         });
+        if (depth > 1 && !completedMove.empty()) {
+            auto it = std::find(moves.begin(), moves.end(), completedMove);
+            if (it != moves.end()) {
+                std::rotate(moves.begin(), it, it + 1);
+            }
+        }
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
         lastDepthComplete = true;
@@ -396,7 +403,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
                 lastDepthComplete = false;
         }
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-                          std::chrono::steady_clock::now() - start)
+                          std::chrono::steady_clock::now() - depthStart)
                           .count();
         std::string pvUCI;
         {
@@ -407,9 +414,13 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
                 pvUCI += toUCIMove(token);
             }
         }
+        int hashPercent = static_cast<int>(tt.used() * 1000 / tt.size());
+        uint64_t nodeCount = nodes.load();
+        uint64_t nps = elapsed > 0 ? (nodeCount * 1000 / elapsed) : nodeCount;
         std::cout << "info depth " << depth << " score cp "
                   << (board.isWhiteToMove() ? bestScore : -bestScore)
-                  << " nodes " << nodes << " time " << elapsed;
+                  << " nodes " << nodeCount << " nps " << nps
+                  << " hashfull " << hashPercent << " time " << elapsed;
         if (!pvUCI.empty())
             std::cout << " pv " << pvUCI;
         std::cout << '\n';
