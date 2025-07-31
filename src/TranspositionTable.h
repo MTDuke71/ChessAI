@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
-#include <unordered_map>
 #include <mutex>
+#include <vector>
 
 struct TTEntry {
     int depth;
@@ -9,24 +9,41 @@ struct TTEntry {
     int flag; // 0 exact, 1 lowerbound, -1 upperbound
 };
 
+struct TTSlot {
+    uint64_t key = 0;
+    TTEntry entry{ -1, 0, 0 };
+};
+
 class TranspositionTable {
 public:
+    explicit TranspositionTable(size_t size = DEFAULT_SIZE)
+        : table(size) {}
+
     void store(uint64_t key, const TTEntry& entry) {
         std::lock_guard<std::mutex> lock(mtx);
-        table[key] = entry;
+        auto& slot = table[key % table.size()];
+        if (slot.entry.depth <= entry.depth) {
+            slot.key = key;
+            slot.entry = entry;
+        }
     }
+
     bool probe(uint64_t key, TTEntry& entry) const {
         std::lock_guard<std::mutex> lock(mtx);
-        auto it = table.find(key);
-        if (it == table.end()) return false;
-        entry = it->second;
+        const auto& slot = table[key % table.size()];
+        if (slot.entry.depth == -1 || slot.key != key) return false;
+        entry = slot.entry;
         return true;
     }
+
     void clear() {
         std::lock_guard<std::mutex> lock(mtx);
-        table.clear();
+        for (auto& s : table) {
+            s.entry.depth = -1;
+        }
     }
 private:
-    std::unordered_map<uint64_t, TTEntry> table;
+    static constexpr size_t DEFAULT_SIZE = 1 << 20;
+    std::vector<TTSlot> table;
     mutable std::mutex mtx;
 };
