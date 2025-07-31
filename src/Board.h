@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <unordered_map>
 
 class Board {
 private:
@@ -9,6 +10,9 @@ private:
     int enPassantSquare;
     bool whiteToMove;
     bool castleWK, castleWQ, castleBK, castleBQ;
+    int halfmoveClock;
+    int fullmoveNumber;
+    std::unordered_map<uint64_t,int> repetitionTable;
 
 
 public:
@@ -45,6 +49,11 @@ public:
     uint64_t getBlackQueens()  const { return blackQueens;  }
     uint64_t getWhiteKing() const { return whiteKing; }
     uint64_t getBlackKing() const { return blackKing; }
+    int getHalfmoveClock() const { return halfmoveClock; }
+    int getFullmoveNumber() const { return fullmoveNumber; }
+    bool isFiftyMoveDraw() const { return halfmoveClock >= 100; }
+    bool isThreefoldRepetition() const;
+    int repetitionCount() const;
 
     // Setters for testing
     void setWhitePawns(uint64_t value) { whitePawns = value; }
