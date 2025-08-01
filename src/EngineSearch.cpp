@@ -369,6 +369,12 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
             return moveScore(board, a, generator) > moveScore(board, b, generator);
         });
+        if (depth > 1 && !completedMove.empty()) {
+            auto it = std::find(moves.begin(), moves.end(), completedMove);
+            if (it != moves.end()) {
+                std::rotate(moves.begin(), it, it + 1);
+            }
+        }
         bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         bestPV.clear();
         lastDepthComplete = true;

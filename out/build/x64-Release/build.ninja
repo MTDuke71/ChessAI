@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: Aphelion
-# Configurations: Release
+# Configurations: RelWithDebInfo
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Release
+CONFIGURATION = RelWithDebInfo
 # =============================================================================
 # Include auxiliary files.
 
@@ -217,96 +217,96 @@ build ContinuousSubmit: phony CMakeFiles\ContinuousSubmit
 
 build cmake_object_order_depends_target_Example: phony || .
 
-build CMakeFiles\Example.dir\src\Example.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Example.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\Example.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Example.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\Board.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\Board.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\Engine.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\Engine.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\Zobrist.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\Zobrist.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\Magic.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\Magic.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Example.dir\
   TARGET_PDB = Example.pdb
 
-build CMakeFiles\Example.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Example_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_Example
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Example.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Example_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_Example
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Example.dir
   OBJECT_FILE_DIR = CMakeFiles\Example.dir\src
@@ -321,9 +321,9 @@ build CMakeFiles\Example.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Example_unscan
 #############################################
 # Link the executable Example.exe
 
-build Example.exe: CXX_EXECUTABLE_LINKER__Example_Release CMakeFiles\Example.dir\src\Example.cpp.obj CMakeFiles\Example.dir\src\Board.cpp.obj CMakeFiles\Example.dir\src\MoveGenerator.cpp.obj CMakeFiles\Example.dir\src\PrintMoves.cpp.obj CMakeFiles\Example.dir\src\Engine.cpp.obj CMakeFiles\Example.dir\src\EngineEvaluation.cpp.obj CMakeFiles\Example.dir\src\EngineSearch.cpp.obj CMakeFiles\Example.dir\src\Zobrist.cpp.obj CMakeFiles\Example.dir\src\Magic.cpp.obj CMakeFiles\Example.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\Example.dir\src\OpeningBook.cpp.obj CMakeFiles\Example.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build Example.exe: CXX_EXECUTABLE_LINKER__Example_RelWithDebInfo CMakeFiles\Example.dir\src\Example.cpp.obj CMakeFiles\Example.dir\src\Board.cpp.obj CMakeFiles\Example.dir\src\MoveGenerator.cpp.obj CMakeFiles\Example.dir\src\PrintMoves.cpp.obj CMakeFiles\Example.dir\src\Engine.cpp.obj CMakeFiles\Example.dir\src\EngineEvaluation.cpp.obj CMakeFiles\Example.dir\src\EngineSearch.cpp.obj CMakeFiles\Example.dir\src\Zobrist.cpp.obj CMakeFiles\Example.dir\src\Magic.cpp.obj CMakeFiles\Example.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\Example.dir\src\OpeningBook.cpp.obj CMakeFiles\Example.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\Example.dir
   POST_BUILD = cd .
@@ -342,96 +342,96 @@ build Example.exe: CXX_EXECUTABLE_LINKER__Example_Release CMakeFiles\Example.dir
 
 build cmake_object_order_depends_target_BoardTest: phony || .
 
-build CMakeFiles\BoardTest.dir\test\BoardTest.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\BoardTest.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\test\BoardTest.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\BoardTest.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\Board.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\Board.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\Engine.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\Engine.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\Zobrist.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\Zobrist.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\Magic.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\Magic.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\BoardTest.dir\
   TARGET_PDB = BoardTest.pdb
 
-build CMakeFiles\BoardTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__BoardTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_BoardTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\BoardTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__BoardTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_BoardTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   OBJECT_FILE_DIR = CMakeFiles\BoardTest.dir\src
@@ -446,9 +446,9 @@ build CMakeFiles\BoardTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__BoardTest_un
 #############################################
 # Link the executable BoardTest.exe
 
-build BoardTest.exe: CXX_EXECUTABLE_LINKER__BoardTest_Release CMakeFiles\BoardTest.dir\test\BoardTest.cpp.obj CMakeFiles\BoardTest.dir\src\Board.cpp.obj CMakeFiles\BoardTest.dir\src\PrintMoves.cpp.obj CMakeFiles\BoardTest.dir\src\MoveGenerator.cpp.obj CMakeFiles\BoardTest.dir\src\Engine.cpp.obj CMakeFiles\BoardTest.dir\src\EngineEvaluation.cpp.obj CMakeFiles\BoardTest.dir\src\EngineSearch.cpp.obj CMakeFiles\BoardTest.dir\src\Zobrist.cpp.obj CMakeFiles\BoardTest.dir\src\Magic.cpp.obj CMakeFiles\BoardTest.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\BoardTest.dir\src\OpeningBook.cpp.obj CMakeFiles\BoardTest.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build BoardTest.exe: CXX_EXECUTABLE_LINKER__BoardTest_RelWithDebInfo CMakeFiles\BoardTest.dir\test\BoardTest.cpp.obj CMakeFiles\BoardTest.dir\src\Board.cpp.obj CMakeFiles\BoardTest.dir\src\PrintMoves.cpp.obj CMakeFiles\BoardTest.dir\src\MoveGenerator.cpp.obj CMakeFiles\BoardTest.dir\src\Engine.cpp.obj CMakeFiles\BoardTest.dir\src\EngineEvaluation.cpp.obj CMakeFiles\BoardTest.dir\src\EngineSearch.cpp.obj CMakeFiles\BoardTest.dir\src\Zobrist.cpp.obj CMakeFiles\BoardTest.dir\src\Magic.cpp.obj CMakeFiles\BoardTest.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\BoardTest.dir\src\OpeningBook.cpp.obj CMakeFiles\BoardTest.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\BoardTest.dir
   POST_BUILD = cd .
@@ -467,96 +467,96 @@ build BoardTest.exe: CXX_EXECUTABLE_LINKER__BoardTest_Release CMakeFiles\BoardTe
 
 build cmake_object_order_depends_target_PawnMoveTests: phony || .
 
-build CMakeFiles\PawnMoveTests.dir\test\PawnMoveTests.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\PawnMoveTests.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\test\PawnMoveTests.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\PawnMoveTests.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PawnMoveTests.dir\
   TARGET_PDB = PawnMoveTests.pdb
 
-build CMakeFiles\PawnMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_PawnMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PawnMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__PawnMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_PawnMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\PawnMoveTests.dir\src
@@ -571,9 +571,9 @@ build CMakeFiles\PawnMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__PawnMove
 #############################################
 # Link the executable PawnMoveTests.exe
 
-build PawnMoveTests.exe: CXX_EXECUTABLE_LINKER__PawnMoveTests_Release CMakeFiles\PawnMoveTests.dir\test\PawnMoveTests.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Board.cpp.obj CMakeFiles\PawnMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\PawnMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Engine.cpp.obj CMakeFiles\PawnMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\PawnMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Magic.cpp.obj CMakeFiles\PawnMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\PawnMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build PawnMoveTests.exe: CXX_EXECUTABLE_LINKER__PawnMoveTests_RelWithDebInfo CMakeFiles\PawnMoveTests.dir\test\PawnMoveTests.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Board.cpp.obj CMakeFiles\PawnMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\PawnMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Engine.cpp.obj CMakeFiles\PawnMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\PawnMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Magic.cpp.obj CMakeFiles\PawnMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\PawnMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\PawnMoveTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\PawnMoveTests.dir
   POST_BUILD = cd .
@@ -592,96 +592,96 @@ build PawnMoveTests.exe: CXX_EXECUTABLE_LINKER__PawnMoveTests_Release CMakeFiles
 
 build cmake_object_order_depends_target_KnightMoveTests: phony || .
 
-build CMakeFiles\KnightMoveTests.dir\test\KnightMoveTests.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\KnightMoveTests.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\test\KnightMoveTests.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\KnightMoveTests.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KnightMoveTests.dir\
   TARGET_PDB = KnightMoveTests.pdb
 
-build CMakeFiles\KnightMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_KnightMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KnightMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__KnightMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_KnightMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KnightMoveTests.dir\src
@@ -696,9 +696,9 @@ build CMakeFiles\KnightMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Knight
 #############################################
 # Link the executable KnightMoveTests.exe
 
-build KnightMoveTests.exe: CXX_EXECUTABLE_LINKER__KnightMoveTests_Release CMakeFiles\KnightMoveTests.dir\test\KnightMoveTests.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Board.cpp.obj CMakeFiles\KnightMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\KnightMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Engine.cpp.obj CMakeFiles\KnightMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\KnightMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Magic.cpp.obj CMakeFiles\KnightMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\KnightMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build KnightMoveTests.exe: CXX_EXECUTABLE_LINKER__KnightMoveTests_RelWithDebInfo CMakeFiles\KnightMoveTests.dir\test\KnightMoveTests.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Board.cpp.obj CMakeFiles\KnightMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\KnightMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Engine.cpp.obj CMakeFiles\KnightMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\KnightMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Magic.cpp.obj CMakeFiles\KnightMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\KnightMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\KnightMoveTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\KnightMoveTests.dir
   POST_BUILD = cd .
@@ -717,96 +717,96 @@ build KnightMoveTests.exe: CXX_EXECUTABLE_LINKER__KnightMoveTests_Release CMakeF
 
 build cmake_object_order_depends_target_SliderMoveTests: phony || .
 
-build CMakeFiles\SliderMoveTests.dir\test\SliderMoveTests.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\SliderMoveTests.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\test\SliderMoveTests.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\SliderMoveTests.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SliderMoveTests.dir\
   TARGET_PDB = SliderMoveTests.pdb
 
-build CMakeFiles\SliderMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_SliderMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SliderMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__SliderMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_SliderMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\SliderMoveTests.dir\src
@@ -821,9 +821,9 @@ build CMakeFiles\SliderMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Slider
 #############################################
 # Link the executable SliderMoveTests.exe
 
-build SliderMoveTests.exe: CXX_EXECUTABLE_LINKER__SliderMoveTests_Release CMakeFiles\SliderMoveTests.dir\test\SliderMoveTests.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Board.cpp.obj CMakeFiles\SliderMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\SliderMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Engine.cpp.obj CMakeFiles\SliderMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\SliderMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Magic.cpp.obj CMakeFiles\SliderMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\SliderMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build SliderMoveTests.exe: CXX_EXECUTABLE_LINKER__SliderMoveTests_RelWithDebInfo CMakeFiles\SliderMoveTests.dir\test\SliderMoveTests.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Board.cpp.obj CMakeFiles\SliderMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\SliderMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Engine.cpp.obj CMakeFiles\SliderMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\SliderMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Magic.cpp.obj CMakeFiles\SliderMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\SliderMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\SliderMoveTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\SliderMoveTests.dir
   POST_BUILD = cd .
@@ -842,96 +842,96 @@ build SliderMoveTests.exe: CXX_EXECUTABLE_LINKER__SliderMoveTests_Release CMakeF
 
 build cmake_object_order_depends_target_KingMoveTests: phony || .
 
-build CMakeFiles\KingMoveTests.dir\test\KingMoveTests.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\KingMoveTests.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\test\KingMoveTests.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\KingMoveTests.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\KingMoveTests.dir\
   TARGET_PDB = KingMoveTests.pdb
 
-build CMakeFiles\KingMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_KingMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\KingMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__KingMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_KingMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\KingMoveTests.dir\src
@@ -946,9 +946,9 @@ build CMakeFiles\KingMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__KingMove
 #############################################
 # Link the executable KingMoveTests.exe
 
-build KingMoveTests.exe: CXX_EXECUTABLE_LINKER__KingMoveTests_Release CMakeFiles\KingMoveTests.dir\test\KingMoveTests.cpp.obj CMakeFiles\KingMoveTests.dir\src\Board.cpp.obj CMakeFiles\KingMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\KingMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\KingMoveTests.dir\src\Engine.cpp.obj CMakeFiles\KingMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\KingMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\KingMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\KingMoveTests.dir\src\Magic.cpp.obj CMakeFiles\KingMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\KingMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\KingMoveTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build KingMoveTests.exe: CXX_EXECUTABLE_LINKER__KingMoveTests_RelWithDebInfo CMakeFiles\KingMoveTests.dir\test\KingMoveTests.cpp.obj CMakeFiles\KingMoveTests.dir\src\Board.cpp.obj CMakeFiles\KingMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\KingMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\KingMoveTests.dir\src\Engine.cpp.obj CMakeFiles\KingMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\KingMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\KingMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\KingMoveTests.dir\src\Magic.cpp.obj CMakeFiles\KingMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\KingMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\KingMoveTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\KingMoveTests.dir
   POST_BUILD = cd .
@@ -967,96 +967,96 @@ build KingMoveTests.exe: CXX_EXECUTABLE_LINKER__KingMoveTests_Release CMakeFiles
 
 build cmake_object_order_depends_target_IllegalMoveTests: phony || .
 
-build CMakeFiles\IllegalMoveTests.dir\test\IllegalMoveTests.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\IllegalMoveTests.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\test\IllegalMoveTests.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\IllegalMoveTests.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\Board.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\Engine.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\Magic.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\IllegalMoveTests.dir\
   TARGET_PDB = IllegalMoveTests.pdb
 
-build CMakeFiles\IllegalMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_IllegalMoveTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\IllegalMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__IllegalMoveTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_IllegalMoveTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   OBJECT_FILE_DIR = CMakeFiles\IllegalMoveTests.dir\src
@@ -1071,9 +1071,9 @@ build CMakeFiles\IllegalMoveTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Illeg
 #############################################
 # Link the executable IllegalMoveTests.exe
 
-build IllegalMoveTests.exe: CXX_EXECUTABLE_LINKER__IllegalMoveTests_Release CMakeFiles\IllegalMoveTests.dir\test\IllegalMoveTests.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Board.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Engine.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Magic.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build IllegalMoveTests.exe: CXX_EXECUTABLE_LINKER__IllegalMoveTests_RelWithDebInfo CMakeFiles\IllegalMoveTests.dir\test\IllegalMoveTests.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Board.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\PrintMoves.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Engine.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\EngineSearch.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Zobrist.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Magic.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\OpeningBook.cpp.obj CMakeFiles\IllegalMoveTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\IllegalMoveTests.dir
   POST_BUILD = cd .
@@ -1092,96 +1092,96 @@ build IllegalMoveTests.exe: CXX_EXECUTABLE_LINKER__IllegalMoveTests_Release CMak
 
 build cmake_object_order_depends_target_GamePhaseTests: phony || .
 
-build CMakeFiles\GamePhaseTests.dir\test\GamePhaseTests.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\GamePhaseTests.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\test\GamePhaseTests.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\GamePhaseTests.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\Board.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\Board.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\Engine.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\Engine.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\Magic.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\Magic.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GamePhaseTests.dir\
   TARGET_PDB = GamePhaseTests.pdb
 
-build CMakeFiles\GamePhaseTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_GamePhaseTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GamePhaseTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__GamePhaseTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_GamePhaseTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   OBJECT_FILE_DIR = CMakeFiles\GamePhaseTests.dir\src
@@ -1196,9 +1196,9 @@ build CMakeFiles\GamePhaseTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__GamePha
 #############################################
 # Link the executable GamePhaseTests.exe
 
-build GamePhaseTests.exe: CXX_EXECUTABLE_LINKER__GamePhaseTests_Release CMakeFiles\GamePhaseTests.dir\test\GamePhaseTests.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Board.cpp.obj CMakeFiles\GamePhaseTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\GamePhaseTests.dir\src\PrintMoves.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Engine.cpp.obj CMakeFiles\GamePhaseTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\GamePhaseTests.dir\src\EngineSearch.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Zobrist.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Magic.cpp.obj CMakeFiles\GamePhaseTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\GamePhaseTests.dir\src\OpeningBook.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build GamePhaseTests.exe: CXX_EXECUTABLE_LINKER__GamePhaseTests_RelWithDebInfo CMakeFiles\GamePhaseTests.dir\test\GamePhaseTests.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Board.cpp.obj CMakeFiles\GamePhaseTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\GamePhaseTests.dir\src\PrintMoves.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Engine.cpp.obj CMakeFiles\GamePhaseTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\GamePhaseTests.dir\src\EngineSearch.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Zobrist.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Magic.cpp.obj CMakeFiles\GamePhaseTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\GamePhaseTests.dir\src\OpeningBook.cpp.obj CMakeFiles\GamePhaseTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\GamePhaseTests.dir
   POST_BUILD = cd .
@@ -1217,96 +1217,96 @@ build GamePhaseTests.exe: CXX_EXECUTABLE_LINKER__GamePhaseTests_Release CMakeFil
 
 build cmake_object_order_depends_target_DrawRuleTests: phony || .
 
-build CMakeFiles\DrawRuleTests.dir\test\DrawRuleTests.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\DrawRuleTests.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\test\DrawRuleTests.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\DrawRuleTests.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\Board.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\Board.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\Engine.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\Engine.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\Zobrist.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\Magic.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\Magic.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\DrawRuleTests.dir\
   TARGET_PDB = DrawRuleTests.pdb
 
-build CMakeFiles\DrawRuleTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_DrawRuleTests
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\DrawRuleTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__DrawRuleTests_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_DrawRuleTests
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   OBJECT_FILE_DIR = CMakeFiles\DrawRuleTests.dir\src
@@ -1321,9 +1321,9 @@ build CMakeFiles\DrawRuleTests.dir\src\Tablebase.cpp.obj: CXX_COMPILER__DrawRule
 #############################################
 # Link the executable DrawRuleTests.exe
 
-build DrawRuleTests.exe: CXX_EXECUTABLE_LINKER__DrawRuleTests_Release CMakeFiles\DrawRuleTests.dir\test\DrawRuleTests.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Board.cpp.obj CMakeFiles\DrawRuleTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\DrawRuleTests.dir\src\PrintMoves.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Engine.cpp.obj CMakeFiles\DrawRuleTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\DrawRuleTests.dir\src\EngineSearch.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Zobrist.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Magic.cpp.obj CMakeFiles\DrawRuleTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\DrawRuleTests.dir\src\OpeningBook.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build DrawRuleTests.exe: CXX_EXECUTABLE_LINKER__DrawRuleTests_RelWithDebInfo CMakeFiles\DrawRuleTests.dir\test\DrawRuleTests.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Board.cpp.obj CMakeFiles\DrawRuleTests.dir\src\MoveGenerator.cpp.obj CMakeFiles\DrawRuleTests.dir\src\PrintMoves.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Engine.cpp.obj CMakeFiles\DrawRuleTests.dir\src\EngineEvaluation.cpp.obj CMakeFiles\DrawRuleTests.dir\src\EngineSearch.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Zobrist.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Magic.cpp.obj CMakeFiles\DrawRuleTests.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\DrawRuleTests.dir\src\OpeningBook.cpp.obj CMakeFiles\DrawRuleTests.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\DrawRuleTests.dir
   POST_BUILD = cd .
@@ -1342,96 +1342,96 @@ build DrawRuleTests.exe: CXX_EXECUTABLE_LINKER__DrawRuleTests_Release CMakeFiles
 
 build cmake_object_order_depends_target_LegalMoveGenerationTest: phony || .
 
-build CMakeFiles\LegalMoveGenerationTest.dir\test\LegalMoveGenerationTest.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\LegalMoveGenerationTest.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\test\LegalMoveGenerationTest.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\LegalMoveGenerationTest.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\Board.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\Board.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\Engine.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\Engine.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\Zobrist.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\Zobrist.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\Magic.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\Magic.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\LegalMoveGenerationTest.dir\
   TARGET_PDB = LegalMoveGenerationTest.pdb
 
-build CMakeFiles\LegalMoveGenerationTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\LegalMoveGenerationTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__LegalMoveGenerationTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_LegalMoveGenerationTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   OBJECT_FILE_DIR = CMakeFiles\LegalMoveGenerationTest.dir\src
@@ -1446,9 +1446,9 @@ build CMakeFiles\LegalMoveGenerationTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER
 #############################################
 # Link the executable LegalMoveGenerationTest.exe
 
-build LegalMoveGenerationTest.exe: CXX_EXECUTABLE_LINKER__LegalMoveGenerationTest_Release CMakeFiles\LegalMoveGenerationTest.dir\test\LegalMoveGenerationTest.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Board.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGenerator.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\PrintMoves.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Engine.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\EngineEvaluation.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\EngineSearch.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Zobrist.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Magic.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\OpeningBook.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build LegalMoveGenerationTest.exe: CXX_EXECUTABLE_LINKER__LegalMoveGenerationTest_RelWithDebInfo CMakeFiles\LegalMoveGenerationTest.dir\test\LegalMoveGenerationTest.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Board.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGenerator.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\PrintMoves.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Engine.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\EngineEvaluation.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\EngineSearch.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Zobrist.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Magic.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\OpeningBook.cpp.obj CMakeFiles\LegalMoveGenerationTest.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\LegalMoveGenerationTest.dir
   POST_BUILD = cd .
@@ -1467,96 +1467,96 @@ build LegalMoveGenerationTest.exe: CXX_EXECUTABLE_LINKER__LegalMoveGenerationTes
 
 build cmake_object_order_depends_target_PerftTest: phony || .
 
-build CMakeFiles\PerftTest.dir\test\PerftTest.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\test\PerftTest.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\test\PerftTest.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\test\PerftTest.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\test
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\Board.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\Board.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\Perft.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Perft.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\Perft.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Perft.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\Engine.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\Engine.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\Zobrist.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\Zobrist.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\Magic.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\Magic.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\PerftTest.dir\
   TARGET_PDB = PerftTest.pdb
 
-build CMakeFiles\PerftTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__PerftTest_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_PerftTest
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\PerftTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__PerftTest_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_PerftTest
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   OBJECT_FILE_DIR = CMakeFiles\PerftTest.dir\src
@@ -1571,9 +1571,9 @@ build CMakeFiles\PerftTest.dir\src\Tablebase.cpp.obj: CXX_COMPILER__PerftTest_un
 #############################################
 # Link the executable PerftTest.exe
 
-build PerftTest.exe: CXX_EXECUTABLE_LINKER__PerftTest_Release CMakeFiles\PerftTest.dir\test\PerftTest.cpp.obj CMakeFiles\PerftTest.dir\src\Board.cpp.obj CMakeFiles\PerftTest.dir\src\MoveGenerator.cpp.obj CMakeFiles\PerftTest.dir\src\Perft.cpp.obj CMakeFiles\PerftTest.dir\src\Engine.cpp.obj CMakeFiles\PerftTest.dir\src\EngineEvaluation.cpp.obj CMakeFiles\PerftTest.dir\src\EngineSearch.cpp.obj CMakeFiles\PerftTest.dir\src\Zobrist.cpp.obj CMakeFiles\PerftTest.dir\src\Magic.cpp.obj CMakeFiles\PerftTest.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\PerftTest.dir\src\OpeningBook.cpp.obj CMakeFiles\PerftTest.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build PerftTest.exe: CXX_EXECUTABLE_LINKER__PerftTest_RelWithDebInfo CMakeFiles\PerftTest.dir\test\PerftTest.cpp.obj CMakeFiles\PerftTest.dir\src\Board.cpp.obj CMakeFiles\PerftTest.dir\src\MoveGenerator.cpp.obj CMakeFiles\PerftTest.dir\src\Perft.cpp.obj CMakeFiles\PerftTest.dir\src\Engine.cpp.obj CMakeFiles\PerftTest.dir\src\EngineEvaluation.cpp.obj CMakeFiles\PerftTest.dir\src\EngineSearch.cpp.obj CMakeFiles\PerftTest.dir\src\Zobrist.cpp.obj CMakeFiles\PerftTest.dir\src\Magic.cpp.obj CMakeFiles\PerftTest.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\PerftTest.dir\src\OpeningBook.cpp.obj CMakeFiles\PerftTest.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\PerftTest.dir
   POST_BUILD = cd .
@@ -1592,96 +1592,96 @@ build PerftTest.exe: CXX_EXECUTABLE_LINKER__PerftTest_Release CMakeFiles\PerftTe
 
 build cmake_object_order_depends_target_CreatePosition: phony || .
 
-build CMakeFiles\CreatePosition.dir\examples\create_position.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\examples\create_position.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\examples\create_position.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\examples\create_position.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\examples
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\Board.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\Board.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\Engine.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\Engine.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\Zobrist.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\Zobrist.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\Magic.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\Magic.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\CreatePosition.dir\
   TARGET_PDB = CreatePosition.pdb
 
-build CMakeFiles\CreatePosition.dir\src\Tablebase.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_CreatePosition
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\CreatePosition.dir\src\Tablebase.cpp.obj: CXX_COMPILER__CreatePosition_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_CreatePosition
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   OBJECT_FILE_DIR = CMakeFiles\CreatePosition.dir\src
@@ -1696,9 +1696,9 @@ build CMakeFiles\CreatePosition.dir\src\Tablebase.cpp.obj: CXX_COMPILER__CreateP
 #############################################
 # Link the executable CreatePosition.exe
 
-build CreatePosition.exe: CXX_EXECUTABLE_LINKER__CreatePosition_Release CMakeFiles\CreatePosition.dir\examples\create_position.cpp.obj CMakeFiles\CreatePosition.dir\src\Board.cpp.obj CMakeFiles\CreatePosition.dir\src\MoveGenerator.cpp.obj CMakeFiles\CreatePosition.dir\src\PrintMoves.cpp.obj CMakeFiles\CreatePosition.dir\src\Engine.cpp.obj CMakeFiles\CreatePosition.dir\src\EngineEvaluation.cpp.obj CMakeFiles\CreatePosition.dir\src\EngineSearch.cpp.obj CMakeFiles\CreatePosition.dir\src\Zobrist.cpp.obj CMakeFiles\CreatePosition.dir\src\Magic.cpp.obj CMakeFiles\CreatePosition.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\CreatePosition.dir\src\OpeningBook.cpp.obj CMakeFiles\CreatePosition.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build CreatePosition.exe: CXX_EXECUTABLE_LINKER__CreatePosition_RelWithDebInfo CMakeFiles\CreatePosition.dir\examples\create_position.cpp.obj CMakeFiles\CreatePosition.dir\src\Board.cpp.obj CMakeFiles\CreatePosition.dir\src\MoveGenerator.cpp.obj CMakeFiles\CreatePosition.dir\src\PrintMoves.cpp.obj CMakeFiles\CreatePosition.dir\src\Engine.cpp.obj CMakeFiles\CreatePosition.dir\src\EngineEvaluation.cpp.obj CMakeFiles\CreatePosition.dir\src\EngineSearch.cpp.obj CMakeFiles\CreatePosition.dir\src\Zobrist.cpp.obj CMakeFiles\CreatePosition.dir\src\Magic.cpp.obj CMakeFiles\CreatePosition.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\CreatePosition.dir\src\OpeningBook.cpp.obj CMakeFiles\CreatePosition.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\CreatePosition.dir
   POST_BUILD = cd .
@@ -1717,96 +1717,96 @@ build CreatePosition.exe: CXX_EXECUTABLE_LINKER__CreatePosition_Release CMakeFil
 
 build cmake_object_order_depends_target_GenerateMoves: phony || .
 
-build CMakeFiles\GenerateMoves.dir\examples\generate_moves.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\examples\generate_moves.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\examples\generate_moves.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\examples\generate_moves.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\examples
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\Board.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\Board.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\Engine.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\Engine.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\Zobrist.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\Zobrist.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\Magic.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\Magic.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\GenerateMoves.dir\
   TARGET_PDB = GenerateMoves.pdb
 
-build CMakeFiles\GenerateMoves.dir\src\Tablebase.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_GenerateMoves
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\GenerateMoves.dir\src\Tablebase.cpp.obj: CXX_COMPILER__GenerateMoves_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_GenerateMoves
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   OBJECT_FILE_DIR = CMakeFiles\GenerateMoves.dir\src
@@ -1821,9 +1821,9 @@ build CMakeFiles\GenerateMoves.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Generate
 #############################################
 # Link the executable GenerateMoves.exe
 
-build GenerateMoves.exe: CXX_EXECUTABLE_LINKER__GenerateMoves_Release CMakeFiles\GenerateMoves.dir\examples\generate_moves.cpp.obj CMakeFiles\GenerateMoves.dir\src\Board.cpp.obj CMakeFiles\GenerateMoves.dir\src\MoveGenerator.cpp.obj CMakeFiles\GenerateMoves.dir\src\PrintMoves.cpp.obj CMakeFiles\GenerateMoves.dir\src\Engine.cpp.obj CMakeFiles\GenerateMoves.dir\src\EngineEvaluation.cpp.obj CMakeFiles\GenerateMoves.dir\src\EngineSearch.cpp.obj CMakeFiles\GenerateMoves.dir\src\Zobrist.cpp.obj CMakeFiles\GenerateMoves.dir\src\Magic.cpp.obj CMakeFiles\GenerateMoves.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\GenerateMoves.dir\src\OpeningBook.cpp.obj CMakeFiles\GenerateMoves.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build GenerateMoves.exe: CXX_EXECUTABLE_LINKER__GenerateMoves_RelWithDebInfo CMakeFiles\GenerateMoves.dir\examples\generate_moves.cpp.obj CMakeFiles\GenerateMoves.dir\src\Board.cpp.obj CMakeFiles\GenerateMoves.dir\src\MoveGenerator.cpp.obj CMakeFiles\GenerateMoves.dir\src\PrintMoves.cpp.obj CMakeFiles\GenerateMoves.dir\src\Engine.cpp.obj CMakeFiles\GenerateMoves.dir\src\EngineEvaluation.cpp.obj CMakeFiles\GenerateMoves.dir\src\EngineSearch.cpp.obj CMakeFiles\GenerateMoves.dir\src\Zobrist.cpp.obj CMakeFiles\GenerateMoves.dir\src\Magic.cpp.obj CMakeFiles\GenerateMoves.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\GenerateMoves.dir\src\OpeningBook.cpp.obj CMakeFiles\GenerateMoves.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\GenerateMoves.dir
   POST_BUILD = cd .
@@ -1842,96 +1842,96 @@ build GenerateMoves.exe: CXX_EXECUTABLE_LINKER__GenerateMoves_Release CMakeFiles
 
 build cmake_object_order_depends_target_SearchBestMove: phony || .
 
-build CMakeFiles\SearchBestMove.dir\examples\search_best_move.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\examples\search_best_move.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\examples\search_best_move.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\examples\search_best_move.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\examples
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\Board.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\Board.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\Engine.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\Engine.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\Zobrist.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\Zobrist.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\Magic.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\Magic.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\SearchBestMove.dir\
   TARGET_PDB = SearchBestMove.pdb
 
-build CMakeFiles\SearchBestMove.dir\src\Tablebase.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_SearchBestMove
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\SearchBestMove.dir\src\Tablebase.cpp.obj: CXX_COMPILER__SearchBestMove_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_SearchBestMove
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   OBJECT_FILE_DIR = CMakeFiles\SearchBestMove.dir\src
@@ -1946,9 +1946,9 @@ build CMakeFiles\SearchBestMove.dir\src\Tablebase.cpp.obj: CXX_COMPILER__SearchB
 #############################################
 # Link the executable SearchBestMove.exe
 
-build SearchBestMove.exe: CXX_EXECUTABLE_LINKER__SearchBestMove_Release CMakeFiles\SearchBestMove.dir\examples\search_best_move.cpp.obj CMakeFiles\SearchBestMove.dir\src\Board.cpp.obj CMakeFiles\SearchBestMove.dir\src\MoveGenerator.cpp.obj CMakeFiles\SearchBestMove.dir\src\PrintMoves.cpp.obj CMakeFiles\SearchBestMove.dir\src\Engine.cpp.obj CMakeFiles\SearchBestMove.dir\src\EngineEvaluation.cpp.obj CMakeFiles\SearchBestMove.dir\src\EngineSearch.cpp.obj CMakeFiles\SearchBestMove.dir\src\Zobrist.cpp.obj CMakeFiles\SearchBestMove.dir\src\Magic.cpp.obj CMakeFiles\SearchBestMove.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\SearchBestMove.dir\src\OpeningBook.cpp.obj CMakeFiles\SearchBestMove.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build SearchBestMove.exe: CXX_EXECUTABLE_LINKER__SearchBestMove_RelWithDebInfo CMakeFiles\SearchBestMove.dir\examples\search_best_move.cpp.obj CMakeFiles\SearchBestMove.dir\src\Board.cpp.obj CMakeFiles\SearchBestMove.dir\src\MoveGenerator.cpp.obj CMakeFiles\SearchBestMove.dir\src\PrintMoves.cpp.obj CMakeFiles\SearchBestMove.dir\src\Engine.cpp.obj CMakeFiles\SearchBestMove.dir\src\EngineEvaluation.cpp.obj CMakeFiles\SearchBestMove.dir\src\EngineSearch.cpp.obj CMakeFiles\SearchBestMove.dir\src\Zobrist.cpp.obj CMakeFiles\SearchBestMove.dir\src\Magic.cpp.obj CMakeFiles\SearchBestMove.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\SearchBestMove.dir\src\OpeningBook.cpp.obj CMakeFiles\SearchBestMove.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\SearchBestMove.dir
   POST_BUILD = cd .
@@ -1967,104 +1967,104 @@ build SearchBestMove.exe: CXX_EXECUTABLE_LINKER__SearchBestMove_Release CMakeFil
 
 build cmake_object_order_depends_target_Perft: phony || .
 
-build CMakeFiles\Perft.dir\examples\perft.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\examples\perft.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\examples\perft.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\examples\perft.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\examples
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\Board.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\Board.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\Perft.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Perft.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\Perft.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Perft.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\Engine.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\Engine.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\Zobrist.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\Zobrist.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\Magic.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\Magic.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Perft.dir\
   TARGET_PDB = Perft.pdb
 
-build CMakeFiles\Perft.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Perft_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_Perft
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Perft.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Perft_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_Perft
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Perft.dir
   OBJECT_FILE_DIR = CMakeFiles\Perft.dir\src
@@ -2079,9 +2079,9 @@ build CMakeFiles\Perft.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Perft_unscanned_
 #############################################
 # Link the executable Perft.exe
 
-build Perft.exe: CXX_EXECUTABLE_LINKER__Perft_Release CMakeFiles\Perft.dir\examples\perft.cpp.obj CMakeFiles\Perft.dir\src\Board.cpp.obj CMakeFiles\Perft.dir\src\MoveGenerator.cpp.obj CMakeFiles\Perft.dir\src\PrintMoves.cpp.obj CMakeFiles\Perft.dir\src\Perft.cpp.obj CMakeFiles\Perft.dir\src\Engine.cpp.obj CMakeFiles\Perft.dir\src\EngineEvaluation.cpp.obj CMakeFiles\Perft.dir\src\EngineSearch.cpp.obj CMakeFiles\Perft.dir\src\Zobrist.cpp.obj CMakeFiles\Perft.dir\src\Magic.cpp.obj CMakeFiles\Perft.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\Perft.dir\src\OpeningBook.cpp.obj CMakeFiles\Perft.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build Perft.exe: CXX_EXECUTABLE_LINKER__Perft_RelWithDebInfo CMakeFiles\Perft.dir\examples\perft.cpp.obj CMakeFiles\Perft.dir\src\Board.cpp.obj CMakeFiles\Perft.dir\src\MoveGenerator.cpp.obj CMakeFiles\Perft.dir\src\PrintMoves.cpp.obj CMakeFiles\Perft.dir\src\Perft.cpp.obj CMakeFiles\Perft.dir\src\Engine.cpp.obj CMakeFiles\Perft.dir\src\EngineEvaluation.cpp.obj CMakeFiles\Perft.dir\src\EngineSearch.cpp.obj CMakeFiles\Perft.dir\src\Zobrist.cpp.obj CMakeFiles\Perft.dir\src\Magic.cpp.obj CMakeFiles\Perft.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\Perft.dir\src\OpeningBook.cpp.obj CMakeFiles\Perft.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\Perft.dir
   POST_BUILD = cd .
@@ -2100,96 +2100,96 @@ build Perft.exe: CXX_EXECUTABLE_LINKER__Perft_Release CMakeFiles\Perft.dir\examp
 
 build cmake_object_order_depends_target_Aphelion: phony || .
 
-build CMakeFiles\Aphelion.dir\src\UCI.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\UCI.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\UCI.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\UCI.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\Board.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\Board.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Board.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\MoveGenerator.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGenerator.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\PrintMoves.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\PrintMoves.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\Engine.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\Engine.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Engine.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\EngineEvaluation.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineEvaluation.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\EngineSearch.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\EngineSearch.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\Zobrist.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\Zobrist.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Zobrist.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\Magic.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\Magic.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Magic.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\MoveGeneratorUtils.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\MoveGeneratorUtils.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\OpeningBook.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\OpeningBook.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\Aphelion.dir\
   TARGET_PDB = Aphelion.pdb
 
-build CMakeFiles\Aphelion.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Aphelion_unscanned_Release C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_Aphelion
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+build CMakeFiles\Aphelion.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Aphelion_unscanned_RelWithDebInfo C$:\Users\m_lad\source\repos\ChessAI\src\Tablebase.cpp || cmake_object_order_depends_target_Aphelion
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++17
   INCLUDES = -IC:\Users\m_lad\source\repos\ChessAI\src
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   OBJECT_FILE_DIR = CMakeFiles\Aphelion.dir\src
@@ -2204,9 +2204,9 @@ build CMakeFiles\Aphelion.dir\src\Tablebase.cpp.obj: CXX_COMPILER__Aphelion_unsc
 #############################################
 # Link the executable Aphelion.exe
 
-build Aphelion.exe: CXX_EXECUTABLE_LINKER__Aphelion_Release CMakeFiles\Aphelion.dir\src\UCI.cpp.obj CMakeFiles\Aphelion.dir\src\Board.cpp.obj CMakeFiles\Aphelion.dir\src\MoveGenerator.cpp.obj CMakeFiles\Aphelion.dir\src\PrintMoves.cpp.obj CMakeFiles\Aphelion.dir\src\Engine.cpp.obj CMakeFiles\Aphelion.dir\src\EngineEvaluation.cpp.obj CMakeFiles\Aphelion.dir\src\EngineSearch.cpp.obj CMakeFiles\Aphelion.dir\src\Zobrist.cpp.obj CMakeFiles\Aphelion.dir\src\Magic.cpp.obj CMakeFiles\Aphelion.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\Aphelion.dir\src\OpeningBook.cpp.obj CMakeFiles\Aphelion.dir\src\Tablebase.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
-  LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
+build Aphelion.exe: CXX_EXECUTABLE_LINKER__Aphelion_RelWithDebInfo CMakeFiles\Aphelion.dir\src\UCI.cpp.obj CMakeFiles\Aphelion.dir\src\Board.cpp.obj CMakeFiles\Aphelion.dir\src\MoveGenerator.cpp.obj CMakeFiles\Aphelion.dir\src\PrintMoves.cpp.obj CMakeFiles\Aphelion.dir\src\Engine.cpp.obj CMakeFiles\Aphelion.dir\src\EngineEvaluation.cpp.obj CMakeFiles\Aphelion.dir\src\EngineSearch.cpp.obj CMakeFiles\Aphelion.dir\src\Zobrist.cpp.obj CMakeFiles\Aphelion.dir\src\Magic.cpp.obj CMakeFiles\Aphelion.dir\src\MoveGeneratorUtils.cpp.obj CMakeFiles\Aphelion.dir\src\OpeningBook.cpp.obj CMakeFiles\Aphelion.dir\src\Tablebase.cpp.obj
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG
+  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\Aphelion.dir
   POST_BUILD = cd .
