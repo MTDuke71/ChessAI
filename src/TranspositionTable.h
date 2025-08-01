@@ -25,17 +25,6 @@ public:
 
     size_t used() const { return usedSlots.load(std::memory_order_relaxed); }
 
-    size_t size() const { return table.size(); }
-
-    size_t used() const {
-        size_t count = 0;
-        for (const auto& slot : table) {
-            if (slot.depth.load(std::memory_order_relaxed) != -1)
-                ++count;
-        }
-        return count;
-    }
-
     void store(uint64_t key, const TTEntry& entry) {
         auto& slot = table[key % table.size()];
         int curDepth = slot.depth.load(std::memory_order_relaxed);
