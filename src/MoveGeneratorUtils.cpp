@@ -3,6 +3,19 @@
 #include "BitUtils.h"
 #include <iostream>
 #include <string>
+#include <array>
+
+namespace {
+const std::array<std::string, 64> algebraicSquares = [] {
+    std::array<std::string, 64> arr{};
+    for (int i = 0; i < 64; ++i) {
+        char file = 'a' + (i % 8);
+        char rank = '1' + (i / 8);
+        arr[i] = std::string{file} + rank;
+    }
+    return arr;
+}();
+} // namespace
 
 std::string squareToNotation(int square) {
     char file = 'a' + (square % 8);
@@ -11,9 +24,7 @@ std::string squareToNotation(int square) {
 }
 
 std::string indexToAlgebraic(int index) {
-    char file = 'a' + (index % 8);
-    int rank = (index / 8) + 1;
-    return std::string(1, file) + std::to_string(rank);
+    return algebraicSquares[index];
 }
 
 void printBitboard(uint64_t bitboard, const std::string& label) {
