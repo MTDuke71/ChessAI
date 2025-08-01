@@ -21,6 +21,12 @@ public:
     explicit TranspositionTable(size_t size = DEFAULT_SIZE)
         : table(size), usedSlots(0) {}
 
+    void resize(size_t newSize) {
+        std::vector<TTSlot> newTable(newSize);
+        table.swap(newTable);
+        usedSlots.store(0, std::memory_order_relaxed);
+    }
+
     size_t size() const { return table.size(); }
 
     size_t used() const { return usedSlots.load(std::memory_order_relaxed); }
