@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "BitUtils.h"
+#include "MVVLVA.h"
 #include <algorithm>
 #include <chrono>
 #include <atomic>
@@ -46,6 +47,17 @@ static int pieceValueAt(const Board& board, int index) {
     if (board.getWhiteQueens() & mask || board.getBlackQueens() & mask) return 900;
     if (board.getWhiteKing() & mask || board.getBlackKing() & mask) return 20000;
     return 0;
+}
+
+static int pieceTypeAt(const Board& board, int index) {
+    uint64_t mask = 1ULL << index;
+    if (board.getWhitePawns() & mask || board.getBlackPawns() & mask) return MVVLVA::Pawn;
+    if (board.getWhiteKnights() & mask || board.getBlackKnights() & mask) return MVVLVA::Knight;
+    if (board.getWhiteBishops() & mask || board.getBlackBishops() & mask) return MVVLVA::Bishop;
+    if (board.getWhiteRooks() & mask || board.getBlackRooks() & mask) return MVVLVA::Rook;
+    if (board.getWhiteQueens() & mask || board.getBlackQueens() & mask) return MVVLVA::Queen;
+    if (board.getWhiteKing() & mask || board.getBlackKing() & mask) return MVVLVA::King;
+    return MVVLVA::Pawn; // default, should not happen for valid board
 }
 
 static int seeRec(const MoveGenerator& gen, Board& board, int square) {
@@ -96,13 +108,17 @@ static int moveScore(const Board& board,
     int from = algebraicToIndex(move.substr(0, 2));
     int to = algebraicToIndex(move.substr(dash + 1, 2));
     if (from < 0 || to < 0) return 0;
-    int captured = pieceValueAt(board, to);
-    if (!captured && board.getEnPassantSquare() == to)
-        captured = 100; // en passant captures a pawn
-    if (captured) {
-        int attacker = pieceValueAt(board, from);
+    int capturedVal = pieceValueAt(board, to);
+    if (!capturedVal && board.getEnPassantSquare() == to)
+        capturedVal = 100; // en passant captures a pawn
+    if (capturedVal) {
+        int attackerType = pieceTypeAt(board, from);
+        int victimType = pieceTypeAt(board, to);
+        if (board.getEnPassantSquare() == to)
+            victimType = MVVLVA::Pawn;
+        int score = MVVLVA::Table[victimType][attackerType];
         int seeVal = staticExchangeEval(gen, board, move);
-        return captured * 10 - attacker + seeVal; // MVV/LVA + SEE
+        return score * 10 + seeVal; // MVV/LVA table + SEE
     }
     return 0;
 }
