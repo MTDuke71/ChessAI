@@ -74,9 +74,10 @@ static int seeRec(const MoveGenerator& gen, Board& board, int square) {
         any = true;
         int from = algebraicToIndex(mv.substr(0, 2));
         int val = pieceValueAt(board, from);
-        Board copy = board;
-        copy.makeMove(mv);
-        int gain = val - seeRec(gen, copy, square);
+        Board::MoveState state;
+        board.makeMove(mv, state);
+        int gain = val - seeRec(gen, board, square);
+        board.unmakeMove(state);
         if (gain > best) best = gain;
     }
     if (!any) return 0;
@@ -84,7 +85,7 @@ static int seeRec(const MoveGenerator& gen, Board& board, int square) {
 }
 
 static int staticExchangeEval(const MoveGenerator& gen,
-                              const Board& board,
+                              Board& board,
                               const std::string& move) {
     auto dash = move.find('-');
     if (dash == std::string::npos) return 0;
@@ -95,12 +96,14 @@ static int staticExchangeEval(const MoveGenerator& gen,
     int captured = pieceValueAt(board, to);
     if (!captured && board.getEnPassantSquare() == to)
         captured = 100;
-    Board copy = board;
-    copy.makeMove(move);
-    return captured - seeRec(gen, copy, to);
+    Board::MoveState state;
+    board.makeMove(move, state);
+    int result = captured - seeRec(gen, board, to);
+    board.unmakeMove(state);
+    return result;
 }
 
-static int moveScore(const Board& board,
+static int moveScore(Board& board,
                      const std::string& move,
                      const MoveGenerator& gen) {
     auto dash = move.find('-');
@@ -151,9 +154,10 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
             moves.push_back(mv);
 
     for (const auto& m : moves) {
-        Board copy = board;
-        copy.makeMove(m);
-        int score = quiescence(copy, alpha, beta, !maximizing, end, stop);
+        Board::MoveState state;
+        board.makeMove(m, state);
+        int score = quiescence(board, alpha, beta, !maximizing, end, stop);
+        board.unmakeMove(state);
         if (maximizing) {
             if (score > alpha) alpha = score;
         } else {
@@ -232,17 +236,17 @@ std::pair<int, std::string> Engine::minimax(
         std::string bestPV;
         bool first = true;
         for (const auto& m : moves) {
-            Board copy = board;
-            copy.makeMove(m);
+            Board::MoveState state;
+            board.makeMove(m, state);
             std::pair<int, std::string> child;
             if (first) {
-                child = minimax(copy, depth - 1, alpha, beta, false, end, stop);
+                child = minimax(board, depth - 1, alpha, beta, false, end, stop);
             } else {
-                child = minimax(copy, depth - 1, alpha, alpha + 1,
+                child = minimax(board, depth - 1, alpha, alpha + 1,
                                 false, end, stop);
                 int eval = child.first;
                 if (eval > alpha && eval < beta) {
-                    child = minimax(copy, depth - 1, eval, beta,
+                    child = minimax(board, depth - 1, eval, beta,
                                     false, end, stop);
                 }
             }
@@ -253,8 +257,9 @@ std::pair<int, std::string> Engine::minimax(
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
             alpha = std::max(alpha, eval);
-            if (beta <= alpha) break;
+            if (beta <= alpha) { board.unmakeMove(state); break; }
             first = false;
+            board.unmakeMove(state);
         }
         TTEntry save{depth, bestEval, 0};
         if (bestEval <= alphaOrig) save.flag = -1;
@@ -266,17 +271,17 @@ std::pair<int, std::string> Engine::minimax(
         std::string bestPV;
         bool first = true;
         for (const auto& m : moves) {
-            Board copy = board;
-            copy.makeMove(m);
+            Board::MoveState state;
+            board.makeMove(m, state);
             std::pair<int, std::string> child;
             if (first) {
-                child = minimax(copy, depth - 1, alpha, beta, true, end, stop);
+                child = minimax(board, depth - 1, alpha, beta, true, end, stop);
             } else {
-                child = minimax(copy, depth - 1, beta - 1, beta,
+                child = minimax(board, depth - 1, beta - 1, beta,
                                 true, end, stop);
                 int eval = child.first;
                 if (eval < beta && eval > alpha) {
-                    child = minimax(copy, depth - 1, alpha, eval,
+                    child = minimax(board, depth - 1, alpha, eval,
                                     true, end, stop);
                 }
             }
@@ -287,8 +292,9 @@ std::pair<int, std::string> Engine::minimax(
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
             beta = std::min(beta, eval);
-            if (beta <= alpha) break;
+            if (beta <= alpha) { board.unmakeMove(state); break; }
             first = false;
+            board.unmakeMove(state);
         }
         TTEntry save{depth, bestEval, 0};
         if (bestEval <= alphaOrig) save.flag = -1;
