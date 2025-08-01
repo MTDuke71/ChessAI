@@ -19,7 +19,8 @@ int main(int argc, char* argv[]) {
         depth = std::stoi(argv[2]);
     }
 
-    uint64_t nodes = perft(board, gen, depth);
-    std::cout << "Perft(" << depth << ") = " << nodes << "\n";
+    double ms = 0.0;
+    uint64_t nodes = perft(board, gen, depth, ms);
+    std::cout << "Perft(" << depth << ") = " << nodes << " in " << ms << " ms\n";
     return 0;
 }
