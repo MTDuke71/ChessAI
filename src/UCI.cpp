@@ -9,7 +9,10 @@
 
 static std::string toInternalMove(const std::string& uci) {
     if (uci.size() < 4) return "";
-    return uci.substr(0,2) + "-" + uci.substr(2,2);
+    std::string move = uci.substr(0,2) + "-" + uci.substr(2,2);
+    if (uci.size() >= 5)
+        move += std::string(1, static_cast<char>(std::tolower(uci[4])));
+    return move;
 }
 
 static std::string toUCIMove(const std::string& move) {

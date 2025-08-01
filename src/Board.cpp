@@ -255,6 +255,12 @@ void Board::applyMove(const std::string& move) {
     int from = algebraicToIndex(move.substr(0, 2));
     int to = algebraicToIndex(move.substr(dash + 1, 2));
     if (from < 0 || to < 0) return;
+    char promoChar = 0;
+    if (move.size() > dash + 3) {
+        char c = move.back();
+        if (c=='q'||c=='r'||c=='b'||c=='n'||c=='Q'||c=='R'||c=='B'||c=='N')
+            promoChar = std::tolower(c);
+    }
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
     bool capture = ((getWhitePieces() | getBlackPieces()) & toMask);
@@ -315,6 +321,26 @@ void Board::applyMove(const std::string& move) {
     if (movedBlackRook) {
         if (from == 56) castleBQ = false;
         if (from == 63) castleBK = false;
+    }
+
+    if (promoChar && pawnMove) {
+        if (whiteToMove) {
+            whitePawns &= ~toMask;
+            switch (promoChar) {
+                case 'q': whiteQueens |= toMask; break;
+                case 'r': whiteRooks |= toMask; break;
+                case 'b': whiteBishops |= toMask; break;
+                case 'n': whiteKnights |= toMask; break;
+            }
+        } else {
+            blackPawns &= ~toMask;
+            switch (promoChar) {
+                case 'q': blackQueens |= toMask; break;
+                case 'r': blackRooks |= toMask; break;
+                case 'b': blackBishops |= toMask; break;
+                case 'n': blackKnights |= toMask; break;
+            }
+        }
     }
 
     whiteToMove = !whiteToMove;

@@ -70,11 +70,12 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t targets = one; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to - 8;
-      if ((1ULL << to) & whitePromRank)
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                        " (Promotes to Queen)");
-      else
+      if ((1ULL << to) & whitePromRank) {
+        for (char p : {'q', 'r', 'b', 'n'})
+          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+      } else {
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      }
     }
 
     // Double pushes from starting rank
@@ -91,22 +92,24 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t targets = left; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to - 9;
-      if ((1ULL << to) & whitePromRank)
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                        " (Captures and Promotes)");
-      else
+      if ((1ULL << to) & whitePromRank) {
+        for (char p : {'q', 'r', 'b', 'n'})
+          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+      } else {
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      }
     }
 
     uint64_t right = (pawns << 7) & opponentPieces & 0x7F7F7F7F7F7F7F7FULL;
     for (uint64_t targets = right; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to - 7;
-      if ((1ULL << to) & whitePromRank)
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                        " (Captures and Promotes)");
-      else
+      if ((1ULL << to) & whitePromRank) {
+        for (char p : {'q', 'r', 'b', 'n'})
+          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+      } else {
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      }
     }
   } else {
     // Single pushes
@@ -114,11 +117,12 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t targets = one; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to + 8;
-      if ((1ULL << to) & blackPromRank)
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                        " (Promotes to Queen)");
-      else
+      if ((1ULL << to) & blackPromRank) {
+        for (char p : {'q', 'r', 'b', 'n'})
+          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+      } else {
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      }
     }
 
     // Double pushes from starting rank
@@ -135,22 +139,24 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t targets = left; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to + 7;
-      if ((1ULL << to) & blackPromRank)
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                        " (Captures and Promotes)");
-      else
+      if ((1ULL << to) & blackPromRank) {
+        for (char p : {'q', 'r', 'b', 'n'})
+          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+      } else {
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      }
     }
 
     uint64_t right = (pawns >> 9) & opponentPieces & 0x7F7F7F7F7F7F7F7FULL;
     for (uint64_t targets = right; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to + 9;
-      if ((1ULL << to) & blackPromRank)
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                        " (Captures and Promotes)");
-      else
+      if ((1ULL << to) & blackPromRank) {
+        for (char p : {'q', 'r', 'b', 'n'})
+          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+      } else {
         moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      }
     }
   }
 
