@@ -284,3 +284,11 @@ int Board::repetitionCount() const {
     auto it = repetitionTable.find(key);
     return it != repetitionTable.end() ? it->second : 0;
 }
+
+bool Board::isStalemate() const {
+    MoveGenerator gen;
+    if (gen.isKingInCheck(*this, whiteToMove))
+        return false;
+    auto moves = gen.generateLegalMoves(*this, whiteToMove);
+    return moves.empty();
+}

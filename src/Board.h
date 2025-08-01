@@ -54,6 +54,7 @@ public:
     bool isFiftyMoveDraw() const { return halfmoveClock >= 100; }
     bool isThreefoldRepetition() const;
     int repetitionCount() const;
+    bool isStalemate() const;
 
     // Setters for testing
     void setWhitePawns(uint64_t value) { whitePawns = value; }
