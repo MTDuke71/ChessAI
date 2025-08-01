@@ -455,3 +455,10 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         return completedMove;
     return bestMove;
 }
+
+void Engine::setHashSizeMB(size_t mb) {
+    size_t bytes = mb * 1024 * 1024;
+    size_t entries = bytes / sizeof(TTSlot);
+    if (entries == 0) entries = 1;
+    tt.resize(entries);
+}

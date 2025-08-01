@@ -31,6 +31,8 @@ public:
                                     std::atomic<bool>& stopFlag);
 
     void clearTranspositionTable() { tt.clear(); }
+    void setHashSizeMB(size_t mb);
+    size_t getHashSize() const { return tt.size(); }
 
 private:
     int quiescence(Board& board, int alpha, int beta, bool maximizing,

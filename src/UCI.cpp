@@ -40,6 +40,19 @@ int main() {
             std::cout << "uciok" << '\n';
         } else if (line == "isready") {
             std::cout << "readyok" << '\n';
+        } else if (line.rfind("setoption", 0) == 0) {
+            auto namePos = line.find("name ");
+            auto valuePos = line.find(" value ");
+            if (namePos != std::string::npos) {
+                std::string name = line.substr(namePos + 5,
+                                              valuePos == std::string::npos ?
+                                              std::string::npos :
+                                              valuePos - (namePos + 5));
+                if (name == "Hash" && valuePos != std::string::npos) {
+                    int mb = std::stoi(line.substr(valuePos + 7));
+                    engine.setHashSizeMB(static_cast<size_t>(mb));
+                }
+            }
         } else if (line == "ucinewgame") {
             if (searchThread.joinable()) {
                 stopFlag = true;
