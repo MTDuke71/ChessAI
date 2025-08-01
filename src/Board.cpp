@@ -397,3 +397,11 @@ bool Board::isStalemate() const {
     auto moves = gen.generateLegalMoves(*this, whiteToMove);
     return moves.empty();
 }
+
+bool Board::isCheckmate() const {
+    MoveGenerator gen;
+    if (!gen.isKingInCheck(*this, whiteToMove))
+        return false;
+    auto moves = gen.generateLegalMoves(*this, whiteToMove);
+    return moves.empty();
+}

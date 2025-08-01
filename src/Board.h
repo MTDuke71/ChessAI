@@ -67,6 +67,7 @@ public:
     bool isThreefoldRepetition() const;
     int repetitionCount() const;
     bool isStalemate() const;
+    bool isCheckmate() const;
 
     // Setters for testing
     void setWhitePawns(uint64_t value) { whitePawns = value; }
