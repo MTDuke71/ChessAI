@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
 project(Aphelion)
 
+# Enable Interprocedural Optimization (Link Time Code Generation) in Release mode
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
+
+# Set high-speed optimization flags for MSVC in Release mode
+if(MSVC)
+  set(CMAKE_CXX_FLAGS_RELEASE "/O2 /Ot /Ob2 /Oi /Oy /DNDEBUG")
+  set(CMAKE_C_FLAGS_RELEASE "/O2 /Ot /Ob2 /Oi /Oy /DNDEBUG")
+endif()
+
 find_package(Threads REQUIRED)
 
 include(CTest)
