@@ -66,7 +66,9 @@ int main() {
             iss >> token; // position
             iss >> token;
             if (token == "startpos") {
-                board.loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+                if (!board.loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")) {
+                    std::cout << "info string Failed to load startpos" << '\n';
+                }
                 engine.clearTranspositionTable();
             } else if (token == "fen") {
                 std::string fenParts[6];
@@ -77,7 +79,12 @@ int main() {
             }
             if (iss >> token && token == "moves") {
                 while (iss >> token) {
-                    board.makeMove(toInternalMove(token));
+                    std::string internal = toInternalMove(token);
+                    if (!board.isMoveLegal(internal)) {
+                        std::cout << "info string Illegal move in position command: " << token << '\n';
+                        break;
+                    }
+                    board.makeMove(internal);
                 }
             }
         } else if (line.rfind("go",0) == 0) {
