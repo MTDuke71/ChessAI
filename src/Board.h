@@ -18,6 +18,18 @@ private:
 public:
     Board();
 
+    struct MoveState {
+        uint64_t whitePawns, whiteKnights, whiteBishops,
+                 whiteRooks, whiteQueens, whiteKing;
+        uint64_t blackPawns, blackKnights, blackBishops,
+                 blackRooks, blackQueens, blackKing;
+        int enPassantSquare;
+        bool whiteToMove;
+        bool castleWK, castleWQ, castleBK, castleBQ;
+        int halfmoveClock;
+        int fullmoveNumber;
+    };
+
     enum class Color { None, White, Black };
     Color pieceColorAt(int index) const;
 
@@ -77,6 +89,8 @@ public:
     std::string getFEN() const;
     bool isMoveLegal(const std::string& move) const;
     void makeMove(const std::string& move);
+    void makeMove(const std::string& move, MoveState& state);
+    void unmakeMove(const MoveState& state);
 private:
     void applyMove(const std::string& move);
 };

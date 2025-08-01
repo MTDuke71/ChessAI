@@ -194,6 +194,61 @@ void Board::makeMove(const std::string& move) {
     applyMove(move);
 }
 
+void Board::makeMove(const std::string& move, MoveState& state) {
+    state.whitePawns = whitePawns;
+    state.whiteKnights = whiteKnights;
+    state.whiteBishops = whiteBishops;
+    state.whiteRooks = whiteRooks;
+    state.whiteQueens = whiteQueens;
+    state.whiteKing = whiteKing;
+    state.blackPawns = blackPawns;
+    state.blackKnights = blackKnights;
+    state.blackBishops = blackBishops;
+    state.blackRooks = blackRooks;
+    state.blackQueens = blackQueens;
+    state.blackKing = blackKing;
+    state.enPassantSquare = enPassantSquare;
+    state.whiteToMove = whiteToMove;
+    state.castleWK = castleWK;
+    state.castleWQ = castleWQ;
+    state.castleBK = castleBK;
+    state.castleBQ = castleBQ;
+    state.halfmoveClock = halfmoveClock;
+    state.fullmoveNumber = fullmoveNumber;
+
+    applyMove(move);
+}
+
+void Board::unmakeMove(const MoveState& state) {
+    uint64_t key = Zobrist::hashBoard(*this);
+    auto it = repetitionTable.find(key);
+    if (it != repetitionTable.end()) {
+        if (--it->second == 0)
+            repetitionTable.erase(it);
+    }
+
+    whitePawns = state.whitePawns;
+    whiteKnights = state.whiteKnights;
+    whiteBishops = state.whiteBishops;
+    whiteRooks = state.whiteRooks;
+    whiteQueens = state.whiteQueens;
+    whiteKing = state.whiteKing;
+    blackPawns = state.blackPawns;
+    blackKnights = state.blackKnights;
+    blackBishops = state.blackBishops;
+    blackRooks = state.blackRooks;
+    blackQueens = state.blackQueens;
+    blackKing = state.blackKing;
+    enPassantSquare = state.enPassantSquare;
+    whiteToMove = state.whiteToMove;
+    castleWK = state.castleWK;
+    castleWQ = state.castleWQ;
+    castleBK = state.castleBK;
+    castleBQ = state.castleBQ;
+    halfmoveClock = state.halfmoveClock;
+    fullmoveNumber = state.fullmoveNumber;
+}
+
 void Board::applyMove(const std::string& move) {
     auto dash = move.find('-');
     if (dash == std::string::npos) return;
