@@ -29,8 +29,9 @@ public:
         auto& slot = table[key % table.size()];
         int curDepth = slot.depth.load(std::memory_order_relaxed);
         if (curDepth <= entry.depth) {
-            if (curDepth == -1)
+            if (curDepth == -1) {
                 usedSlots.fetch_add(1, std::memory_order_relaxed);
+            }
             slot.key.store(key, std::memory_order_relaxed);
             slot.depth.store(entry.depth, std::memory_order_relaxed);
             slot.value.store(entry.value, std::memory_order_relaxed);
