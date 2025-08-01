@@ -74,3 +74,7 @@ Thumbs.db
 
 # Git related
 *.orig
+
+/Testing/Temporary/
+
+/out/build/
