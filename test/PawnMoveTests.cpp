@@ -1,6 +1,7 @@
 #include "Board.h"
 #include "MoveGenerator.h"
 #include "PrintMoves.h"
+#include "BitUtils.h"
 #include <iostream>
 #include <cassert>
 
@@ -17,8 +18,13 @@ void testPawnPromotion() {
     std::cout << "\n[?] Pawn Promotion Test\n";
     printMoves(moves);
 
-    // Ensure at least one promotion move is generated
-    assert(!moves.empty());
+    // Expect 32 promotion moves (8 files * 4 piece choices)
+    assert(moves.size() == 32);
+
+    // Apply one underpromotion and verify board state changes
+    board.makeMove(moves.front());
+    // The moved piece should no longer be a pawn
+    assert(popcount64(board.getWhitePawns()) == 7);
 }
 
 // Test 2: En Passant
