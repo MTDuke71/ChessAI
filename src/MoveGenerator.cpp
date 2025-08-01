@@ -175,8 +175,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
       int from = lsbIndex(mask);
       int to = board.getEnPassantSquare();
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) +
-                      " (En Passant)");
+      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
     }
   }
 

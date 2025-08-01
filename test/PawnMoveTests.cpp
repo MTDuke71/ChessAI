@@ -52,10 +52,40 @@ void testEnPassant() {
     assert(!moves.empty());
 }
 
+// Test 3: En Passant Make/Unmake and Legality
+void testEnPassantExecution() {
+    Board board;
+    board.clearBoard();
+
+    // White pawn on e5, black pawn on d5 just advanced two squares
+    board.setWhitePawns(1ULL << 36); // e5
+    board.setBlackPawns(1ULL << 35); // d5
+    board.setEnPassantSquare(43);    // d6
+
+    // Move should be legal
+    assert(board.isMoveLegal("e5-d6"));
+
+    Board::MoveState st;
+    board.makeMove("e5-d6", st);
+
+    // White pawn captured en passant on d6
+    assert(board.getWhitePawns() == (1ULL << 43));
+    assert(board.getBlackPawns() == 0);
+    assert(board.getEnPassantSquare() == -1);
+
+    board.unmakeMove(st);
+
+    // Board restored
+    assert(board.getWhitePawns() == (1ULL << 36));
+    assert(board.getBlackPawns() == (1ULL << 35));
+    assert(board.getEnPassantSquare() == 43);
+}
+
 int main()
 {
     testPawnPromotion();
     testEnPassant();
+    testEnPassantExecution();
 
     std::cout << "\nAll tests passed successfully!\n";
     return 0;

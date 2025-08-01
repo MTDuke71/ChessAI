@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <cctype>
+#include <cstdlib>
 
 Board::Board() {
     loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
@@ -265,6 +266,16 @@ void Board::applyMove(const std::string& move) {
     uint64_t toMask = 1ULL << to;
     bool capture = ((getWhitePieces() | getBlackPieces()) & toMask);
     bool pawnMove = (whitePawns & fromMask) || (blackPawns & fromMask);
+    int prevEnPassant = enPassantSquare;
+    bool enPassantCapture = pawnMove && to == prevEnPassant && !capture;
+    if (enPassantCapture) {
+        uint64_t capMask = whiteToMove ? (1ULL << (to - 8)) : (1ULL << (to + 8));
+        if (whiteToMove)
+            blackPawns &= ~capMask;
+        else
+            whitePawns &= ~capMask;
+        capture = true;
+    }
 
     if (toMask & whiteRooks) {
         if (to == 0) castleWQ = false;
@@ -341,6 +352,19 @@ void Board::applyMove(const std::string& move) {
                 case 'n': blackKnights |= toMask; break;
             }
         }
+    }
+
+    if (pawnMove && std::abs(to - from) == 16) {
+        int mid = (from + to) / 2;
+        uint64_t adjMask = whiteToMove ? blackPawns : whitePawns;
+        bool leftAdj = (to % 8 > 0) && (adjMask & (1ULL << (to - 1)));
+        bool rightAdj = (to % 8 < 7) && (adjMask & (1ULL << (to + 1)));
+        if (leftAdj || rightAdj)
+            enPassantSquare = mid;
+        else
+            enPassantSquare = -1;
+    } else {
+        enPassantSquare = -1;
     }
 
     whiteToMove = !whiteToMove;
