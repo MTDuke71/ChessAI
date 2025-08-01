@@ -59,6 +59,12 @@ add_executable(IllegalMoveTests
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+add_executable(EngineMoveSelectionTest
+    test/EngineMoveSelectionTest.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/PrintMoves.cpp ${ENGINE_SOURCES})
+
 add_executable(GamePhaseTests
     test/GamePhaseTests.cpp
     src/Board.cpp
@@ -113,6 +119,7 @@ target_include_directories(KnightMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SliderMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(KingMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(IllegalMoveTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(EngineMoveSelectionTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(GamePhaseTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(DrawRuleTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(LegalMoveGenerationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -135,6 +142,7 @@ add_test(NAME SliderMoveTests COMMAND SliderMoveTests)
 add_test(NAME KingMoveTests COMMAND KingMoveTests)
 add_test(NAME PerftTest COMMAND PerftTest)
 add_test(NAME IllegalMoveTests COMMAND IllegalMoveTests)
+add_test(NAME EngineMoveSelectionTest COMMAND EngineMoveSelectionTest)
 add_test(NAME GamePhaseTests COMMAND GamePhaseTests)
 add_test(NAME DrawRuleTests COMMAND DrawRuleTests)
 add_test(NAME LegalMoveGenerationTest COMMAND LegalMoveGenerationTest)
