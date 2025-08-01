@@ -69,13 +69,12 @@ int main() {
                 if (!board.loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")) {
                     std::cout << "info string Failed to load startpos" << '\n';
                 }
-                engine.clearTranspositionTable();
             } else if (token == "fen") {
                 std::string fenParts[6];
                 for (int i=0;i<6 && iss>>fenParts[i];++i) {}
                 std::string fen = fenParts[0]+" "+fenParts[1]+" "+fenParts[2]+" "+fenParts[3]+" "+fenParts[4]+" "+fenParts[5];
                 board.loadFEN(fen);
-                engine.clearTranspositionTable();
+				board.printBoard();
             }
             if (iss >> token && token == "moves") {
                 while (iss >> token) {
@@ -85,7 +84,9 @@ int main() {
                         break;
                     }
                     board.makeMove(internal);
+
                 }
+                board.printBoard();
             }
         } else if (line.rfind("go",0) == 0) {
             if (searchThread.joinable()) {
