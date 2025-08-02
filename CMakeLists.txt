@@ -104,8 +104,12 @@ add_executable(PerftTest
 add_executable(MVVLVAArrayTest
     test/MVVLVAArrayTest.cpp)
 
-add_executable(TranspositionTableResizeTest
-    test/TranspositionTableResizeTest.cpp
+add_executable(TranspositionTableResizeTest 
+    test/TranspositionTableResizeTest.cpp 
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+
+add_executable(PassedPawnEvaluationTest
+    test/PassedPawnEvaluationTest.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 
 # Example programs
@@ -143,6 +147,7 @@ target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Aphelion PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(MVVLVAArrayTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(TranspositionTableResizeTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(PassedPawnEvaluationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 target_link_libraries(Aphelion PRIVATE Threads::Threads)
 
@@ -162,6 +167,7 @@ add_test(NAME StalemateTest COMMAND StalemateTest)
 add_test(NAME CheckmateTest COMMAND CheckmateTest)
 add_test(NAME MVVLVAArrayTest COMMAND MVVLVAArrayTest)
 add_test(NAME TranspositionTableResizeTest COMMAND TranspositionTableResizeTest)
+add_test(NAME PassedPawnEvaluationTest COMMAND PassedPawnEvaluationTest)
 
 
 
