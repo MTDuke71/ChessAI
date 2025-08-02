@@ -51,6 +51,8 @@ int Engine::evaluate(const Board &b) const {
   GamePhase phase = getGamePhase(b);
   int score = 0;
   uint64_t pieces;
+  int whiteFileCounts[8] = {0};
+  int blackFileCounts[8] = {0};
 
   auto isWhitePassed = [&b](int sq) {
     int rank = sq / 8;
@@ -136,6 +138,7 @@ int Engine::evaluate(const Board &b) const {
     score += PAWN_VALUE + PAWN_TABLE[sq];
     if (isWhitePassed(sq))
       score += PASSED_PAWN_BONUS[sq / 8];
+    ++whiteFileCounts[sq % 8];
   }
 
   pieces = b.getBlackPawns();
@@ -144,6 +147,26 @@ int Engine::evaluate(const Board &b) const {
     score -= PAWN_VALUE + PAWN_TABLE[mirror(sq)];
     if (isBlackPassed(sq))
       score -= PASSED_PAWN_BONUS[7 - (sq / 8)];
+    ++blackFileCounts[sq % 8];
+  }
+
+  for (int f = 0; f < 8; ++f) {
+    if (whiteFileCounts[f] > 1)
+      score -= DOUBLED_PAWN_PENALTY * (whiteFileCounts[f] - 1);
+    if (whiteFileCounts[f] > 0) {
+      bool left = (f > 0) && (whiteFileCounts[f - 1] > 0);
+      bool right = (f < 7) && (whiteFileCounts[f + 1] > 0);
+      if (!left && !right)
+        score -= ISOLATED_PAWN_PENALTY * whiteFileCounts[f];
+    }
+    if (blackFileCounts[f] > 1)
+      score += DOUBLED_PAWN_PENALTY * (blackFileCounts[f] - 1);
+    if (blackFileCounts[f] > 0) {
+      bool left = (f > 0) && (blackFileCounts[f - 1] > 0);
+      bool right = (f < 7) && (blackFileCounts[f + 1] > 0);
+      if (!left && !right)
+        score += ISOLATED_PAWN_PENALTY * blackFileCounts[f];
+    }
   }
 
   pieces = b.getWhiteKnights();
