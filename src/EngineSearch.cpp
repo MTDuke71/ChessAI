@@ -558,6 +558,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         int hashPercent = static_cast<int>(tt.used() * 1000 / tt.size());
         uint64_t nodeCount = nodes.load();
         uint64_t nps = elapsed > 0 ? (nodeCount * 1000 / elapsed) : nodeCount;
+        if (!lastDepthComplete) break;
         std::cout << "info depth " << depth << " score cp "
                   << (board.isWhiteToMove() ? bestScore : -bestScore)
                   << " nodes " << nodeCount << " nps " << nps
@@ -565,9 +566,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         if (!pvUCI.empty())
             std::cout << " pv " << pvUCI;
         std::cout << '\n';
-        if (lastDepthComplete) {
-            completedMove = bestMove;
-        }
+        completedMove = bestMove;
         if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
     }
     if (!completedMove.empty())
