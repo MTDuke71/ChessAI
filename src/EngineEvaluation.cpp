@@ -15,6 +15,20 @@ static int mirror(int sq) {
     return ((7 - (sq / 8)) * 8) + (sq % 8);
 }
 
+static uint64_t kingAttackMask(int sq) {
+    int r = sq / 8, f = sq % 8;
+    uint64_t mask = 0;
+    for (int dr = -1; dr <= 1; ++dr) {
+        for (int df = -1; df <= 1; ++df) {
+            if (dr == 0 && df == 0) continue;
+            int tr = r + dr, tf = f + df;
+            if (tr >= 0 && tr < 8 && tf >= 0 && tf < 8)
+                mask |= 1ULL << (tr * 8 + tf);
+        }
+    }
+    return mask;
+}
+
 namespace {
 const std::array<int, 64> pawnTable = {
      0,  0,  0,  0,  0,  0,  0,  0,
@@ -287,6 +301,42 @@ int Engine::evaluate(const Board& b) const {
     blackDevelop += countDeveloped(b.getBlackKnights(), {57,62});
     blackDevelop += countDeveloped(b.getBlackBishops(), {58,61});
     score += developBonus * (whiteDevelop - blackDevelop);
+
+    auto kingSafety = [&](bool white) {
+        uint64_t kingBb = white ? b.getWhiteKing() : b.getBlackKing();
+        if (!kingBb) return 0;
+        int sq = lsbIndex(kingBb);
+        uint64_t pawns = white ? b.getWhitePawns() : b.getBlackPawns();
+        uint64_t shield = 0;
+        int file = sq % 8;
+        if (white) {
+            if (sq / 8 < 7) {
+                shield |= 1ULL << (sq + 8);
+                if (file > 0) shield |= 1ULL << (sq + 7);
+                if (file < 7) shield |= 1ULL << (sq + 9);
+            }
+        } else {
+            if (sq / 8 > 0) {
+                shield |= 1ULL << (sq - 8);
+                if (file > 0) shield |= 1ULL << (sq - 9);
+                if (file < 7) shield |= 1ULL << (sq - 7);
+            }
+        }
+        int shieldCount = popcount64(pawns & shield);
+        int score = 10 * shieldCount;
+        uint64_t area = kingAttackMask(sq);
+        int attacked = 0;
+        for (uint64_t m = area; m; m &= m - 1) {
+            int s = popLSBIndex(m);
+            if (generator.isSquareAttacked(b, s, !white))
+                ++attacked;
+        }
+        score -= 15 * attacked;
+        return score;
+    };
+
+    score += kingSafety(true);
+    score -= kingSafety(false);
 
     if (phase != GamePhase::Endgame) {
         bool whiteCastled = (b.getWhiteKing() == (1ULL<<6)) ||

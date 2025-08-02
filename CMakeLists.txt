@@ -116,6 +116,10 @@ add_executable(ActivityBonusEvaluationTest
     test/ActivityBonusEvaluationTest.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+add_executable(KingSafetyEvaluationTest
+    test/KingSafetyEvaluationTest.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+
 # Example programs
 add_executable(CreatePosition examples/create_position.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
@@ -153,6 +157,7 @@ target_include_directories(MVVLVAArrayTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(TranspositionTableResizeTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PassedPawnEvaluationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(ActivityBonusEvaluationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(KingSafetyEvaluationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 target_link_libraries(Aphelion PRIVATE Threads::Threads)
 
@@ -174,6 +179,7 @@ add_test(NAME MVVLVAArrayTest COMMAND MVVLVAArrayTest)
 add_test(NAME TranspositionTableResizeTest COMMAND TranspositionTableResizeTest)
 add_test(NAME PassedPawnEvaluationTest COMMAND PassedPawnEvaluationTest)
 add_test(NAME ActivityBonusEvaluationTest COMMAND ActivityBonusEvaluationTest)
+add_test(NAME KingSafetyEvaluationTest COMMAND KingSafetyEvaluationTest)
 
 
 
