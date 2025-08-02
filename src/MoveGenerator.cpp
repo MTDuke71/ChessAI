@@ -168,8 +168,10 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       fromMask = ((epSquare >> 9) & pawns & 0xFEFEFEFEFEFEFEFEULL) |
                  ((epSquare >> 7) & pawns & 0x7F7F7F7F7F7F7F7FULL);
     } else {
-      fromMask = ((epSquare << 7) & pawns & 0xFEFEFEFEFEFEFEFEULL) |
-                 ((epSquare << 9) & pawns & 0x7F7F7F7F7F7F7F7FULL);
+      // Mirror the masks used for white so file wrapping is handled correctly
+      // for black pawns capturing en passant from either side.
+      fromMask = ((epSquare << 7) & pawns & 0x7F7F7F7F7F7F7F7FULL) |
+                 ((epSquare << 9) & pawns & 0xFEFEFEFEFEFEFEFEULL);
     }
 
     for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
