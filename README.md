@@ -56,6 +56,7 @@ the API:
 - `generate_moves.cpp` – load a FEN string and list all legal moves.
 - `search_best_move.cpp` – use the engine to pick a move from a position.
 - `perft.cpp` – calculate move counts at a given depth.
+- `print_book.cpp` – display all entries from the Polyglot opening book.
 - `Aphelion` – command line interface implementing the UCI protocol.
 
 After building, run them from the `build` directory just like the main example:
@@ -65,8 +66,15 @@ After building, run them from the `build` directory just like the main example:
 ./GenerateMoves
 ./SearchBestMove
 ./Perft <FEN> <depth>
+./PrintBook [book.bin]
 ./Aphelion
 ```
+
+## Opening Book
+
+The engine looks for a Polyglot book at `books/komodo.bin`. You can replace this
+file with any other Polyglot `.bin` to customize the opening repertoire.
+The `PrintBook` utility lists the decoded entries from a given book file.
 
 ## Implemented Features
 
@@ -77,7 +85,7 @@ After building, run them from the `build` directory just like the main example:
 - Transposition tables with Zobrist hashing for reusing evaluated positions.
 - Command-line UCI engine along with example programs for move generation and search.
 - Quiescence search to reduce horizon effects in tactical positions.
-- Opening book integration for common starting positions.
+- Opening book integration via a Polyglot `.bin` file (default book in `books/komodo.bin`).
 - Endgame tablebase lookup for perfect play in simplified endings.
 - Parallel root search to utilize multiple CPU cores during move calculation.
 - Move ordering using capture heuristics for faster alpha-beta pruning.

@@ -1,13 +1,20 @@
 #pragma once
 #include "Board.h"
-#include <unordered_map>
+#include "MoveGenerator.h"
 #include <string>
 #include <optional>
+#include <unordered_map>
+#include <cstdint>
+#include <iosfwd>
 
 class OpeningBook {
 public:
-    OpeningBook();
+    explicit OpeningBook(const std::string& file = "books/komodo.bin");
     std::optional<std::string> getBookMove(const Board& board) const;
+    void print(std::ostream& out) const;
 private:
-    std::unordered_map<std::string, std::string> book;
+    struct Entry { uint16_t move; uint16_t weight; uint32_t learn; };
+    std::unordered_multimap<uint64_t, Entry> entries;
+    static uint64_t polyglotHash(const Board& board);
+    static std::string decodeMove(uint16_t move);
 };

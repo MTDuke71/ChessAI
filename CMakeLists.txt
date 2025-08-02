@@ -129,6 +129,8 @@ add_executable(SearchBestMove examples/search_best_move.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(Perft examples/perft.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp src/Perft.cpp ${ENGINE_SOURCES})
+add_executable(PrintBook examples/print_book.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(Aphelion
     src/UCI.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
@@ -151,6 +153,7 @@ target_include_directories(CreatePosition PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(PrintBook PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Aphelion PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(MVVLVAArrayTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
