@@ -7,6 +7,7 @@
 #include <future>
 #include <iostream>
 #include <sstream>
+#include <array>
 
 static std::string toUCIMove(const std::string& move) {
     std::string uci = move;
@@ -208,7 +209,12 @@ int Engine::negamaxAlphaBeta(Board& board, int depth,
 std::pair<int, std::string> Engine::minimax(
         Board& board, int depth, int alpha, int beta, bool maximizing,
         const std::chrono::steady_clock::time_point& end,
-        const std::atomic<bool>& stop) {
+        const std::atomic<bool>& stop, int ply) {
+    constexpr int MAX_PLY = 64;
+    static thread_local std::array<std::array<std::string, 2>, MAX_PLY> killerMoves;
+    if (ply == 0) {
+        for (auto& km : killerMoves) { km[0].clear(); km[1].clear(); }
+    }
     if (stop || std::chrono::steady_clock::now() >= end)
         return {evaluate(board), ""};
     if (board.isFiftyMoveDraw() || board.isThreefoldRepetition())
@@ -242,12 +248,12 @@ std::pair<int, std::string> Engine::minimax(
         std::pair<int, std::string> nullRes;
         if (maximizing) {
             nullRes = minimax(nullBoard, rDepth, beta - 1, beta,
-                              false, end, stop);
+                              false, end, stop, ply + 1);
             if (nullRes.first >= beta)
                 return {nullRes.first, ""};
         } else {
             nullRes = minimax(nullBoard, rDepth, alpha, alpha + 1,
-                              true, end, stop);
+                              true, end, stop, ply + 1);
             if (nullRes.first <= alpha)
                 return {nullRes.first, ""};
         }
@@ -259,7 +265,17 @@ std::pair<int, std::string> Engine::minimax(
             moves.push_back(mv);
     }
     std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
-        return moveScore(board, a, generator) > moveScore(board, b, generator);
+        int scoreA = moveScore(board, a, generator);
+        int scoreB = moveScore(board, b, generator);
+        if (scoreA == 0) {
+            if (killerMoves[ply][0] == a) scoreA = 900;
+            else if (killerMoves[ply][1] == a) scoreA = 800;
+        }
+        if (scoreB == 0) {
+            if (killerMoves[ply][0] == b) scoreB = 900;
+            else if (killerMoves[ply][1] == b) scoreB = 800;
+        }
+        return scoreA > scoreB;
     });
     if (moves.empty()) {
         if (generator.isKingInCheck(board, board.isWhiteToMove())) {
@@ -273,18 +289,19 @@ std::pair<int, std::string> Engine::minimax(
         std::string bestPV;
         bool first = true;
         for (const auto& m : moves) {
+            bool capture = isCaptureMove(board, m);
             Board::MoveState state;
             board.makeMove(m, state);
             std::pair<int, std::string> child;
             if (first) {
-                child = minimax(board, depth - 1, alpha, beta, false, end, stop);
+                child = minimax(board, depth - 1, alpha, beta, false, end, stop, ply + 1);
             } else {
                 child = minimax(board, depth - 1, alpha, alpha + 1,
-                                false, end, stop);
+                                false, end, stop, ply + 1);
                 int eval = child.first;
                 if (eval > alpha && eval < beta) {
                     child = minimax(board, depth - 1, eval, beta,
-                                    false, end, stop);
+                                    false, end, stop, ply + 1);
                 }
             }
             int eval = child.first;
@@ -293,8 +310,17 @@ std::pair<int, std::string> Engine::minimax(
                 bestPV = m;
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
-            alpha = std::max(alpha, eval);
-            if (beta <= alpha) { board.unmakeMove(state); break; }
+            if (eval > alpha) alpha = eval;
+            if (alpha >= beta) {
+                if (!capture && ply < MAX_PLY) {
+                    if (killerMoves[ply][0] != m) {
+                        killerMoves[ply][1] = killerMoves[ply][0];
+                        killerMoves[ply][0] = m;
+                    }
+                }
+                board.unmakeMove(state);
+                break;
+            }
             first = false;
             board.unmakeMove(state);
         }
@@ -308,18 +334,19 @@ std::pair<int, std::string> Engine::minimax(
         std::string bestPV;
         bool first = true;
         for (const auto& m : moves) {
+            bool capture = isCaptureMove(board, m);
             Board::MoveState state;
             board.makeMove(m, state);
             std::pair<int, std::string> child;
             if (first) {
-                child = minimax(board, depth - 1, alpha, beta, true, end, stop);
+                child = minimax(board, depth - 1, alpha, beta, true, end, stop, ply + 1);
             } else {
                 child = minimax(board, depth - 1, beta - 1, beta,
-                                true, end, stop);
+                                true, end, stop, ply + 1);
                 int eval = child.first;
                 if (eval < beta && eval > alpha) {
                     child = minimax(board, depth - 1, alpha, eval,
-                                    true, end, stop);
+                                    true, end, stop, ply + 1);
                 }
             }
             int eval = child.first;
@@ -328,8 +355,17 @@ std::pair<int, std::string> Engine::minimax(
                 bestPV = m;
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
-            beta = std::min(beta, eval);
-            if (beta <= alpha) { board.unmakeMove(state); break; }
+            if (eval < beta) beta = eval;
+            if (beta <= alpha) {
+                if (!capture && ply < MAX_PLY) {
+                    if (killerMoves[ply][0] != m) {
+                        killerMoves[ply][1] = killerMoves[ply][0];
+                        killerMoves[ply][0] = m;
+                    }
+                }
+                board.unmakeMove(state);
+                break;
+            }
             first = false;
             board.unmakeMove(state);
         }
@@ -377,7 +413,7 @@ std::string Engine::searchBestMove(Board& board, int depth) {
                 return minimax(copy, d - 1, -1000000, 1000000,
                                !board.isWhiteToMove(),
                                std::chrono::steady_clock::time_point::max(),
-                               dummyStop);
+                               dummyStop, 0);
             }));
         }
 
@@ -444,7 +480,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
                 Board copy = board;
                 copy.makeMove(m);
                 return minimax(copy, depth - 1, -1000000, 1000000,
-                               !board.isWhiteToMove(), endTime, stopFlag);
+                               !board.isWhiteToMove(), endTime, stopFlag, 0);
             }));
         }
         for (size_t i = 0; i < moves.size(); ++i) {
