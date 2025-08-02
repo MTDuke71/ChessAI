@@ -26,11 +26,6 @@
           "name": "CMAKE_C_FLAGS_RELEASE",
           "value": "/MD /O2 /Ob2 /DNDEBUG",
           "type": "STRING"
-        },
-        {
-          "name": "CMAKE_BUILD_TYPE",
-          "value": "Release",
-          "type": "STRING"
         }
       ]
     }

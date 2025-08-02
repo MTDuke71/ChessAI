@@ -147,6 +147,7 @@ int Engine::evaluate(const Board& b) const {
         }
         return true;
     };
+
     auto isBlackPassed = [&b](int sq) {
         int rank = sq / 8;
         int file = sq % 8;
@@ -209,6 +210,7 @@ int Engine::evaluate(const Board& b) const {
         if (isWhitePassed(sq))
             score += passedPawnBonus[sq / 8];
     }
+
     pieces = b.getBlackPawns();
     while (pieces) {
         int sq = popLSBIndex(pieces);
@@ -224,6 +226,7 @@ int Engine::evaluate(const Board& b) const {
         if (isWhiteKnightOutpost(sq))
             score += 25;
     }
+
     pieces = b.getBlackKnights();
     while (pieces) {
         int sq = popLSBIndex(pieces);
@@ -237,6 +240,7 @@ int Engine::evaluate(const Board& b) const {
         int sq = popLSBIndex(pieces);
         score += bishop + bishopTable[sq];
     }
+
     if (popcount64(b.getWhiteBishops()) >= 2)
         score += 50; // bishop pair bonus
     pieces = b.getBlackBishops();
@@ -244,6 +248,7 @@ int Engine::evaluate(const Board& b) const {
         int sq = popLSBIndex(pieces);
         score -= bishop + bishopTable[mirror(sq)];
     }
+
     if (popcount64(b.getBlackBishops()) >= 2)
         score -= 50; // bishop pair bonus
 
@@ -255,6 +260,7 @@ int Engine::evaluate(const Board& b) const {
         if (((b.getWhitePawns() | b.getBlackPawns()) & fileMask) == 0)
             score += 15;
     }
+
     pieces = b.getBlackRooks();
     while (pieces) {
         int sq = popLSBIndex(pieces);
@@ -269,6 +275,7 @@ int Engine::evaluate(const Board& b) const {
         int sq = popLSBIndex(pieces);
         score += queen + queenTable[sq];
     }
+
     pieces = b.getBlackQueens();
     while (pieces) {
         int sq = popLSBIndex(pieces);
@@ -282,6 +289,7 @@ int Engine::evaluate(const Board& b) const {
         int sq = lsbIndex(pieces);
         score += king + (*kingTablePtr)[sq];
     }
+
     pieces = b.getBlackKing();
     if (pieces) {
         int sq = lsbIndex(pieces);
@@ -296,6 +304,7 @@ int Engine::evaluate(const Board& b) const {
         mobilityWeight = 2;
         developBonus = 0;
     }
+
     int whiteMobility = static_cast<int>(generator.generateAllMoves(b, true).size());
     int blackMobility = static_cast<int>(generator.generateAllMoves(b, false).size());
     score += mobilityWeight * (whiteMobility - blackMobility);
@@ -338,6 +347,7 @@ int Engine::evaluate(const Board& b) const {
                 if (file < 7) shield |= 1ULL << (sq - 7);
             }
         }
+
         int shieldCount = popcount64(pawns & shield);
         int score = 10 * shieldCount;
         uint64_t area = kingAttackMask(sq);
@@ -357,16 +367,21 @@ int Engine::evaluate(const Board& b) const {
     if (phase != GamePhase::Endgame) {
         bool whiteCastled = (b.getWhiteKing() == (1ULL<<6)) ||
                             (b.getWhiteKing() == (1ULL<<2));
+        
         bool blackCastled = (b.getBlackKing() == (1ULL<<62)) ||
                             (b.getBlackKing() == (1ULL<<58));
+        
         bool whiteHome = b.getWhiteKing() == (1ULL<<4);
         bool blackHome = b.getBlackKing() == (1ULL<<60);
+        
         int castleBonus = 40;
         int stuckPenalty = 20;
+        
         if (whiteCastled)
             score += castleBonus;
         else if (whiteHome && !b.canCastleWK() && !b.canCastleWQ())
             score -= stuckPenalty;
+        
         if (blackCastled)
             score -= castleBonus;
         else if (blackHome && !b.canCastleBK() && !b.canCastleBQ())
