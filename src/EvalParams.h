@@ -20,6 +20,9 @@ inline constexpr int KNIGHT_OUTPOST_BONUS = 25;
 inline constexpr int BISHOP_PAIR_BONUS = 50;
 inline constexpr int ROOK_OPEN_FILE_BONUS = 15;
 
+inline constexpr int ISOLATED_PAWN_PENALTY = 15;
+inline constexpr int DOUBLED_PAWN_PENALTY = 10;
+
 inline constexpr int MOBILITY_WEIGHT_DEFAULT = 5;
 inline constexpr int MOBILITY_WEIGHT_ENDGAME = 2;
 
