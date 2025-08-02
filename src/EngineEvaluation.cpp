@@ -202,5 +202,24 @@ int Engine::evaluate(const Board& b) const {
     blackDevelop += countDeveloped(b.getBlackBishops(), {58,61});
     score += developBonus * (whiteDevelop - blackDevelop);
 
+    if (phase != GamePhase::Endgame) {
+        bool whiteCastled = (b.getWhiteKing() == (1ULL<<6)) ||
+                            (b.getWhiteKing() == (1ULL<<2));
+        bool blackCastled = (b.getBlackKing() == (1ULL<<62)) ||
+                            (b.getBlackKing() == (1ULL<<58));
+        bool whiteHome = b.getWhiteKing() == (1ULL<<4);
+        bool blackHome = b.getBlackKing() == (1ULL<<60);
+        int castleBonus = 40;
+        int stuckPenalty = 20;
+        if (whiteCastled)
+            score += castleBonus;
+        else if (whiteHome && !b.canCastleWK() && !b.canCastleWQ())
+            score -= stuckPenalty;
+        if (blackCastled)
+            score -= castleBonus;
+        else if (blackHome && !b.canCastleBK() && !b.canCastleBQ())
+            score += stuckPenalty;
+    }
+
     return score;
 }
