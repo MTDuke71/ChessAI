@@ -168,6 +168,43 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
     return maximizing ? alpha : beta;
 }
 
+int Engine::negamaxAlphaBeta(Board& board, int depth,
+                             int alpha, int beta, int color,
+                             const std::chrono::steady_clock::time_point& end,
+                             const std::atomic<bool>& stop) {
+    if (stop || std::chrono::steady_clock::now() >= end)
+        return color * evaluate(board);
+    if (board.isFiftyMoveDraw() || board.isThreefoldRepetition())
+        return 0;
+    if (depth == 0)
+        return color * evaluate(board);
+
+    auto pseudo = generator.generateAllMoves(board, board.isWhiteToMove());
+    std::vector<std::string> moves;
+    for (const auto& mv : pseudo)
+        if (board.isMoveLegal(mv))
+            moves.push_back(mv);
+
+    if (moves.empty()) {
+        if (generator.isKingInCheck(board, board.isWhiteToMove()))
+            return -1000000 * color;
+        return 0;
+    }
+
+    for (const auto& m : moves) {
+        Board::MoveState st;
+        board.makeMove(m, st);
+        int score = -negamaxAlphaBeta(board, depth - 1,
+                                      -beta, -alpha, -color, end, stop);
+        board.unmakeMove(st);
+        if (score >= beta)
+            return score;
+        if (score > alpha)
+            alpha = score;
+    }
+    return alpha;
+}
+
 std::pair<int, std::string> Engine::minimax(
         Board& board, int depth, int alpha, int beta, bool maximizing,
         const std::chrono::steady_clock::time_point& end,
