@@ -24,6 +24,12 @@ public:
             const std::chrono::steady_clock::time_point& end,
             const std::atomic<bool>& stop);
 
+    // Simple negamax search with alpha-beta pruning
+    int negamaxAlphaBeta(Board& board, int depth,
+                         int alpha, int beta, int color,
+                         const std::chrono::steady_clock::time_point& end,
+                         const std::atomic<bool>& stop);
+
     std::string searchBestMove(Board& board, int depth);
 
     std::string searchBestMoveTimed(Board& board, int maxDepth,
