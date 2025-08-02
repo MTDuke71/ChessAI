@@ -92,6 +92,9 @@ const std::array<int, 64> kingTableEndgame = {
    -30,-30,  0,  0,  0,  0,-30,-30,
    -50,-30,-30,-30,-30,-30,-30,-50
 };
+
+// Bonus for passed pawns by rank (from White's perspective)
+const std::array<int,8> passedPawnBonus = {0, 5, 10, 20, 35, 60, 100, 0};
 }
 
 int Engine::evaluate(const Board& b) const {
@@ -100,15 +103,48 @@ int Engine::evaluate(const Board& b) const {
     int score = 0;
     uint64_t pieces;
 
+    auto isWhitePassed = [&b](int sq) {
+        int rank = sq / 8;
+        int file = sq % 8;
+        int startFile = (file > 0) ? file - 1 : file;
+        int endFile = (file < 7) ? file + 1 : file;
+        uint64_t blackPawns = b.getBlackPawns();
+        for (int r = rank + 1; r < 8; ++r) {
+            for (int f = startFile; f <= endFile; ++f) {
+                int idx = r * 8 + f;
+                if (blackPawns & (1ULL << idx)) return false;
+            }
+        }
+        return true;
+    };
+    auto isBlackPassed = [&b](int sq) {
+        int rank = sq / 8;
+        int file = sq % 8;
+        int startFile = (file > 0) ? file - 1 : file;
+        int endFile = (file < 7) ? file + 1 : file;
+        uint64_t whitePawns = b.getWhitePawns();
+        for (int r = rank - 1; r >= 0; --r) {
+            for (int f = startFile; f <= endFile; ++f) {
+                int idx = r * 8 + f;
+                if (whitePawns & (1ULL << idx)) return false;
+            }
+        }
+        return true;
+    };
+
     pieces = b.getWhitePawns();
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score += pawn + pawnTable[sq];
+        if (isWhitePassed(sq))
+            score += passedPawnBonus[sq / 8];
     }
     pieces = b.getBlackPawns();
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score -= pawn + pawnTable[mirror(sq)];
+        if (isBlackPassed(sq))
+            score -= passedPawnBonus[7 - (sq / 8)];
     }
 
     pieces = b.getWhiteKnights();
