@@ -6,10 +6,16 @@
 #include <cctype>
 #include <cstdlib>
 
+//------------------------------------------------------------------------------
+// Default constructor initializes the board to the standard starting position.
+//------------------------------------------------------------------------------
 Board::Board() {
     loadFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
+//------------------------------------------------------------------------------
+// Reset all bitboards and state information to represent an empty board.
+//------------------------------------------------------------------------------
 void Board::clearBoard() {
     whitePawns = whiteKnights = whiteBishops = whiteRooks = whiteQueens = whiteKing = 0;
     blackPawns = blackKnights = blackBishops = blackRooks = blackQueens = blackKing = 0;
@@ -21,6 +27,9 @@ void Board::clearBoard() {
     repetitionTable.clear();
 }
 
+//------------------------------------------------------------------------------
+// Display the current board state in a simple ASCII diagram.
+//------------------------------------------------------------------------------
 void Board::printBoard() const {
     std::cout << "   a b c d e f g h\n";
     std::cout << "  +-----------------+\n";
@@ -51,6 +60,10 @@ void Board::printBoard() const {
     std::cout << "   a b c d e f g h\n\n";
 }
 
+//------------------------------------------------------------------------------
+// Load a board position from a FEN string.
+// Returns true on success, false if the string is malformed.
+//------------------------------------------------------------------------------
 bool Board::loadFEN(const std::string& fen) {
     clearBoard();
     std::stringstream ss(fen);
@@ -109,6 +122,9 @@ bool Board::loadFEN(const std::string& fen) {
     return true;
 }
 
+//------------------------------------------------------------------------------
+// Convert the current board state into a FEN string.
+//------------------------------------------------------------------------------
 std::string Board::getFEN() const {
     std::string fen;
     for (int rank = 7; rank >= 0; --rank) {
@@ -172,6 +188,9 @@ Board::Color Board::pieceColorAt(int index) const {
     return Color::None;
 }
 
+//------------------------------------------------------------------------------
+// Check whether a move in algebraic format (e2-e4) is legal.
+//------------------------------------------------------------------------------
 bool Board::isMoveLegal(const std::string& move) const {
     if (move.size() < 5) return false;
     MoveGenerator gen;
@@ -187,6 +206,9 @@ bool Board::isMoveLegal(const std::string& move) const {
     return false;
 }
 
+//------------------------------------------------------------------------------
+// Validate and apply a move, printing an error if the move is illegal.
+//------------------------------------------------------------------------------
 void Board::makeMove(const std::string& move) {
     if (!isMoveLegal(move)) {
         std::cerr << "Illegal move attempted: " << move << "\n";
@@ -250,22 +272,34 @@ void Board::unmakeMove(const MoveState& state) {
     fullmoveNumber = state.fullmoveNumber;
 }
 
+//------------------------------------------------------------------------------
+// Apply a (pre-validated) move to the board and update game state.
+// The move string is expected in the format "e2-e4" with an optional promotion
+// piece (e.g., "e7-e8q").
+//------------------------------------------------------------------------------
 void Board::applyMove(const std::string& move) {
+    // -- Parse move and determine source and destination squares ---------------
     auto dash = move.find('-');
     if (dash == std::string::npos) return;
     int from = algebraicToIndex(move.substr(0, 2));
     int to = algebraicToIndex(move.substr(dash + 1, 2));
     if (from < 0 || to < 0) return;
+
+    // Detect promotion piece
     char promoChar = 0;
     if (move.size() > dash + 3) {
         char c = move.back();
         if (c=='q'||c=='r'||c=='b'||c=='n'||c=='Q'||c=='R'||c=='B'||c=='N')
             promoChar = std::tolower(c);
     }
+
+    // Determine move characteristics
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
     bool capture = ((getWhitePieces() | getBlackPieces()) & toMask);
     bool pawnMove = (whitePawns & fromMask) || (blackPawns & fromMask);
+
+    // Handle en passant captures
     int prevEnPassant = enPassantSquare;
     bool enPassantCapture = pawnMove && to == prevEnPassant && !capture;
     if (enPassantCapture) {
@@ -277,6 +311,7 @@ void Board::applyMove(const std::string& move) {
         capture = true;
     }
 
+    // Update castling rights if rooks are captured
     if (toMask & whiteRooks) {
         if (to == 0) castleWQ = false;
         if (to == 7) castleWK = false;
@@ -286,10 +321,12 @@ void Board::applyMove(const std::string& move) {
         if (to == 63) castleBK = false;
     }
 
+    // Remove any piece on the destination square
     uint64_t mask = ~toMask;
     whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
     blackPawns &= mask; blackKnights &= mask; blackBishops &= mask; blackRooks &= mask; blackQueens &= mask; blackKing &= mask;
 
+    // Move the piece from source to destination
     auto movePiece = [&](uint64_t &bb) { if (bb & fromMask) { bb &= ~fromMask; bb |= toMask; return true; } return false; };
 
     bool movedWhiteKing = (whiteKing & fromMask);
@@ -304,6 +341,7 @@ void Board::applyMove(const std::string& move) {
         return;
     }
 
+    // Handle castling moves
     if (movedWhiteKing) {
         castleWK = castleWQ = false;
         if (from == 4 && to == 6) {
@@ -325,6 +363,7 @@ void Board::applyMove(const std::string& move) {
         }
     }
 
+    // Update castling rights if rooks move
     if (movedWhiteRook) {
         if (from == 0) castleWQ = false;
         if (from == 7) castleWK = false;
@@ -334,6 +373,7 @@ void Board::applyMove(const std::string& move) {
         if (from == 63) castleBK = false;
     }
 
+    // Handle pawn promotion
     if (promoChar && pawnMove) {
         if (whiteToMove) {
             whitePawns &= ~toMask;
@@ -354,6 +394,7 @@ void Board::applyMove(const std::string& move) {
         }
     }
 
+    // Set en passant target if a pawn moved two squares
     if (pawnMove && std::abs(to - from) == 16) {
         int mid = (from + to) / 2;
         uint64_t adjMask = whiteToMove ? blackPawns : whitePawns;
@@ -367,6 +408,7 @@ void Board::applyMove(const std::string& move) {
         enPassantSquare = -1;
     }
 
+    // Update move counters and side to move
     whiteToMove = !whiteToMove;
     if (pawnMove || capture)
         halfmoveClock = 0;
@@ -374,22 +416,33 @@ void Board::applyMove(const std::string& move) {
         ++halfmoveClock;
     if (!whiteToMove)
         ++fullmoveNumber;
+
+    // Record position for repetition detection
     uint64_t key = Zobrist::hashBoard(*this);
     repetitionTable[key]++;
 }
 
+//------------------------------------------------------------------------------
+// Determine whether the current position has occurred three or more times.
+//------------------------------------------------------------------------------
 bool Board::isThreefoldRepetition() const {
     uint64_t key = Zobrist::hashBoard(*this);
     auto it = repetitionTable.find(key);
     return it != repetitionTable.end() && it->second >= 3;
 }
 
+//------------------------------------------------------------------------------
+// Get how many times the current position has appeared in the game history.
+//------------------------------------------------------------------------------
 int Board::repetitionCount() const {
     uint64_t key = Zobrist::hashBoard(*this);
     auto it = repetitionTable.find(key);
     return it != repetitionTable.end() ? it->second : 0;
 }
 
+//------------------------------------------------------------------------------
+// Check whether the side to move has no legal moves and is not in check.
+//------------------------------------------------------------------------------
 bool Board::isStalemate() const {
     MoveGenerator gen;
     if (gen.isKingInCheck(*this, whiteToMove))
@@ -398,6 +451,9 @@ bool Board::isStalemate() const {
     return moves.empty();
 }
 
+//------------------------------------------------------------------------------
+// Check whether the side to move is in check and has no legal moves.
+//------------------------------------------------------------------------------
 bool Board::isCheckmate() const {
     MoveGenerator gen;
     if (!gen.isKingInCheck(*this, whiteToMove))
