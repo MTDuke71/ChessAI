@@ -9,6 +9,10 @@
 #include <sstream>
 #include <array>
 
+// -----------------------------------------------------------------------------
+// Converts an internal move representation (e.g., "e2-e4") into the compact UCI
+// format ("e2e4").
+// -----------------------------------------------------------------------------
 static std::string toUCIMove(const std::string& move) {
     std::string uci = move;
     auto dash = uci.find('-');
@@ -16,6 +20,10 @@ static std::string toUCIMove(const std::string& move) {
     return uci;
 }
 
+// -----------------------------------------------------------------------------
+// Determines if the provided move results in a capture on the target square or
+// via en passant.
+// -----------------------------------------------------------------------------
 static bool isCaptureMove(const Board& board, const std::string& move) {
     auto dash = move.find('-');
     if (dash == std::string::npos) return false;
@@ -39,6 +47,9 @@ static bool isCaptureMove(const Board& board, const std::string& move) {
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Returns the material value of the piece located at the given board index.
+// -----------------------------------------------------------------------------
 static int pieceValueAt(const Board& board, int index) {
     uint64_t mask = 1ULL << index;
     if (board.getWhitePawns() & mask || board.getBlackPawns() & mask) return 100;
@@ -50,6 +61,9 @@ static int pieceValueAt(const Board& board, int index) {
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Returns the MVVLVA piece type at a given board index used for move ordering.
+// -----------------------------------------------------------------------------
 static int pieceTypeAt(const Board& board, int index) {
     uint64_t mask = 1ULL << index;
     if (board.getWhitePawns() & mask || board.getBlackPawns() & mask) return MVVLVA::Pawn;
@@ -61,6 +75,10 @@ static int pieceTypeAt(const Board& board, int index) {
     return MVVLVA::Pawn; // default, should not happen for valid board
 }
 
+// -----------------------------------------------------------------------------
+// Recursively evaluates a capture sequence starting on the given square using
+// static exchange evaluation (SEE).
+// -----------------------------------------------------------------------------
 static int seeRec(const MoveGenerator& gen, Board& board, int square) {
     bool side = board.isWhiteToMove();
     auto pseudo = gen.generateAllMoves(board, side);
@@ -85,6 +103,10 @@ static int seeRec(const MoveGenerator& gen, Board& board, int square) {
     return best;
 }
 
+// -----------------------------------------------------------------------------
+// Performs static exchange evaluation for a given move by simulating the capture
+// sequence on the target square.
+// -----------------------------------------------------------------------------
 static int staticExchangeEval(const MoveGenerator& gen,
                               Board& board,
                               const std::string& move) {
@@ -104,6 +126,9 @@ static int staticExchangeEval(const MoveGenerator& gen,
     return result;
 }
 
+// -----------------------------------------------------------------------------
+// Computes a heuristic score for move ordering using MVV/LVA and SEE.
+// -----------------------------------------------------------------------------
 static int moveScore(Board& board,
                      const std::string& move,
                      const MoveGenerator& gen) {
@@ -127,11 +152,17 @@ static int moveScore(Board& board,
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Engine constructor ensures Zobrist keys are initialized once.
+// -----------------------------------------------------------------------------
 Engine::Engine() {
     static bool init = false;
     if (!init) { Zobrist::init(); init = true; }
 }
 
+// -----------------------------------------------------------------------------
+// Quiescence search that explores only capture moves to stabilize evaluation.
+// -----------------------------------------------------------------------------
 int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
                        const std::chrono::steady_clock::time_point& end,
                        const std::atomic<bool>& stop) {
@@ -169,6 +200,10 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
     return maximizing ? alpha : beta;
 }
 
+// -----------------------------------------------------------------------------
+// Negamax search with alpha-beta pruning. Returns the evaluated score from the
+// perspective of the current player.
+// -----------------------------------------------------------------------------
 int Engine::negamaxAlphaBeta(Board& board, int depth,
                              int alpha, int beta, int color,
                              const std::chrono::steady_clock::time_point& end,
@@ -206,6 +241,10 @@ int Engine::negamaxAlphaBeta(Board& board, int depth,
     return alpha;
 }
 
+// -----------------------------------------------------------------------------
+// Full-featured minimax search with alpha-beta pruning, null-move pruning and
+// killer move heuristics. Returns the evaluation score and principal variation.
+// -----------------------------------------------------------------------------
 std::pair<int, std::string> Engine::minimax(
         Board& board, int depth, int alpha, int beta, bool maximizing,
         const std::chrono::steady_clock::time_point& end,
@@ -377,6 +416,9 @@ std::pair<int, std::string> Engine::minimax(
     }
 }
 
+// -----------------------------------------------------------------------------
+// Iteratively deepens search up to the specified depth to find the best move.
+// -----------------------------------------------------------------------------
 std::string Engine::searchBestMove(Board& board, int depth) {
     if (auto tb = tablebase.lookupMove(board))
         return *tb;
@@ -432,6 +474,10 @@ std::string Engine::searchBestMove(Board& board, int depth) {
     return bestMove;
 }
 
+// -----------------------------------------------------------------------------
+// Time-limited iterative deepening search. Stops when the time limit is reached
+// or search is externally halted.
+// -----------------------------------------------------------------------------
 std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
                                         int timeLimitMs,
                                         std::atomic<bool>& stopFlag) {
@@ -529,6 +575,10 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
     return bestMove;
 }
 
+// -----------------------------------------------------------------------------
+// Resizes the transposition table to hold approximately the given number of
+// megabytes.
+// -----------------------------------------------------------------------------
 void Engine::setHashSizeMB(size_t mb) {
     size_t bytes = mb * 1024 * 1024;
     size_t entries = bytes / sizeof(TTSlot);
