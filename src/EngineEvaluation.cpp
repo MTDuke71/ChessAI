@@ -3,6 +3,10 @@
 #include "MoveGenerator.h"
 #include <array>
 
+// -----------------------------------------------------------------------------
+// Determines the phase of the game (opening, middlegame, endgame) based on the
+// total number of pieces remaining on the board.
+// -----------------------------------------------------------------------------
 Engine::GamePhase Engine::getGamePhase(const Board& b) const {
     uint64_t all = b.getWhitePieces() | b.getBlackPieces();
     int pieces = popcount64(all);
@@ -11,10 +15,18 @@ Engine::GamePhase Engine::getGamePhase(const Board& b) const {
     return GamePhase::Endgame;
 }
 
+// -----------------------------------------------------------------------------
+// Returns the mirrored square index relative to the horizontal center of the
+// board. Useful for evaluating black piece positions using white tables.
+// -----------------------------------------------------------------------------
 static int mirror(int sq) {
     return ((7 - (sq / 8)) * 8) + (sq % 8);
 }
 
+// -----------------------------------------------------------------------------
+// Generates a bitboard mask of all squares attacked by a king placed on the
+// given square.
+// -----------------------------------------------------------------------------
 static uint64_t kingAttackMask(int sq) {
     int r = sq / 8, f = sq % 8;
     uint64_t mask = 0;
@@ -111,6 +123,10 @@ const std::array<int, 64> kingTableEndgame = {
 const std::array<int,8> passedPawnBonus = {0, 5, 10, 20, 35, 60, 100, 0};
 }
 
+// -----------------------------------------------------------------------------
+// Evaluates the given board position and returns a score. Positive values favor
+// White, negative values favor Black.
+// -----------------------------------------------------------------------------
 int Engine::evaluate(const Board& b) const {
     const int pawn = 100, knight = 320, bishop = 330, rook = 500, queen = 900, king = 20000;
     GamePhase phase = getGamePhase(b);
