@@ -119,15 +119,14 @@ int main() {
 
             stopFlag = false;
             pondering = ponder;
-            searchThread = std::thread([&]() {
+            bool autoPrint = !infinite && !ponder;
+            searchThread = std::thread([&, autoPrint]() {
                 bestMove = engine.searchBestMoveTimed(board, depth, timeLimit, stopFlag);
+                if (autoPrint && !stopFlag) {
+                    std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
+                    std::cout << "bestmove " << uci << '\n';
+                }
             });
-
-            if (!infinite && !ponder) {
-                searchThread.join();
-                std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
-                std::cout << "bestmove " << uci << '\n';
-            }
         } else if (line == "ponderhit") {
             if (searchThread.joinable() && pondering) {
                 stopFlag = true;
