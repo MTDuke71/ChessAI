@@ -132,6 +132,46 @@ int Engine::evaluate(const Board& b) const {
         return true;
     };
 
+    auto isWhiteKnightOutpost = [&b](int sq) {
+        int rank = sq / 8;
+        if (rank < 3) return false; // needs to be on 4th rank or beyond
+        int file = sq % 8;
+        uint64_t blackPawns = b.getBlackPawns();
+        uint64_t whitePawns = b.getWhitePawns();
+        uint64_t attackers = 0, supporters = 0;
+        if (file > 0) {
+            attackers |= 1ULL << (sq + 7);
+            supporters |= 1ULL << (sq - 9);
+        }
+        if (file < 7) {
+            attackers |= 1ULL << (sq + 9);
+            supporters |= 1ULL << (sq - 7);
+        }
+        if (blackPawns & attackers) return false;
+        if ((whitePawns & supporters) == 0) return false;
+        return true;
+    };
+
+    auto isBlackKnightOutpost = [&b](int sq) {
+        int rank = sq / 8;
+        if (rank > 4) return false; // needs to be on 5th rank or beyond from black's view
+        int file = sq % 8;
+        uint64_t whitePawns = b.getWhitePawns();
+        uint64_t blackPawns = b.getBlackPawns();
+        uint64_t attackers = 0, supporters = 0;
+        if (file > 0) {
+            attackers |= 1ULL << (sq - 9);
+            supporters |= 1ULL << (sq + 7);
+        }
+        if (file < 7) {
+            attackers |= 1ULL << (sq - 7);
+            supporters |= 1ULL << (sq + 9);
+        }
+        if (whitePawns & attackers) return false;
+        if ((blackPawns & supporters) == 0) return false;
+        return true;
+    };
+
     pieces = b.getWhitePawns();
     while (pieces) {
         int sq = popLSBIndex(pieces);
@@ -151,11 +191,15 @@ int Engine::evaluate(const Board& b) const {
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score += knight + knightTable[sq];
+        if (isWhiteKnightOutpost(sq))
+            score += 25;
     }
     pieces = b.getBlackKnights();
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score -= knight + knightTable[mirror(sq)];
+        if (isBlackKnightOutpost(sq))
+            score -= 25;
     }
 
     pieces = b.getWhiteBishops();
@@ -177,11 +221,17 @@ int Engine::evaluate(const Board& b) const {
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score += rook + rookTable[sq];
+        uint64_t fileMask = 0x0101010101010101ULL << (sq % 8);
+        if (((b.getWhitePawns() | b.getBlackPawns()) & fileMask) == 0)
+            score += 15;
     }
     pieces = b.getBlackRooks();
     while (pieces) {
         int sq = popLSBIndex(pieces);
         score -= rook + rookTable[mirror(sq)];
+        uint64_t fileMask = 0x0101010101010101ULL << (sq % 8);
+        if (((b.getWhitePawns() | b.getBlackPawns()) & fileMask) == 0)
+            score -= 15;
     }
 
     pieces = b.getWhiteQueens();
