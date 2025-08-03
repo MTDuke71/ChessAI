@@ -52,21 +52,22 @@ uint64_t OpeningBook::polyglotHash(const Board& b) {
 #else
             sq = __builtin_ctzll(bb); bb &= bb-1ULL;
 #endif
-            h ^= polyglotRandom[pieceIndex*64 + sq];
+            sq ^= 56;
+            h ^= polyglotRandom[pieceIndex * 64 + sq];
         }
     };
     addPieces(b.getWhitePawns(), 0);
-    addPieces(b.getWhiteKnights(), 1);
-    addPieces(b.getWhiteBishops(), 2);
-    addPieces(b.getWhiteRooks(), 3);
-    addPieces(b.getWhiteQueens(), 4);
-    addPieces(b.getWhiteKing(), 5);
-    addPieces(b.getBlackPawns(), 6);
-    addPieces(b.getBlackKnights(), 7);
-    addPieces(b.getBlackBishops(), 8);
-    addPieces(b.getBlackRooks(), 9);
-    addPieces(b.getBlackQueens(),10);
-    addPieces(b.getBlackKing(),11);
+    addPieces(b.getBlackPawns(), 1);
+    addPieces(b.getWhiteKnights(), 2);
+    addPieces(b.getBlackKnights(), 3);
+    addPieces(b.getWhiteBishops(), 4);
+    addPieces(b.getBlackBishops(), 5);
+    addPieces(b.getWhiteRooks(), 6);
+    addPieces(b.getBlackRooks(), 7);
+    addPieces(b.getWhiteQueens(), 8);
+    addPieces(b.getBlackQueens(), 9);
+    addPieces(b.getWhiteKing(), 10);
+    addPieces(b.getBlackKing(), 11);
     if (b.canCastleWK()) h ^= polyglotRandom[768];
     if (b.canCastleWQ()) h ^= polyglotRandom[769];
     if (b.canCastleBK()) h ^= polyglotRandom[770];
