@@ -16,9 +16,25 @@ static std::string toInternalMove(const std::string& uci) {
 }
 
 static std::string toUCIMove(const std::string& move) {
-    std::string uci = move;
-    auto dash = uci.find('-');
-    if (dash != std::string::npos) uci.erase(dash,1);
+    auto dash = move.find('-');
+    if (dash == std::string::npos) return move;
+
+    std::string from = move.substr(0, 2);
+    std::string to = move.substr(dash + 1, 2);
+
+    if (from == "e1" && to == "h1") to = "g1";
+    else if (from == "e1" && to == "a1") to = "c1";
+    else if (from == "e8" && to == "h8") to = "g8";
+    else if (from == "e8" && to == "a8") to = "c8";
+
+    std::string uci = from + to;
+
+    if (move.size() > dash + 3) {
+        char c = std::tolower(move.back());
+        if (c == 'q' || c == 'r' || c == 'b' || c == 'n')
+            uci += c;
+    }
+
     return uci;
 }
 
