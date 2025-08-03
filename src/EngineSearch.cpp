@@ -422,8 +422,10 @@ std::pair<int, std::string> Engine::minimax(
 std::string Engine::searchBestMove(Board& board, int depth) {
     if (auto tb = tablebase.lookupMove(board))
         return *tb;
-    if (auto bm = book.getBookMove(board))
-        return *bm;
+    if (useOwnBook) {
+        if (auto bm = book.getBookMove(board))
+            return *bm;
+    }
 
     std::atomic<bool> dummyStop(false);
     std::string bestMove;
@@ -490,8 +492,10 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
 
     if (auto tb = tablebase.lookupMove(board))
         return *tb;
-    if (auto bm = book.getBookMove(board))
-        return *bm;
+    if (useOwnBook) {
+        if (auto bm = book.getBookMove(board))
+            return *bm;
+    }
 
     std::string bestMove;
     std::string bestPV;
