@@ -251,8 +251,13 @@ std::pair<int, std::string> Engine::minimax(
         const std::atomic<bool>& stop, int ply) {
     constexpr int MAX_PLY = 64;
     static thread_local std::array<std::array<std::string, 2>, MAX_PLY> killerMoves;
+    static thread_local int historyTable[2][64][64];
     if (ply == 0) {
         for (auto& km : killerMoves) { km[0].clear(); km[1].clear(); }
+        for (int s = 0; s < 2; ++s)
+            for (int f = 0; f < 64; ++f)
+                for (int t = 0; t < 64; ++t)
+                    historyTable[s][f][t] = 0;
     }
     if (stop || std::chrono::steady_clock::now() >= end)
         return {evaluate(board), ""};
@@ -303,16 +308,27 @@ std::pair<int, std::string> Engine::minimax(
         if (board.isMoveLegal(mv))
             moves.push_back(mv);
     }
+    int sideIndex = board.isWhiteToMove() ? 0 : 1;
     std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
         int scoreA = moveScore(board, a, generator);
         int scoreB = moveScore(board, b, generator);
         if (scoreA == 0) {
             if (killerMoves[ply][0] == a) scoreA = 900;
             else if (killerMoves[ply][1] == a) scoreA = 800;
+            else {
+                int fa = algebraicToIndex(a.substr(0, 2));
+                int ta = algebraicToIndex(a.substr(a.find('-') + 1, 2));
+                scoreA = historyTable[sideIndex][fa][ta];
+            }
         }
         if (scoreB == 0) {
             if (killerMoves[ply][0] == b) scoreB = 900;
             else if (killerMoves[ply][1] == b) scoreB = 800;
+            else {
+                int fb = algebraicToIndex(b.substr(0, 2));
+                int tb = algebraicToIndex(b.substr(b.find('-') + 1, 2));
+                scoreB = historyTable[sideIndex][fb][tb];
+            }
         }
         return scoreA > scoreB;
     });
@@ -329,6 +345,9 @@ std::pair<int, std::string> Engine::minimax(
         bool first = true;
         for (const auto& m : moves) {
             bool capture = isCaptureMove(board, m);
+            int from = algebraicToIndex(m.substr(0,2));
+            int to = algebraicToIndex(m.substr(m.find('-')+1,2));
+            int plySide = board.isWhiteToMove() ? 0 : 1;
             Board::MoveState state;
             board.makeMove(m, state);
             std::pair<int, std::string> child;
@@ -349,7 +368,11 @@ std::pair<int, std::string> Engine::minimax(
                 bestPV = m;
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
-            if (eval > alpha) alpha = eval;
+            if (eval > alpha) {
+                alpha = eval;
+                if (!capture)
+                    historyTable[plySide][from][to] += depth * depth;
+            }
             if (alpha >= beta) {
                 if (!capture && ply < MAX_PLY) {
                     if (killerMoves[ply][0] != m) {
@@ -374,6 +397,9 @@ std::pair<int, std::string> Engine::minimax(
         bool first = true;
         for (const auto& m : moves) {
             bool capture = isCaptureMove(board, m);
+            int from = algebraicToIndex(m.substr(0,2));
+            int to = algebraicToIndex(m.substr(m.find('-')+1,2));
+            int plySide = board.isWhiteToMove() ? 0 : 1;
             Board::MoveState state;
             board.makeMove(m, state);
             std::pair<int, std::string> child;
@@ -394,7 +420,11 @@ std::pair<int, std::string> Engine::minimax(
                 bestPV = m;
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
-            if (eval < beta) beta = eval;
+            if (eval < beta) {
+                beta = eval;
+                if (!capture)
+                    historyTable[plySide][from][to] += depth * depth;
+            }
             if (beta <= alpha) {
                 if (!capture && ply < MAX_PLY) {
                     if (killerMoves[ply][0] != m) {
