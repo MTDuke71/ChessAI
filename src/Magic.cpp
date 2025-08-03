@@ -4,6 +4,11 @@
 #include <array>
 #include <random>
 
+//------------------------------------------------------------------------------
+// Magic bitboard generation for sliding piece attacks. This module precomputes
+// masks, magic numbers and lookup tables for rooks and bishops to allow fast
+// move generation during search.
+//------------------------------------------------------------------------------
 namespace Magic {
     std::array<U64, 64> rookMasks{};
     std::array<U64, 64> bishopMasks{};
@@ -15,16 +20,25 @@ namespace Magic {
     std::array<std::vector<U64>, 64> bishopTable{};
     bool initialized = false;
 
+    //------------------------------------------------------------------------------
+    // Return the number of set bits in a 64-bit integer.
+    //------------------------------------------------------------------------------
     inline int popcount(U64 b) {
         return popcount64(b);
     }
 
+    //------------------------------------------------------------------------------
+    // Generate a pseudo-random 64-bit value used during magic number search.
+    //------------------------------------------------------------------------------
     U64 random_u64() {
         static std::mt19937_64 gen(42);
         std::uniform_int_distribution<U64> dist(0, ~0ULL);
         return dist(gen);
     }
 
+    //------------------------------------------------------------------------------
+    // Compute the rook attack mask for the given square on an otherwise empty board.
+    //------------------------------------------------------------------------------
     U64 maskRook(int sq) {
         U64 mask = 0ULL;
         int r = sq / 8, f = sq % 8;
@@ -35,6 +49,9 @@ namespace Magic {
         return mask;
     }
 
+    //------------------------------------------------------------------------------
+    // Compute the bishop attack mask for the given square on an otherwise empty board.
+    //------------------------------------------------------------------------------
     U64 maskBishop(int sq) {
         U64 mask = 0ULL;
         int r = sq / 8, f = sq % 8;
@@ -49,6 +66,9 @@ namespace Magic {
         return mask;
     }
 
+    //------------------------------------------------------------------------------
+    // Generate rook attack bitboard on the fly given a square and occupancy.
+    //------------------------------------------------------------------------------
     U64 rookAttacksOnTheFly(int sq, U64 occ) {
         U64 attacks = 0ULL;
         int r = sq / 8, f = sq % 8;
@@ -67,6 +87,9 @@ namespace Magic {
         return attacks;
     }
 
+    //------------------------------------------------------------------------------
+    // Generate bishop attack bitboard on the fly given a square and occupancy.
+    //------------------------------------------------------------------------------
     U64 bishopAttacksOnTheFly(int sq, U64 occ) {
         U64 attacks = 0ULL;
         int r = sq / 8, f = sq % 8;
@@ -85,6 +108,9 @@ namespace Magic {
         return attacks;
     }
 
+    //------------------------------------------------------------------------------
+    // Build an occupancy bitboard from an index and a list of attack squares.
+    //------------------------------------------------------------------------------
     U64 setOccupancy(int index, int bits, const std::vector<int>& squares) {
         U64 occ = 0ULL;
         for (int i = 0; i < bits; ++i)
@@ -93,6 +119,9 @@ namespace Magic {
         return occ;
     }
 
+    //------------------------------------------------------------------------------
+    // Search for a suitable magic number for the given square and piece type.
+    //------------------------------------------------------------------------------
     U64 findMagic(int sq, int bits, bool bishop) {
         std::vector<int> squares;
         U64 mask = bishop ? maskBishop(sq) : maskRook(sq);
@@ -127,6 +156,9 @@ namespace Magic {
         }
     }
 
+    //------------------------------------------------------------------------------
+    // Initialize magic numbers, masks, shifts and attack tables.
+    //------------------------------------------------------------------------------
     void init() {
         if (initialized) return;
         for (int sq = 0; sq < 64; ++sq) {
@@ -168,12 +200,18 @@ namespace Magic {
         initialized = true;
     }
 
+    //------------------------------------------------------------------------------
+    // Retrieve rook attack bitboard from the precomputed table.
+    //------------------------------------------------------------------------------
     U64 getRookAttacks(int sq, U64 occ) {
         U64 masked = occ & rookMasks[sq];
         int index = (int)((masked * rookMagics[sq]) >> rookShifts[sq]);
         return rookTable[sq][index];
     }
 
+    //------------------------------------------------------------------------------
+    // Retrieve bishop attack bitboard from the precomputed table.
+    //------------------------------------------------------------------------------
     U64 getBishopAttacks(int sq, U64 occ) {
         U64 masked = occ & bishopMasks[sq];
         int index = (int)((masked * bishopMagics[sq]) >> bishopShifts[sq]);
