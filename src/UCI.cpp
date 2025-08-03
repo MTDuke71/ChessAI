@@ -53,6 +53,7 @@ int main() {
         if (line == "uci") {
             std::cout << "id name Aphelion 0.1" << '\n';
             std::cout << "id author Matt LaDuke and ChatGPT" << '\n';
+            std::cout << "option name OwnBook type check default false" << '\n';
             std::cout << "uciok" << '\n';
         } else if (line == "isready") {
             std::cout << "readyok" << '\n';
@@ -67,6 +68,11 @@ int main() {
                 if (name == "Hash" && valuePos != std::string::npos) {
                     int mb = std::stoi(line.substr(valuePos + 7));
                     engine.setHashSizeMB(static_cast<size_t>(mb));
+                } else if (name == "OwnBook" && valuePos != std::string::npos) {
+                    std::string val = line.substr(valuePos + 7);
+                    for (auto &c : val) c = static_cast<char>(std::tolower(c));
+                    bool enable = (val == "true" || val == "1");
+                    engine.setOwnBook(enable);
                 }
             }
         } else if (line == "ucinewgame") {
