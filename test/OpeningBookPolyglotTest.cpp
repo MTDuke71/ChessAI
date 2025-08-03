@@ -37,8 +37,20 @@ void testPolyglotKeys() {
     std::cout << "[✔] Polyglot hash vectors validated\n";
 }
 
+void testPolyglotCastlingDecode() {
+    // White short castle: e1h1 -> e1g1
+    assert(OpeningBook::decodeMove(0x0107) == "e1g1");
+    // White long castle: e1a1 -> e1c1
+    assert(OpeningBook::decodeMove(0x0100) == "e1c1");
+    // Black short castle: e8h8 -> e8g8
+    assert(OpeningBook::decodeMove(0x0F3F) == "e8g8");
+    // Black long castle: e8a8 -> e8c8
+    assert(OpeningBook::decodeMove(0x0F38) == "e8c8");
+}
+
 int main() {
     testPolyglotKeys();
+    testPolyglotCastlingDecode();
     std::cout << "All opening book tests passed\n";
     return 0;
 }

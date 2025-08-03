@@ -95,13 +95,22 @@ std::string OpeningBook::decodeMove(uint16_t mv) {
     int to = mv & 0x3f;
     int from = (mv >> 6) & 0x3f;
     int promo = (mv >> 12) & 0x7;
-    std::string s = indexToAlgebraic(from) + "-" + indexToAlgebraic(to);
+
+    // Polyglot represents castling moves using the king's origin square
+    // and the rook's destination square. Convert these to the standard
+    // UCI king destination squares.
+    if (from == 4 && to == 7)       to = 6;  // white short  e1h1 -> e1g1
+    else if (from == 4 && to == 0)  to = 2;  // white long   e1a1 -> e1c1
+    else if (from == 60 && to == 63) to = 62; // black short  e8h8 -> e8g8
+    else if (from == 60 && to == 56) to = 58; // black long   e8a8 -> e8c8
+
+    std::string s = indexToAlgebraic(from) + indexToAlgebraic(to);
     if (promo) {
         char p = 'q';
-        if (promo==1) p='n';
-        else if (promo==2) p='b';
-        else if (promo==3) p='r';
-        else if (promo==4) p='q';
+        if (promo == 1) p = 'n';
+        else if (promo == 2) p = 'b';
+        else if (promo == 3) p = 'r';
+        else if (promo == 4) p = 'q';
         s += p;
     }
     return s;
