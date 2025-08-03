@@ -52,7 +52,8 @@ uint64_t OpeningBook::polyglotHash(const Board& b) {
 #else
             sq = __builtin_ctzll(bb); bb &= bb-1ULL;
 #endif
-            h ^= polyglotRandom[pieceIndex*64 + sq];
+            sq ^= 56;
+            h ^= polyglotRandom[pieceIndex * 64 + sq];
         }
     };
     addPieces(b.getWhitePawns(), 0);
@@ -65,8 +66,8 @@ uint64_t OpeningBook::polyglotHash(const Board& b) {
     addPieces(b.getBlackKnights(), 7);
     addPieces(b.getBlackBishops(), 8);
     addPieces(b.getBlackRooks(), 9);
-    addPieces(b.getBlackQueens(),10);
-    addPieces(b.getBlackKing(),11);
+    addPieces(b.getBlackQueens(), 10);
+    addPieces(b.getBlackKing(), 11);
     if (b.canCastleWK()) h ^= polyglotRandom[768];
     if (b.canCastleWQ()) h ^= polyglotRandom[769];
     if (b.canCastleBK()) h ^= polyglotRandom[770];
@@ -81,15 +82,13 @@ std::string OpeningBook::decodeMove(uint16_t mv) {
     int to = mv & 0x3f;
     int from = (mv >> 6) & 0x3f;
     int promo = (mv >> 12) & 0x7;
+    from ^= 56;
+    to ^= 56;
     std::string s = indexToAlgebraic(from) + "-" + indexToAlgebraic(to);
-    if (promo) {
-        char p = 'q';
-        if (promo==1) p='n';
-        else if (promo==2) p='b';
-        else if (promo==3) p='r';
-        else if (promo==4) p='q';
-        s += p;
-    }
+    if (promo == 1) s += 'n';
+    else if (promo == 2) s += 'b';
+    else if (promo == 3) s += 'r';
+    else if (promo == 4) s += 'q';
     return s;
 }
 
