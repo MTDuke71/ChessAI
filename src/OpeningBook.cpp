@@ -52,28 +52,41 @@ uint64_t OpeningBook::polyglotHash(const Board& b) {
 #else
             sq = __builtin_ctzll(bb); bb &= bb-1ULL;
 #endif
-            sq ^= 56;
             h ^= polyglotRandom[pieceIndex * 64 + sq];
         }
     };
-    addPieces(b.getBlackPawns(), 0);
-    addPieces(b.getWhitePawns(), 1);
+    // Polyglot orders pieces by type with black then white: BP, WP, BN, WN, ...
+    addPieces(b.getBlackPawns(),   0);
+    addPieces(b.getWhitePawns(),   1);
     addPieces(b.getBlackKnights(), 2);
     addPieces(b.getWhiteKnights(), 3);
     addPieces(b.getBlackBishops(), 4);
     addPieces(b.getWhiteBishops(), 5);
-    addPieces(b.getBlackRooks(), 6);
-    addPieces(b.getWhiteRooks(), 7);
-    addPieces(b.getBlackQueens(), 8);
-    addPieces(b.getWhiteQueens(), 9);
-    addPieces(b.getBlackKing(), 10);
-    addPieces(b.getWhiteKing(), 11);
+    addPieces(b.getBlackRooks(),   6);
+    addPieces(b.getWhiteRooks(),   7);
+    addPieces(b.getBlackQueens(),  8);
+    addPieces(b.getWhiteQueens(),  9);
+    addPieces(b.getBlackKing(),    10);
+    addPieces(b.getWhiteKing(),    11);
     if (b.canCastleWK()) h ^= polyglotRandom[768];
     if (b.canCastleWQ()) h ^= polyglotRandom[769];
     if (b.canCastleBK()) h ^= polyglotRandom[770];
     if (b.canCastleBQ()) h ^= polyglotRandom[771];
     int ep = b.getEnPassantSquare();
-    if (ep != -1) h ^= polyglotRandom[772 + (ep % 8)];
+    if (ep != -1) {
+        uint64_t epMask = 1ULL << ep;
+        bool valid = false;
+        if (b.isWhiteToMove()) {
+            uint64_t wp = b.getWhitePawns();
+            valid = ((epMask >> 9) & wp & 0xFEFEFEFEFEFEFEFEULL) ||
+                    ((epMask >> 7) & wp & 0x7F7F7F7F7F7F7F7FULL);
+        } else {
+            uint64_t bp = b.getBlackPawns();
+            valid = ((epMask << 7) & bp & 0xFEFEFEFEFEFEFEFEULL) ||
+                    ((epMask << 9) & bp & 0x7F7F7F7F7F7F7F7FULL);
+        }
+        if (valid) h ^= polyglotRandom[772 + (ep % 8)];
+    }
     if (b.isWhiteToMove()) h ^= polyglotRandom[780];
     return h;
 }
