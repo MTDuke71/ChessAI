@@ -107,6 +107,12 @@ add_executable(PerftTest
     src/MoveGenerator.cpp
     src/Perft.cpp ${ENGINE_SOURCES})
 
+add_executable(PerftSuiteTest
+    test/PerftSuiteTest.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/Perft.cpp ${ENGINE_SOURCES})
+
 add_executable(MVVLVAArrayTest
     test/MVVLVAArrayTest.cpp)
 
@@ -170,6 +176,7 @@ target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PrintBook PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(PerftTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(PerftSuiteTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(Aphelion PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(MVVLVAArrayTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(TranspositionTableResizeTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
