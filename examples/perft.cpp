@@ -19,8 +19,13 @@ int main(int argc, char* argv[]) {
         depth = std::stoi(argv[2]);
     }
 
-    double ms = 0.0;
-    uint64_t nodes = perft(board, gen, depth, ms);
-    std::cout << "Perft(" << depth << ") = " << nodes << " in " << ms << " ms\n";
+    if (argc > 3 && std::string(argv[3]) == "divide") {
+        uint64_t nodes = perftDivide(board, gen, depth);
+        std::cout << "Perft divide total = " << nodes << "\n";
+    } else {
+        double ms = 0.0;
+        uint64_t nodes = perft(board, gen, depth, ms);
+        std::cout << "Perft(" << depth << ") = " << nodes << " in " << ms << " ms\n";
+    }
     return 0;
 }
