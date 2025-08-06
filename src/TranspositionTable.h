@@ -7,6 +7,7 @@ struct TTEntry {
     int depth;
     int value;
     int flag; // 0 exact, 1 lowerbound, -1 upperbound
+    uint16_t move{0};
 };
 
 struct TTSlot {
@@ -14,6 +15,7 @@ struct TTSlot {
     std::atomic<int> depth{-1};
     std::atomic<int> value{0};
     std::atomic<int> flag{0};
+    std::atomic<uint16_t> move{0};
 };
 
 class TranspositionTable {
@@ -42,6 +44,7 @@ public:
             slot.depth.store(entry.depth, std::memory_order_relaxed);
             slot.value.store(entry.value, std::memory_order_relaxed);
             slot.flag.store(entry.flag, std::memory_order_relaxed);
+            slot.move.store(entry.move, std::memory_order_relaxed);
         }
     }
 
@@ -52,12 +55,14 @@ public:
         entry.depth = slot.depth.load(std::memory_order_relaxed);
         entry.value = slot.value.load(std::memory_order_relaxed);
         entry.flag = slot.flag.load(std::memory_order_relaxed);
+        entry.move = slot.move.load(std::memory_order_relaxed);
         return true;
     }
 
     void clear() {
         for (auto& s : table) {
             s.depth.store(-1, std::memory_order_relaxed);
+            s.move.store(0, std::memory_order_relaxed);
         }
         usedSlots.store(0, std::memory_order_relaxed);
     }
