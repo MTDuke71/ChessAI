@@ -1,9 +1,16 @@
+// -----------------------------------------------------------------------------
+// Opening book file parsing and Polyglot lookup utilities.
+// -----------------------------------------------------------------------------
 #include "OpeningBook.h"
 #include "PolyglotRandom.h"
 #include <fstream>
 #include <iostream>
 
 namespace {
+
+// -----------------------------------------------------------------------------
+// Reads a 64-bit big-endian value from the given stream.
+// -----------------------------------------------------------------------------
 uint64_t readU64(std::ifstream& f) {
     unsigned char b[8];
     if (!f.read(reinterpret_cast<char*>(b), 8)) return 0;
@@ -11,19 +18,31 @@ uint64_t readU64(std::ifstream& f) {
            (uint64_t)b[3]<<32 | (uint64_t)b[4]<<24 | (uint64_t)b[5]<<16 |
            (uint64_t)b[6]<<8  | (uint64_t)b[7];
 }
+
+// -----------------------------------------------------------------------------
+// Reads a 16-bit big-endian value from the given stream.
+// -----------------------------------------------------------------------------
 uint16_t readU16(std::ifstream& f) {
     unsigned char b[2];
     if (!f.read(reinterpret_cast<char*>(b), 2)) return 0;
     return (uint16_t)b[0]<<8 | (uint16_t)b[1];
 }
+
+// -----------------------------------------------------------------------------
+// Reads a 32-bit big-endian value from the given stream.
+// -----------------------------------------------------------------------------
 uint32_t readU32(std::ifstream& f) {
     unsigned char b[4];
     if (!f.read(reinterpret_cast<char*>(b), 4)) return 0;
     return (uint32_t)b[0]<<24 | (uint32_t)b[1]<<16 | (uint32_t)b[2]<<8 |
            (uint32_t)b[3];
 }
+
 } // namespace
 
+// -----------------------------------------------------------------------------
+// Loads all entries from a Polyglot opening book file into memory.
+// -----------------------------------------------------------------------------
 OpeningBook::OpeningBook(const std::string& file) {
     std::ifstream in(file, std::ios::binary);
     if (!in) {
@@ -42,6 +61,9 @@ OpeningBook::OpeningBook(const std::string& file) {
     }
 }
 
+// -----------------------------------------------------------------------------
+// Computes the Polyglot hash for a given board position.
+// -----------------------------------------------------------------------------
 uint64_t OpeningBook::polyglotHash(const Board& b) {
     uint64_t h = 0;
     auto addPieces = [&](uint64_t bb, int pieceIndex) {
@@ -91,6 +113,9 @@ uint64_t OpeningBook::polyglotHash(const Board& b) {
     return h;
 }
 
+// -----------------------------------------------------------------------------
+// Decodes a Polyglot move into standard UCI notation.
+// -----------------------------------------------------------------------------
 std::string OpeningBook::decodeMove(uint16_t mv) {
     int to = mv & 0x3f;
     int from = (mv >> 6) & 0x3f;
@@ -116,6 +141,9 @@ std::string OpeningBook::decodeMove(uint16_t mv) {
     return s;
 }
 
+// -----------------------------------------------------------------------------
+// Retrieves the best move from the book for the given board, if available.
+// -----------------------------------------------------------------------------
 std::optional<std::string> OpeningBook::getBookMove(const Board& board) const {
     uint64_t key = polyglotHash(board);
     auto range = entries.equal_range(key);
@@ -127,6 +155,9 @@ std::optional<std::string> OpeningBook::getBookMove(const Board& board) const {
     return decodeMove(best->second.move);
 }
 
+// -----------------------------------------------------------------------------
+// Prints all book entries in a human-readable format.
+// -----------------------------------------------------------------------------
 void OpeningBook::print(std::ostream& out) const {
     for (const auto& kv : entries) {
         out << std::hex << kv.first << std::dec << " "

@@ -1,3 +1,6 @@
+// -----------------------------------------------------------------------------
+// Zobrist hashing implementation for board state hashing.
+// -----------------------------------------------------------------------------
 #include "Zobrist.h"
 #include <random>
 
@@ -7,6 +10,9 @@ namespace Zobrist {
     std::array<uint64_t,4> castleHash;
     std::array<uint64_t,8> enPassantHash;
 
+    // -------------------------------------------------------------------------
+    // Initializes all random hash keys used for Zobrist hashing.
+    // -------------------------------------------------------------------------
     void init() {
         std::mt19937_64 rng(0xABCDEF); // fixed seed for reproducibility
         for (auto& arr : pieceHashes)
@@ -16,6 +22,9 @@ namespace Zobrist {
         for (auto& v : enPassantHash) v = rng();
     }
 
+    // -------------------------------------------------------------------------
+    // Computes the Zobrist hash for the given board position.
+    // -------------------------------------------------------------------------
     uint64_t hashBoard(const Board& b) {
         uint64_t h = 0;
         auto addPieces = [&](uint64_t bb, int pieceIndex) {
