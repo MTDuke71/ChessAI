@@ -24,6 +24,7 @@ set(ENGINE_SOURCES
     src/Zobrist.cpp
     src/Magic.cpp
     src/MoveGeneratorUtils.cpp
+    src/MoveEncoding.cpp
     src/OpeningBook.cpp
     src/Tablebase.cpp)
 

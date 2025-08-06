@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "BitUtils.h"
 #include "MVVLVA.h"
+#include "MoveEncoding.h"
 #include <algorithm>
 #include <chrono>
 #include <atomic>
@@ -264,14 +265,17 @@ std::pair<int, std::string> Engine::minimax(
     if (board.isFiftyMoveDraw() || board.isThreefoldRepetition())
         return {0, ""};
     uint64_t key = Zobrist::hashBoard(board);
-    TTEntry entry;
-    if (tt.probe(key, entry) && entry.depth >= depth) {
+    TTEntry entry{};
+    std::string ttMove;
+    bool hit = tt.probe(key, entry);
+    if (hit) ttMove = decodeMove(entry.move);
+    if (hit && entry.depth >= depth) {
         if (entry.flag == 0)
-            return {entry.value, ""};
+            return {entry.value, ttMove};
         if (entry.flag == 1 && entry.value >= beta)
-            return {entry.value, ""};
+            return {entry.value, ttMove};
         if (entry.flag == -1 && entry.value <= alpha)
-            return {entry.value, ""};
+            return {entry.value, ttMove};
     }
     nodes++;
     int alphaOrig = alpha;
@@ -310,9 +314,9 @@ std::pair<int, std::string> Engine::minimax(
     }
     int sideIndex = board.isWhiteToMove() ? 0 : 1;
     std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
-        int scoreA = moveScore(board, a, generator);
-        int scoreB = moveScore(board, b, generator);
-        if (scoreA == 0) {
+        int scoreA = (a == ttMove) ? 1000000 : moveScore(board, a, generator);
+        int scoreB = (b == ttMove) ? 1000000 : moveScore(board, b, generator);
+        if (scoreA == 0 && a != ttMove) {
             if (killerMoves[ply][0] == a) scoreA = 900;
             else if (killerMoves[ply][1] == a) scoreA = 800;
             else {
@@ -321,7 +325,7 @@ std::pair<int, std::string> Engine::minimax(
                 scoreA = historyTable[sideIndex][fa][ta];
             }
         }
-        if (scoreB == 0) {
+        if (scoreB == 0 && b != ttMove) {
             if (killerMoves[ply][0] == b) scoreB = 900;
             else if (killerMoves[ply][1] == b) scoreB = 800;
             else {
@@ -386,7 +390,20 @@ std::pair<int, std::string> Engine::minimax(
             first = false;
             board.unmakeMove(state);
         }
-        TTEntry save{depth, bestEval, 0};
+        uint16_t encMove = 0;
+        if (!bestPV.empty()) {
+            std::string first = bestPV.substr(0, bestPV.find(' '));
+            encMove = encodeMove(first);
+            int from = algebraicToIndex(first.substr(0,2));
+            int to = algebraicToIndex(first.substr(first.find('-')+1,2));
+            uint64_t fromMask = 1ULL << from;
+            bool pawn = board.isWhiteToMove() ? (board.getWhitePawns() & fromMask) : (board.getBlackPawns() & fromMask);
+            if (pawn && board.getEnPassantSquare() == to) {
+                encMove &= ~(3 << 14);
+                encMove |= (2 << 14);
+            }
+        }
+        TTEntry save{depth, bestEval, 0, encMove};
         if (bestEval <= alphaOrig) save.flag = -1;
         else if (bestEval >= beta) save.flag = 1;
         tt.store(key, save);
@@ -438,7 +455,20 @@ std::pair<int, std::string> Engine::minimax(
             first = false;
             board.unmakeMove(state);
         }
-        TTEntry save{depth, bestEval, 0};
+        uint16_t encMove = 0;
+        if (!bestPV.empty()) {
+            std::string first = bestPV.substr(0, bestPV.find(' '));
+            encMove = encodeMove(first);
+            int from = algebraicToIndex(first.substr(0,2));
+            int to = algebraicToIndex(first.substr(first.find('-')+1,2));
+            uint64_t fromMask = 1ULL << from;
+            bool pawn = board.isWhiteToMove() ? (board.getWhitePawns() & fromMask) : (board.getBlackPawns() & fromMask);
+            if (pawn && board.getEnPassantSquare() == to) {
+                encMove &= ~(3 << 14);
+                encMove |= (2 << 14);
+            }
+        }
+        TTEntry save{depth, bestEval, 0, encMove};
         if (bestEval <= alphaOrig) save.flag = -1;
         else if (bestEval >= beta) save.flag = 1;
         tt.store(key, save);
