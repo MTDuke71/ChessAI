@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <unordered_map>
+#include <array>
 
 class Board {
 private:
@@ -13,7 +14,12 @@ private:
     int halfmoveClock;
     int fullmoveNumber;
     std::unordered_map<uint64_t,int> repetitionTable;
+    uint64_t attackMaps[2];            // Aggregated attack bitboards for white and black
+    std::array<uint64_t,64> squareAttacks; // Attack bitboard from each occupied square
 
+    uint64_t computeAttacks(int square) const;
+    void updateLines(int square);
+    void recalculateAttacks();
 
 public:
     Board();
@@ -28,6 +34,8 @@ public:
         bool castleWK, castleWQ, castleBK, castleBQ;
         int halfmoveClock;
         int fullmoveNumber;
+        uint64_t whiteAttacks, blackAttacks;
+        std::array<uint64_t,64> squareAttacks;
         uint64_t zobristKey;  // Hash of the position after the move
     };
 
@@ -62,6 +70,8 @@ public:
     uint64_t getBlackQueens()  const { return blackQueens;  }
     uint64_t getWhiteKing() const { return whiteKing; }
     uint64_t getBlackKing() const { return blackKing; }
+    uint64_t getWhiteAttacks() const { return attackMaps[0]; }
+    uint64_t getBlackAttacks() const { return attackMaps[1]; }
     int getHalfmoveClock() const { return halfmoveClock; }
     int getFullmoveNumber() const { return fullmoveNumber; }
     bool isFiftyMoveDraw() const { return halfmoveClock >= 100; }
