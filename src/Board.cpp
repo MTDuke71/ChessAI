@@ -297,13 +297,14 @@ Board::Color Board::pieceColorAt(int index) const {
 // Check whether a move in algebraic format (e2-e4) is legal.
 //------------------------------------------------------------------------------
 bool Board::isMoveLegal(const std::string& move) const {
-    if (move.size() < 5) return false;
+    return isMoveLegal(encodeMove(move));
+}
+
+bool Board::isMoveLegal(uint16_t move) const {
     MoveGenerator gen;
     auto moves = gen.generateAllMoves(*this, whiteToMove);
-    std::string check = move.substr(0,5);
     for (auto m : moves) {
-        std::string decoded = decodeMove(m);
-        if (decoded.substr(0,5) == check) {
+        if (m == move) {
             Board copy = *this;
             copy.applyMove(move);
             return !gen.isKingInCheck(copy, !copy.isWhiteToMove());
@@ -316,14 +317,22 @@ bool Board::isMoveLegal(const std::string& move) const {
 // Validate and apply a move, printing an error if the move is illegal.
 //------------------------------------------------------------------------------
 void Board::makeMove(const std::string& move) {
+    makeMove(encodeMove(move));
+}
+
+void Board::makeMove(uint16_t move) {
     if (!isMoveLegal(move)) {
-        std::cerr << "Illegal move attempted: " << move << "\n";
+        std::cerr << "Illegal move attempted: " << decodeMove(move) << "\n";
         return;
     }
     applyMove(move);
 }
 
 void Board::makeMove(const std::string& move, MoveState& state) {
+    makeMove(encodeMove(move), state);
+}
+
+void Board::makeMove(uint16_t move, MoveState& state) {
     state.whitePawns = whitePawns;
     state.whiteKnights = whiteKnights;
     state.whiteBishops = whiteBishops;
@@ -392,28 +401,29 @@ void Board::unmakeMove(const MoveState& state) {
 // piece (e.g., "e7-e8q").
 //------------------------------------------------------------------------------
 void Board::applyMove(const std::string& move) {
-    // -- Parse move and determine source and destination squares ---------------
-    auto dash = move.find('-');
-    if (dash == std::string::npos) return;
-    int from = algebraicToIndex(move.substr(0, 2));
-    int to = algebraicToIndex(move.substr(dash + 1, 2));
+    applyMove(encodeMove(move));
+}
+
+void Board::applyMove(uint16_t move) {
+    int from = moveFrom(move);
+    int to = moveTo(move);
     if (from < 0 || to < 0) return;
 
-    // Detect promotion piece
     char promoChar = 0;
-    if (move.size() > dash + 3) {
-        char c = move.back();
-        if (c=='q'||c=='r'||c=='b'||c=='n'||c=='Q'||c=='R'||c=='B'||c=='N')
-            promoChar = std::tolower(c);
+    if (moveSpecial(move) == 1) {
+        switch (movePromotion(move)) {
+            case 0: promoChar = 'n'; break;
+            case 1: promoChar = 'b'; break;
+            case 2: promoChar = 'r'; break;
+            case 3: promoChar = 'q'; break;
+        }
     }
-
     // Determine move characteristics
     uint64_t fromMask = 1ULL << from;
     uint64_t toMask = 1ULL << to;
     bool capture = ((getWhitePieces() | getBlackPieces()) & toMask);
     bool pawnMove = (whitePawns & fromMask) || (blackPawns & fromMask);
 
-    // Handle en passant captures
     int prevEnPassant = enPassantSquare;
     bool enPassantCapture = pawnMove && to == prevEnPassant && !capture;
     if (enPassantCapture) {
@@ -436,7 +446,6 @@ void Board::applyMove(const std::string& move) {
         squareAttacks[capturedSquare] = 0;
     }
 
-    // Update castling rights if rooks are captured
     if (toMask & whiteRooks) {
         if (to == 0) castleWQ = false;
         if (to == 7) castleWK = false;
@@ -446,12 +455,10 @@ void Board::applyMove(const std::string& move) {
         if (to == 63) castleBK = false;
     }
 
-    // Remove any piece on the destination square
     uint64_t mask = ~toMask;
     whitePawns &= mask; whiteKnights &= mask; whiteBishops &= mask; whiteRooks &= mask; whiteQueens &= mask; whiteKing &= mask;
     blackPawns &= mask; blackKnights &= mask; blackBishops &= mask; blackRooks &= mask; blackQueens &= mask; blackKing &= mask;
 
-    // Move the piece from source to destination
     auto movePiece = [&](uint64_t &bb) { if (bb & fromMask) { bb &= ~fromMask; bb |= toMask; return true; } return false; };
 
     bool movedWhiteKing = (whiteKing & fromMask);
@@ -466,7 +473,6 @@ void Board::applyMove(const std::string& move) {
         return;
     }
 
-    // Handle castling moves
     if (movedWhiteKing) {
         castleWK = castleWQ = false;
         if (from == 4 && to == 6) {
@@ -512,7 +518,6 @@ void Board::applyMove(const std::string& move) {
         }
     }
 
-    // Update castling rights if rooks move
     if (movedWhiteRook) {
         if (from == 0) castleWQ = false;
         if (from == 7) castleWK = false;
@@ -522,7 +527,6 @@ void Board::applyMove(const std::string& move) {
         if (from == 63) castleBK = false;
     }
 
-    // Handle pawn promotion
     if (promoChar && pawnMove) {
         if (whiteToMove) {
             whitePawns &= ~toMask;
@@ -549,7 +553,6 @@ void Board::applyMove(const std::string& move) {
     updateLines(to);
     if (capturedSquare >= 0) updateLines(capturedSquare);
 
-    // Set en passant target if a pawn moved two squares
     if (pawnMove && std::abs(to - from) == 16) {
         int mid = (from + to) / 2;
         uint64_t adjMask = whiteToMove ? blackPawns : whitePawns;
@@ -563,7 +566,6 @@ void Board::applyMove(const std::string& move) {
         enPassantSquare = -1;
     }
 
-    // Update move counters and side to move
     whiteToMove = !whiteToMove;
     if (pawnMove || capture)
         halfmoveClock = 0;
@@ -572,7 +574,6 @@ void Board::applyMove(const std::string& move) {
     if (!whiteToMove)
         ++fullmoveNumber;
 
-    // Record position for repetition detection
     uint64_t key = Zobrist::hashBoard(*this);
     repetitionTable[key]++;
 }
