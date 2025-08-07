@@ -17,8 +17,11 @@
 namespace {
 std::array<uint64_t, 64> knightAttackTable{};
 std::array<uint64_t, 64> kingAttackTable{};
+bool leaperTablesInitialized = false;
 
 void initLeaperTables() {
+  if (leaperTablesInitialized)
+    return;
   const int knightOffsets[8][2] = {{1, 2},  {2, 1},  {-1, 2}, {-2, 1},
                                    {1, -2}, {2, -1}, {-1, -2}, {-2, -1}};
   for (int sq = 0; sq < 64; ++sq) {
@@ -42,6 +45,7 @@ void initLeaperTables() {
     knightAttackTable[sq] = nMoves;
     kingAttackTable[sq] = kMoves;
   }
+  leaperTablesInitialized = true;
 }
 } // namespace
 
