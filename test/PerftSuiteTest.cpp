@@ -24,7 +24,7 @@ void trim(std::string &s) {
 } // namespace
 
 int main(int argc, char *argv[]) {
-  int maxPositions = 126;
+  int maxPositions = 128;
   if (argc > 1) {
     maxPositions = std::stoi(argv[1]);
   }
@@ -43,6 +43,7 @@ int main(int argc, char *argv[]) {
   int index = 0;
 
   while (index < maxPositions && std::getline(file, line)) {
+    std::cout << "Testing position " << index << "." << std::endl;
     trim(line);
     if (line.empty()) continue;
     ++index;
