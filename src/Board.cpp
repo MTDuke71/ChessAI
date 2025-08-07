@@ -242,16 +242,10 @@ void Board::makeMove(const std::string& move, MoveState& state) {
     state.fullmoveNumber = fullmoveNumber;
 
     applyMove(move);
+    state.zobristKey = Zobrist::hashBoard(*this);
 }
 
 void Board::unmakeMove(const MoveState& state) {
-    uint64_t key = Zobrist::hashBoard(*this);
-    auto it = repetitionTable.find(key);
-    if (it != repetitionTable.end()) {
-        if (--it->second == 0)
-            repetitionTable.erase(it);
-    }
-
     whitePawns = state.whitePawns;
     whiteKnights = state.whiteKnights;
     whiteBishops = state.whiteBishops;
@@ -272,6 +266,12 @@ void Board::unmakeMove(const MoveState& state) {
     castleBQ = state.castleBQ;
     halfmoveClock = state.halfmoveClock;
     fullmoveNumber = state.fullmoveNumber;
+
+    auto it = repetitionTable.find(state.zobristKey);
+    if (it != repetitionTable.end()) {
+        if (--it->second == 0)
+            repetitionTable.erase(it);
+    }
 }
 
 //------------------------------------------------------------------------------
