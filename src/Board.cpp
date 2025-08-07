@@ -12,6 +12,27 @@ namespace {
     const int directions[8][2] = {
         {1,0},{-1,0},{0,1},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}
     };
+
+    uint64_t knightAttacks(int sq) {
+        uint64_t p = 1ULL << sq;
+        uint64_t l1 = (p >> 1) & 0x7f7f7f7f7f7f7f7fULL;
+        uint64_t l2 = (p >> 2) & 0x3f3f3f3f3f3f3f3fULL;
+        uint64_t r1 = (p << 1) & 0xfefefefefefefefeULL;
+        uint64_t r2 = (p << 2) & 0xfcfcfcfcfcfcfcfcULL;
+        uint64_t h1 = l1 | r1;
+        uint64_t h2 = l2 | r2;
+        return (h1 << 16) | (h1 >> 16) | (h2 << 8) | (h2 >> 8);
+    }
+
+    uint64_t kingAttacks(int sq) {
+        uint64_t p = 1ULL << sq;
+        uint64_t attacks = (p << 8) | (p >> 8);
+        uint64_t lr = ((p << 1) & 0xfefefefefefefefeULL) |
+                      ((p >> 1) & 0x7f7f7f7f7f7f7f7fULL);
+        attacks |= lr;
+        attacks |= (lr << 8) | (lr >> 8);
+        return attacks;
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -302,15 +323,99 @@ bool Board::isMoveLegal(const std::string& move) const {
 
 bool Board::isMoveLegal(uint16_t move) const {
     MoveGenerator gen;
-    auto moves = gen.generateAllMoves(*this, whiteToMove);
-    for (auto m : moves) {
-        if (m == move) {
-            Board copy = *this;
-            copy.applyMove(move);
-            return !gen.isKingInCheck(copy, !copy.isWhiteToMove());
+    int from = moveFrom(move);
+    int to = moveTo(move);
+    int special = moveSpecial(move);
+    bool isWhite = whiteToMove;
+    uint64_t fromMask = 1ULL << from;
+    uint64_t toMask = 1ULL << to;
+    uint64_t own = isWhite ? getWhitePieces() : getBlackPieces();
+    uint64_t opp = isWhite ? getBlackPieces() : getWhitePieces();
+    uint64_t occ = own | opp;
+
+    if (!(own & fromMask) || (own & toMask)) return false;
+
+    bool pseudo = false;
+
+    if ((whitePawns & fromMask) || (blackPawns & fromMask)) {
+        int dir = isWhite ? 8 : -8;
+        bool promotion = (isWhite && to >= 56) || (!isWhite && to <= 7);
+        if (to == from + dir && !(occ & toMask)) {
+            pseudo = true;
+        } else if (to == from + 2 * dir && !(occ & toMask) &&
+                   !(occ & (1ULL << (from + dir))) &&
+                   ((isWhite && from >= 8 && from < 16) ||
+                    (!isWhite && from >= 48 && from < 56))) {
+            pseudo = true;
+        } else if ((to == from + dir + 1 && from % 8 != 7) ||
+                   (to == from + dir - 1 && from % 8 != 0)) {
+            if (opp & toMask)
+                pseudo = true;
+            else if (to == enPassantSquare && enPassantSquare != -1 && !(occ & toMask))
+                pseudo = true;
         }
+        if (promotion) {
+            if (special != 1) return false;
+        } else if (special == 1) {
+            return false;
+        }
+    } else if ((whiteKnights & fromMask) || (blackKnights & fromMask)) {
+        if ((knightAttacks(from) & ~own & toMask)) pseudo = true;
+        if (special != 0) return false;
+    } else if ((whiteBishops & fromMask) || (blackBishops & fromMask)) {
+        if ((Magic::getBishopAttacks(from, occ) & ~own & toMask)) pseudo = true;
+        if (special != 0) return false;
+    } else if ((whiteRooks & fromMask) || (blackRooks & fromMask)) {
+        if ((Magic::getRookAttacks(from, occ) & ~own & toMask)) pseudo = true;
+        if (special != 0) return false;
+    } else if ((whiteQueens & fromMask) || (blackQueens & fromMask)) {
+        uint64_t attacks = (Magic::getBishopAttacks(from, occ) |
+                            Magic::getRookAttacks(from, occ));
+        if ((attacks & ~own & toMask)) pseudo = true;
+        if (special != 0) return false;
+    } else if ((whiteKing & fromMask) || (blackKing & fromMask)) {
+        uint64_t attacks = kingAttacks(from) & ~own;
+        if (attacks & toMask) {
+            pseudo = true;
+            if (special != 0) return false;
+        } else if (special == 3) {
+            if (isWhite) {
+                if (from == 4 && to == 6 && castleWK &&
+                    !(occ & ((1ULL << 5) | (1ULL << 6))) &&
+                    !gen.isSquareAttacked(*this, 4, false) &&
+                    !gen.isSquareAttacked(*this, 5, false) &&
+                    !gen.isSquareAttacked(*this, 6, false))
+                    pseudo = true;
+                else if (from == 4 && to == 2 && castleWQ &&
+                         !(occ & ((1ULL << 1) | (1ULL << 2) | (1ULL << 3))) &&
+                         !gen.isSquareAttacked(*this, 4, false) &&
+                         !gen.isSquareAttacked(*this, 3, false) &&
+                         !gen.isSquareAttacked(*this, 2, false))
+                    pseudo = true;
+            } else {
+                if (from == 60 && to == 62 && castleBK &&
+                    !(occ & ((1ULL << 61) | (1ULL << 62))) &&
+                    !gen.isSquareAttacked(*this, 60, true) &&
+                    !gen.isSquareAttacked(*this, 61, true) &&
+                    !gen.isSquareAttacked(*this, 62, true))
+                    pseudo = true;
+                else if (from == 60 && to == 58 && castleBQ &&
+                         !(occ & ((1ULL << 57) | (1ULL << 58) | (1ULL << 59))) &&
+                         !gen.isSquareAttacked(*this, 60, true) &&
+                         !gen.isSquareAttacked(*this, 59, true) &&
+                         !gen.isSquareAttacked(*this, 58, true))
+                    pseudo = true;
+            }
+        }
+    } else {
+        return false;
     }
-    return false;
+
+    if (!pseudo) return false;
+
+    Board copy = *this;
+    copy.applyMove(move);
+    return !gen.isKingInCheck(copy, !copy.isWhiteToMove());
 }
 
 //------------------------------------------------------------------------------
