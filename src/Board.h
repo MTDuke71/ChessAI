@@ -100,11 +100,15 @@ public:
     bool loadFEN(const std::string& fen);
     std::string getFEN() const;
     bool isMoveLegal(const std::string& move) const;
+    bool isMoveLegal(uint16_t move) const;
     void makeMove(const std::string& move);
     void makeMove(const std::string& move, MoveState& state);
+    void makeMove(uint16_t move);
+    void makeMove(uint16_t move, MoveState& state);
     void unmakeMove(const MoveState& state);
 private:
     void applyMove(const std::string& move);
+    void applyMove(uint16_t move);
 };
 
 int algebraicToIndex(const std::string& sq);

@@ -11,11 +11,10 @@
 #include <array>
 
 // -----------------------------------------------------------------------------
-// Converts an internal move representation (e.g., "e2-e4") into the compact UCI
-// format ("e2e4").
+// Converts an encoded move into the compact UCI format (e.g., e2e4).
 // -----------------------------------------------------------------------------
-static std::string toUCIMove(const std::string& move) {
-    std::string uci = move;
+static std::string toUCIMove(uint16_t move) {
+    std::string uci = decodeMove(move);
     auto dash = uci.find('-');
     if (dash != std::string::npos) uci.erase(dash, 1);
     return uci;
@@ -25,12 +24,9 @@ static std::string toUCIMove(const std::string& move) {
 // Determines if the provided move results in a capture on the target square or
 // via en passant.
 // -----------------------------------------------------------------------------
-static bool isCaptureMove(const Board& board, const std::string& move) {
-    auto dash = move.find('-');
-    if (dash == std::string::npos) return false;
-    int from = algebraicToIndex(move.substr(0,2));
-    int to = algebraicToIndex(move.substr(dash+1,2));
-    if (from < 0 || to < 0) return false;
+static bool isCaptureMove(const Board& board, uint16_t move) {
+    int from = moveFrom(move);
+    int to = moveTo(move);
     Board::Color colorAtTo = board.pieceColorAt(to);
     if (board.isWhiteToMove()) {
         if (colorAtTo == Board::Color::Black) return true;
@@ -86,17 +82,14 @@ static int seeRec(const MoveGenerator& gen, Board& board, int square) {
     int best = -1000000;
     bool any = false;
     for (auto mv : pseudo) {
-        std::string m = decodeMove(mv);
-        auto dash = m.find('-');
-        if (dash == std::string::npos) continue;
-        int to = algebraicToIndex(m.substr(dash + 1, 2));
+        int to = moveTo(mv);
         if (to != square) continue;
-        if (!board.isMoveLegal(m)) continue;
+        if (!board.isMoveLegal(mv)) continue;
         any = true;
-        int from = algebraicToIndex(m.substr(0, 2));
+        int from = moveFrom(mv);
         int val = pieceValueAt(board, from);
         Board::MoveState state;
-        board.makeMove(m, state);
+        board.makeMove(mv, state);
         int gain = val - seeRec(gen, board, square);
         board.unmakeMove(state);
         if (gain > best) best = gain;
@@ -111,12 +104,9 @@ static int seeRec(const MoveGenerator& gen, Board& board, int square) {
 // -----------------------------------------------------------------------------
 static int staticExchangeEval(const MoveGenerator& gen,
                               Board& board,
-                              const std::string& move) {
-    auto dash = move.find('-');
-    if (dash == std::string::npos) return 0;
-    int from = algebraicToIndex(move.substr(0, 2));
-    int to = algebraicToIndex(move.substr(dash + 1, 2));
-    if (from < 0 || to < 0) return 0;
+                              uint16_t move) {
+    int from = moveFrom(move);
+    int to = moveTo(move);
     if (!isCaptureMove(board, move)) return 0;
     int captured = pieceValueAt(board, to);
     if (!captured && board.getEnPassantSquare() == to)
@@ -132,16 +122,13 @@ static int staticExchangeEval(const MoveGenerator& gen,
 // Computes a heuristic score for move ordering using MVV/LVA and SEE.
 // -----------------------------------------------------------------------------
 static int moveScore(Board& board,
-                     const std::string& move,
+                     uint16_t move,
                      const MoveGenerator& gen) {
-    auto dash = move.find('-');
-    if (dash == std::string::npos) return 0;
-    int from = algebraicToIndex(move.substr(0, 2));
-    int to = algebraicToIndex(move.substr(dash + 1, 2));
-    if (from < 0 || to < 0) return 0;
+    int from = moveFrom(move);
+    int to = moveTo(move);
     int capturedVal = pieceValueAt(board, to);
     if (!capturedVal && board.getEnPassantSquare() == to)
-        capturedVal = 100; // en passant captures a pawn
+        capturedVal = 100;
     if (capturedVal) {
         int attackerType = pieceTypeAt(board, from);
         int victimType = pieceTypeAt(board, to);
@@ -149,7 +136,7 @@ static int moveScore(Board& board,
             victimType = MVVLVA::Pawn;
         int score = MVVLVA::Table[victimType][attackerType];
         int seeVal = staticExchangeEval(gen, board, move);
-        return score * 10 + seeVal; // MVV/LVA table + SEE
+        return score * 10 + seeVal;
     }
     return 0;
 }
@@ -183,16 +170,14 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
     std::vector<uint16_t> moves;
     for (auto mv : pseudoMoves) {
-        std::string sm = decodeMove(mv);
-        if (board.isMoveLegal(sm) && isCaptureMove(board, sm) &&
-            staticExchangeEval(generator, board, sm) >= 0)
+        if (board.isMoveLegal(mv) && isCaptureMove(board, mv) &&
+            staticExchangeEval(generator, board, mv) >= 0)
             moves.push_back(mv);
     }
 
     for (auto m : moves) {
-        std::string sm = decodeMove(m);
         Board::MoveState state;
-        board.makeMove(sm, state);
+        board.makeMove(m, state);
         int score = quiescence(board, alpha, beta, !maximizing, end, stop);
         board.unmakeMove(state);
         if (maximizing) {
@@ -258,10 +243,10 @@ std::pair<int, std::string> Engine::minimax(
         const std::chrono::steady_clock::time_point& end,
         const std::atomic<bool>& stop, int ply) {
     constexpr int MAX_PLY = 64;
-    static thread_local std::array<std::array<std::string, 2>, MAX_PLY> killerMoves;
+    static thread_local std::array<std::array<uint16_t, 2>, MAX_PLY> killerMoves{};
     static thread_local int historyTable[2][64][64];
     if (ply == 0) {
-        for (auto& km : killerMoves) { km[0].clear(); km[1].clear(); }
+        for (auto& km : killerMoves) { km[0] = km[1] = 0; }
         for (int s = 0; s < 2; ++s)
             for (int f = 0; f < 64; ++f)
                 for (int t = 0; t < 64; ++t)
@@ -273,16 +258,16 @@ std::pair<int, std::string> Engine::minimax(
         return {0, ""};
     uint64_t key = Zobrist::hashBoard(board);
     TTEntry entry{};
-    std::string ttMove;
+    uint16_t ttMove = 0;
     bool hit = tt.probe(key, entry);
-    if (hit) ttMove = decodeMove(entry.move);
+    if (hit) ttMove = entry.move;
     if (hit && entry.depth >= depth) {
         if (entry.flag == 0)
-            return {entry.value, ttMove};
+            return {entry.value, decodeMove(ttMove)};
         if (entry.flag == 1 && entry.value >= beta)
-            return {entry.value, ttMove};
+            return {entry.value, decodeMove(ttMove)};
         if (entry.flag == -1 && entry.value <= alpha)
-            return {entry.value, ttMove};
+            return {entry.value, decodeMove(ttMove)};
     }
     nodes++;
     int alphaOrig = alpha;
@@ -314,22 +299,21 @@ std::pair<int, std::string> Engine::minimax(
         }
     }
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
-    std::vector<std::string> moves;
+    std::vector<uint16_t> moves;
     for (auto mv : pseudoMoves) {
-        std::string sm = decodeMove(mv);
-        if (board.isMoveLegal(sm))
-            moves.push_back(sm);
+        if (board.isMoveLegal(mv))
+            moves.push_back(mv);
     }
     int sideIndex = board.isWhiteToMove() ? 0 : 1;
-    std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+    std::sort(moves.begin(), moves.end(), [&](uint16_t a, uint16_t b) {
         int scoreA = (a == ttMove) ? 1000000 : moveScore(board, a, generator);
         int scoreB = (b == ttMove) ? 1000000 : moveScore(board, b, generator);
         if (scoreA == 0 && a != ttMove) {
             if (killerMoves[ply][0] == a) scoreA = 900;
             else if (killerMoves[ply][1] == a) scoreA = 800;
             else {
-                int fa = algebraicToIndex(a.substr(0, 2));
-                int ta = algebraicToIndex(a.substr(a.find('-') + 1, 2));
+                int fa = moveFrom(a);
+                int ta = moveTo(a);
                 scoreA = historyTable[sideIndex][fa][ta];
             }
         }
@@ -337,8 +321,8 @@ std::pair<int, std::string> Engine::minimax(
             if (killerMoves[ply][0] == b) scoreB = 900;
             else if (killerMoves[ply][1] == b) scoreB = 800;
             else {
-                int fb = algebraicToIndex(b.substr(0, 2));
-                int tb = algebraicToIndex(b.substr(b.find('-') + 1, 2));
+                int fb = moveFrom(b);
+                int tb = moveTo(b);
                 scoreB = historyTable[sideIndex][fb][tb];
             }
         }
@@ -349,16 +333,17 @@ std::pair<int, std::string> Engine::minimax(
             int mateScore = board.isWhiteToMove() ? -1000000 : 1000000;
             return {mateScore, ""};
         }
-        return {0, ""}; // stalemate
+        return {0, ""};
     }
     if (maximizing) {
         int bestEval = -1000000;
+        uint16_t bestMove = 0;
         std::string bestPV;
         bool first = true;
-        for (const auto& m : moves) {
+        for (auto m : moves) {
             bool capture = isCaptureMove(board, m);
-            int from = algebraicToIndex(m.substr(0,2));
-            int to = algebraicToIndex(m.substr(m.find('-')+1,2));
+            int from = moveFrom(m);
+            int to = moveTo(m);
             int plySide = board.isWhiteToMove() ? 0 : 1;
             Board::MoveState state;
             board.makeMove(m, state);
@@ -377,7 +362,8 @@ std::pair<int, std::string> Engine::minimax(
             int eval = child.first;
             if (eval > bestEval) {
                 bestEval = eval;
-                bestPV = m;
+                bestMove = m;
+                bestPV = decodeMove(m);
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
             if (eval > alpha) {
@@ -398,32 +384,20 @@ std::pair<int, std::string> Engine::minimax(
             first = false;
             board.unmakeMove(state);
         }
-        uint16_t encMove = 0;
-        if (!bestPV.empty()) {
-            std::string first = bestPV.substr(0, bestPV.find(' '));
-            encMove = encodeMove(first);
-            int from = algebraicToIndex(first.substr(0,2));
-            int to = algebraicToIndex(first.substr(first.find('-')+1,2));
-            uint64_t fromMask = 1ULL << from;
-            bool pawn = board.isWhiteToMove() ? (board.getWhitePawns() & fromMask) : (board.getBlackPawns() & fromMask);
-            if (pawn && board.getEnPassantSquare() == to) {
-                encMove &= ~(3 << 14);
-                encMove |= (2 << 14);
-            }
-        }
-        TTEntry save{depth, bestEval, 0, encMove};
+        TTEntry save{depth, bestEval, 0, bestMove};
         if (bestEval <= alphaOrig) save.flag = -1;
         else if (bestEval >= beta) save.flag = 1;
         tt.store(key, save);
         return {bestEval, bestPV};
     } else {
         int bestEval = 1000000;
+        uint16_t bestMove = 0;
         std::string bestPV;
         bool first = true;
-        for (const auto& m : moves) {
+        for (auto m : moves) {
             bool capture = isCaptureMove(board, m);
-            int from = algebraicToIndex(m.substr(0,2));
-            int to = algebraicToIndex(m.substr(m.find('-')+1,2));
+            int from = moveFrom(m);
+            int to = moveTo(m);
             int plySide = board.isWhiteToMove() ? 0 : 1;
             Board::MoveState state;
             board.makeMove(m, state);
@@ -442,7 +416,8 @@ std::pair<int, std::string> Engine::minimax(
             int eval = child.first;
             if (eval < bestEval) {
                 bestEval = eval;
-                bestPV = m;
+                bestMove = m;
+                bestPV = decodeMove(m);
                 if (!child.second.empty()) bestPV += " " + child.second;
             }
             if (eval < beta) {
@@ -463,20 +438,7 @@ std::pair<int, std::string> Engine::minimax(
             first = false;
             board.unmakeMove(state);
         }
-        uint16_t encMove = 0;
-        if (!bestPV.empty()) {
-            std::string first = bestPV.substr(0, bestPV.find(' '));
-            encMove = encodeMove(first);
-            int from = algebraicToIndex(first.substr(0,2));
-            int to = algebraicToIndex(first.substr(first.find('-')+1,2));
-            uint64_t fromMask = 1ULL << from;
-            bool pawn = board.isWhiteToMove() ? (board.getWhitePawns() & fromMask) : (board.getBlackPawns() & fromMask);
-            if (pawn && board.getEnPassantSquare() == to) {
-                encMove &= ~(3 << 14);
-                encMove |= (2 << 14);
-            }
-        }
-        TTEntry save{depth, bestEval, 0, encMove};
+        TTEntry save{depth, bestEval, 0, bestMove};
         if (bestEval <= alphaOrig) save.flag = -1;
         else if (bestEval >= beta) save.flag = 1;
         tt.store(key, save);
@@ -496,20 +458,19 @@ std::string Engine::searchBestMove(Board& board, int depth) {
     }
 
     std::atomic<bool> dummyStop(false);
-    std::string bestMove;
+    uint16_t bestMove = 0;
 
     for (int d = 1; d <= depth; ++d) {
         auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
-        std::vector<std::string> moves;
+        std::vector<uint16_t> moves;
         for (auto mv : pseudoMoves) {
-            std::string sm = decodeMove(mv);
-            if (board.isMoveLegal(sm))
-                moves.push_back(sm);
+            if (board.isMoveLegal(mv))
+                moves.push_back(mv);
         }
-        std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+        std::sort(moves.begin(), moves.end(), [&](uint16_t a, uint16_t b) {
             return moveScore(board, a, generator) > moveScore(board, b, generator);
         });
-        if (d > 1 && !bestMove.empty()) {
+        if (d > 1 && bestMove) {
             auto it = std::find(moves.begin(), moves.end(), bestMove);
             if (it != moves.end()) {
                 std::rotate(moves.begin(), it, it + 1);
@@ -519,7 +480,7 @@ std::string Engine::searchBestMove(Board& board, int depth) {
         int bestScore = board.isWhiteToMove() ? -1000000 : 1000000;
         std::vector<std::future<std::pair<int, std::string>>> futures;
         futures.reserve(moves.size());
-        for (const auto& m : moves) {
+        for (auto m : moves) {
             futures.emplace_back(pool.enqueue([&, m, d]() {
                 Board copy = board;
                 copy.makeMove(m);
@@ -533,7 +494,7 @@ std::string Engine::searchBestMove(Board& board, int depth) {
         for (size_t i = 0; i < moves.size(); ++i) {
             auto res = futures[i].get();
             int score = res.first;
-            const auto& m = moves[i];
+            uint16_t m = moves[i];
             if (board.isWhiteToMove()) {
                 if (score > bestScore) { bestScore = score; bestMove = m; }
             } else {
@@ -542,7 +503,7 @@ std::string Engine::searchBestMove(Board& board, int depth) {
         }
     }
 
-    return bestMove;
+    return decodeMove(bestMove);
 }
 
 // -----------------------------------------------------------------------------
@@ -566,25 +527,24 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
             return *bm;
     }
 
-    std::string bestMove;
+    uint16_t bestMove = 0;
     std::string bestPV;
-    std::string completedMove; // best move from the last fully searched depth
+    uint16_t completedMove = 0; // best move from the last fully searched depth
     int bestScore = 0;
     bool lastDepthComplete = true;
     for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
         nodes = 0;
         auto depthStart = std::chrono::steady_clock::now();
         auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
-        std::vector<std::string> moves;
+        std::vector<uint16_t> moves;
         for (auto mv : pseudoMoves) {
-            std::string sm = decodeMove(mv);
-            if (board.isMoveLegal(sm))
-                moves.push_back(sm);
+            if (board.isMoveLegal(mv))
+                moves.push_back(mv);
         }
-        std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
+        std::sort(moves.begin(), moves.end(), [&](uint16_t a, uint16_t b) {
             return moveScore(board, a, generator) > moveScore(board, b, generator);
         });
-        if (depth > 1 && !completedMove.empty()) {
+        if (depth > 1 && completedMove) {
             auto it = std::find(moves.begin(), moves.end(), completedMove);
             if (it != moves.end()) {
                 std::rotate(moves.begin(), it, it + 1);
@@ -595,7 +555,7 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         lastDepthComplete = true;
         std::vector<std::future<std::pair<int, std::string>>> futures;
         futures.reserve(moves.size());
-        for (const auto& m : moves) {
+        for (auto m : moves) {
             futures.emplace_back(pool.enqueue([&, m]() {
                 Board copy = board;
                 copy.makeMove(m);
@@ -605,9 +565,9 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         }
         for (size_t i = 0; i < moves.size(); ++i) {
             auto res = futures[i].get();
-            const auto& m = moves[i];
+            uint16_t m = moves[i];
             int score = res.first;
-            std::string pvCandidate = m;
+            std::string pvCandidate = decodeMove(m);
             if (!res.second.empty()) pvCandidate += " " + res.second;
             if (board.isWhiteToMove()) {
                 if (score > bestScore) { bestScore = score; bestMove = m; bestPV = pvCandidate; }
@@ -625,8 +585,9 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
             std::istringstream iss(bestPV);
             std::string token;
             while (iss >> token) {
+                uint16_t mv = encodeMove(token);
                 if (!pvUCI.empty()) pvUCI += " ";
-                pvUCI += toUCIMove(token);
+                pvUCI += toUCIMove(mv);
             }
         }
         int hashPercent = static_cast<int>(tt.used() * 1000 / tt.size());
@@ -643,9 +604,9 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         completedMove = bestMove;
         if (stopFlag || std::chrono::steady_clock::now() >= endTime) break;
     }
-    if (!completedMove.empty())
-        return completedMove;
-    return bestMove;
+    if (completedMove)
+        return decodeMove(completedMove);
+    return decodeMove(bestMove);
 }
 
 // -----------------------------------------------------------------------------

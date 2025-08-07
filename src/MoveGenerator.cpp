@@ -345,7 +345,7 @@ std::vector<uint16_t> MoveGenerator::generateLegalMoves(const Board &board,
   auto pseudo = generateAllMoves(board, isWhite);
   std::vector<uint16_t> legal;
   for (auto mv : pseudo) {
-    if (board.isMoveLegal(decodeMove(mv)))
+    if (board.isMoveLegal(mv))
       legal.push_back(mv);
   }
   return legal;
