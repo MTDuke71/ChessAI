@@ -85,17 +85,18 @@ static int seeRec(const MoveGenerator& gen, Board& board, int square) {
     auto pseudo = gen.generateAllMoves(board, side);
     int best = -1000000;
     bool any = false;
-    for (const auto& mv : pseudo) {
-        auto dash = mv.find('-');
+    for (auto mv : pseudo) {
+        std::string m = decodeMove(mv);
+        auto dash = m.find('-');
         if (dash == std::string::npos) continue;
-        int to = algebraicToIndex(mv.substr(dash + 1, 2));
+        int to = algebraicToIndex(m.substr(dash + 1, 2));
         if (to != square) continue;
-        if (!board.isMoveLegal(mv)) continue;
+        if (!board.isMoveLegal(m)) continue;
         any = true;
-        int from = algebraicToIndex(mv.substr(0, 2));
+        int from = algebraicToIndex(m.substr(0, 2));
         int val = pieceValueAt(board, from);
         Board::MoveState state;
-        board.makeMove(mv, state);
+        board.makeMove(m, state);
         int gain = val - seeRec(gen, board, square);
         board.unmakeMove(state);
         if (gain > best) best = gain;
@@ -180,15 +181,18 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
     }
 
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
-    std::vector<std::string> moves;
-    for (const auto& mv : pseudoMoves)
-        if (board.isMoveLegal(mv) && isCaptureMove(board, mv) &&
-            staticExchangeEval(generator, board, mv) >= 0)
+    std::vector<uint16_t> moves;
+    for (auto mv : pseudoMoves) {
+        std::string sm = decodeMove(mv);
+        if (board.isMoveLegal(sm) && isCaptureMove(board, sm) &&
+            staticExchangeEval(generator, board, sm) >= 0)
             moves.push_back(mv);
+    }
 
-    for (const auto& m : moves) {
+    for (auto m : moves) {
+        std::string sm = decodeMove(m);
         Board::MoveState state;
-        board.makeMove(m, state);
+        board.makeMove(sm, state);
         int score = quiescence(board, alpha, beta, !maximizing, end, stop);
         board.unmakeMove(state);
         if (maximizing) {
@@ -217,10 +221,12 @@ int Engine::negamaxAlphaBeta(Board& board, int depth,
         return color * evaluate(board);
 
     auto pseudo = generator.generateAllMoves(board, board.isWhiteToMove());
-    std::vector<std::string> moves;
-    for (const auto& mv : pseudo)
-        if (board.isMoveLegal(mv))
+    std::vector<uint16_t> moves;
+    for (auto mv : pseudo) {
+        std::string sm = decodeMove(mv);
+        if (board.isMoveLegal(sm))
             moves.push_back(mv);
+    }
 
     if (moves.empty()) {
         if (generator.isKingInCheck(board, board.isWhiteToMove()))
@@ -228,9 +234,10 @@ int Engine::negamaxAlphaBeta(Board& board, int depth,
         return 0;
     }
 
-    for (const auto& m : moves) {
+    for (auto m : moves) {
+        std::string sm = decodeMove(m);
         Board::MoveState st;
-        board.makeMove(m, st);
+        board.makeMove(sm, st);
         int score = -negamaxAlphaBeta(board, depth - 1,
                                       -beta, -alpha, -color, end, stop);
         board.unmakeMove(st);
@@ -308,9 +315,10 @@ std::pair<int, std::string> Engine::minimax(
     }
     auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
     std::vector<std::string> moves;
-    for (const auto& mv : pseudoMoves) {
-        if (board.isMoveLegal(mv))
-            moves.push_back(mv);
+    for (auto mv : pseudoMoves) {
+        std::string sm = decodeMove(mv);
+        if (board.isMoveLegal(sm))
+            moves.push_back(sm);
     }
     int sideIndex = board.isWhiteToMove() ? 0 : 1;
     std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
@@ -493,9 +501,10 @@ std::string Engine::searchBestMove(Board& board, int depth) {
     for (int d = 1; d <= depth; ++d) {
         auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
         std::vector<std::string> moves;
-        for (const auto& mv : pseudoMoves) {
-            if (board.isMoveLegal(mv))
-                moves.push_back(mv);
+        for (auto mv : pseudoMoves) {
+            std::string sm = decodeMove(mv);
+            if (board.isMoveLegal(sm))
+                moves.push_back(sm);
         }
         std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
             return moveScore(board, a, generator) > moveScore(board, b, generator);
@@ -567,9 +576,10 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         auto depthStart = std::chrono::steady_clock::now();
         auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
         std::vector<std::string> moves;
-        for (const auto& mv : pseudoMoves) {
-            if (board.isMoveLegal(mv))
-                moves.push_back(mv);
+        for (auto mv : pseudoMoves) {
+            std::string sm = decodeMove(mv);
+            if (board.isMoveLegal(sm))
+                moves.push_back(sm);
         }
         std::sort(moves.begin(), moves.end(), [&](const std::string& a, const std::string& b) {
             return moveScore(board, a, generator) > moveScore(board, b, generator);

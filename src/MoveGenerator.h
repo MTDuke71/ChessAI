@@ -10,15 +10,15 @@
 class MoveGenerator {
 public:
     MoveGenerator();
-    std::vector<std::string> generatePawnMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateKnightMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateRookMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateBishopMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateQueenMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateKingMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateAllMoves(const Board& board, bool isWhite) const;
-    std::vector<std::string> generateLegalMoves(const Board& board, bool isWhite) const;
-    void addMoves(std::vector<std::string>& moves, uint64_t pawns, uint64_t moveBoard, int shift) const;
+    std::vector<uint16_t> generatePawnMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateKnightMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateRookMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateBishopMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateQueenMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateKingMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateAllMoves(const Board& board, bool isWhite) const;
+    std::vector<uint16_t> generateLegalMoves(const Board& board, bool isWhite) const;
+    void addMoves(std::vector<uint16_t>& moves, uint64_t pawns, uint64_t moveBoard, int shift) const;
 
     bool isSquareAttacked(const Board& board, int square, bool byWhite) const;
     bool isKingInCheck(const Board& board, bool white) const;

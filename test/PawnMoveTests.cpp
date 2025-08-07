@@ -2,6 +2,7 @@
 #include "MoveGenerator.h"
 #include "PrintMoves.h"
 #include "BitUtils.h"
+#include "MoveEncoding.h"
 #include <iostream>
 #include <cassert>
 
@@ -14,7 +15,7 @@ void testPawnPromotion() {
     board.setWhitePawns(0x00FF000000000000); // Pawns on Rank 7 (promotion row)
     MoveGenerator generator;
 
-    std::vector<std::string> moves = generator.generatePawnMoves(board, true);
+    std::vector<uint16_t> moves = generator.generatePawnMoves(board, true);
     std::cout << "\n[?] Pawn Promotion Test\n";
     printMoves(moves);
 
@@ -22,7 +23,7 @@ void testPawnPromotion() {
     assert(moves.size() == 32);
 
     // Apply one underpromotion and verify board state changes
-    board.makeMove(moves.front());
+    board.makeMove(decodeMove(moves.front()));
     // The moved piece should no longer be a pawn
     assert(popcount64(board.getWhitePawns()) == 7);
 }
@@ -43,7 +44,7 @@ void testEnPassant() {
     board.setEnPassantSquare(43);  // Position d6 in bitboard notation
 
     MoveGenerator generator;
-    std::vector<std::string> moves = generator.generatePawnMoves(board, true);
+    std::vector<uint16_t> moves = generator.generatePawnMoves(board, true);
 
     std::cout << "\n[?] En Passant Test\n";
     printMoves(moves);

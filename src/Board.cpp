@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "MoveGenerator.h"
+#include "MoveEncoding.h"
 #include "Zobrist.h"
 #include <iostream>
 #include <sstream>
@@ -196,8 +197,9 @@ bool Board::isMoveLegal(const std::string& move) const {
     MoveGenerator gen;
     auto moves = gen.generateAllMoves(*this, whiteToMove);
     std::string check = move.substr(0,5);
-    for (const auto& m : moves) {
-        if (m.substr(0,5) == check) {
+    for (auto m : moves) {
+        std::string decoded = decodeMove(m);
+        if (decoded.substr(0,5) == check) {
             Board copy = *this;
             copy.applyMove(move);
             return !gen.isKingInCheck(copy, !copy.isWhiteToMove());

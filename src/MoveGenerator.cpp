@@ -2,6 +2,7 @@
 #include "BitUtils.h"
 #include "Board.h"
 #include "Magic.h"
+#include "MoveEncoding.h"
 #include <vector>
 #if defined(_MSC_VER)
 #include <intrin.h>
@@ -49,9 +50,9 @@ MoveGenerator::MoveGenerator() {
   initLeaperTables();
 }
 
-std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
-                                                          bool isWhite) const {
-  std::vector<std::string> moves;
+std::vector<uint16_t> MoveGenerator::generatePawnMoves(const Board &board,
+                                                       bool isWhite) const {
+  std::vector<uint16_t> moves;
   uint64_t pawns = isWhite ? board.getWhitePawns() : board.getBlackPawns();
   uint64_t ownPieces =
       isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -72,9 +73,9 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       int from = to - 8;
       if ((1ULL << to) & whitePromRank) {
         for (char p : {'q', 'r', 'b', 'n'})
-          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+          moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p));
       } else {
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
       }
     }
 
@@ -84,7 +85,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t targets = two; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to - 16;
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
 
     // Captures
@@ -94,9 +95,9 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       int from = to - 9;
       if ((1ULL << to) & whitePromRank) {
         for (char p : {'q', 'r', 'b', 'n'})
-          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+          moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p));
       } else {
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
       }
     }
 
@@ -106,9 +107,9 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       int from = to - 7;
       if ((1ULL << to) & whitePromRank) {
         for (char p : {'q', 'r', 'b', 'n'})
-          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+          moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p));
       } else {
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
       }
     }
   } else {
@@ -119,9 +120,9 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       int from = to + 8;
       if ((1ULL << to) & blackPromRank) {
         for (char p : {'q', 'r', 'b', 'n'})
-          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+          moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p));
       } else {
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
       }
     }
 
@@ -131,7 +132,7 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t targets = two; targets; targets &= targets - 1) {
       int to = lsbIndex(targets);
       int from = to + 16;
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
 
     // Captures
@@ -141,9 +142,9 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       int from = to + 7;
       if ((1ULL << to) & blackPromRank) {
         for (char p : {'q', 'r', 'b', 'n'})
-          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+          moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p));
       } else {
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
       }
     }
 
@@ -153,9 +154,9 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
       int from = to + 9;
       if ((1ULL << to) & blackPromRank) {
         for (char p : {'q', 'r', 'b', 'n'})
-          moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p);
+          moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to) + p));
       } else {
-        moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
       }
     }
   }
@@ -177,25 +178,25 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
       int from = lsbIndex(mask);
       int to = board.getEnPassantSquare();
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
   }
 
   return moves;
 }
 
-void MoveGenerator::addMoves(std::vector<std::string> &moves, uint64_t pawns,
+void MoveGenerator::addMoves(std::vector<uint16_t> &moves, uint64_t pawns,
                              uint64_t moveBoard, int shift) const {
   for (int from = 0; moveBoard; moveBoard &= moveBoard - 1) {
     int to = lsbIndex(moveBoard);
     from = to - shift; // Calculate starting square
-    moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+    moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
   }
 }
 
-std::vector<std::string>
+std::vector<uint16_t>
 MoveGenerator::generateKnightMoves(const Board &board, bool isWhite) const {
-  std::vector<std::string> moves;
+  std::vector<uint16_t> moves;
   uint64_t knights =
       isWhite ? board.getWhiteKnights() : board.getBlackKnights();
   uint64_t ownPieces =
@@ -205,16 +206,16 @@ MoveGenerator::generateKnightMoves(const Board &board, bool isWhite) const {
     uint64_t attacks = knightAttackTable[from] & ~ownPieces;
     for (uint64_t m = attacks; m; m &= m - 1) {
       int to = lsbIndex(m);
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
   }
 
   return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateRookMoves(const Board &board,
-                                                          bool isWhite) const {
-  std::vector<std::string> moves;
+std::vector<uint16_t> MoveGenerator::generateRookMoves(const Board &board,
+                                                       bool isWhite) const {
+  std::vector<uint16_t> moves;
   uint64_t rooks = isWhite ? board.getWhiteRooks() : board.getBlackRooks();
   uint64_t ownPieces =
       isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -224,15 +225,15 @@ std::vector<std::string> MoveGenerator::generateRookMoves(const Board &board,
     uint64_t attacks = Magic::getRookAttacks(from, occupancy) & ~ownPieces;
     for (uint64_t m = attacks; m; m &= m - 1) {
       int to = lsbIndex(m);
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
   }
   return moves;
 }
 
-std::vector<std::string>
+std::vector<uint16_t>
 MoveGenerator::generateBishopMoves(const Board &board, bool isWhite) const {
-  std::vector<std::string> moves;
+  std::vector<uint16_t> moves;
   uint64_t bishops =
       isWhite ? board.getWhiteBishops() : board.getBlackBishops();
   uint64_t ownPieces =
@@ -243,15 +244,15 @@ MoveGenerator::generateBishopMoves(const Board &board, bool isWhite) const {
     uint64_t attacks = Magic::getBishopAttacks(from, occupancy) & ~ownPieces;
     for (uint64_t m = attacks; m; m &= m - 1) {
       int to = lsbIndex(m);
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
   }
   return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateQueenMoves(const Board &board,
-                                                           bool isWhite) const {
-  std::vector<std::string> moves;
+std::vector<uint16_t> MoveGenerator::generateQueenMoves(const Board &board,
+                                                        bool isWhite) const {
+  std::vector<uint16_t> moves;
   uint64_t queens = isWhite ? board.getWhiteQueens() : board.getBlackQueens();
   uint64_t ownPieces =
       isWhite ? board.getWhitePieces() : board.getBlackPieces();
@@ -263,15 +264,15 @@ std::vector<std::string> MoveGenerator::generateQueenMoves(const Board &board,
                        ~ownPieces;
     for (uint64_t m = attacks; m; m &= m - 1) {
       int to = lsbIndex(m);
-      moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
     }
   }
   return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateKingMoves(const Board &board,
-                                                          bool isWhite) const {
-  std::vector<std::string> moves;
+std::vector<uint16_t> MoveGenerator::generateKingMoves(const Board &board,
+                                                       bool isWhite) const {
+  std::vector<uint16_t> moves;
   uint64_t king = isWhite ? board.getWhiteKing() : board.getBlackKing();
   if (!king)
     return moves;
@@ -281,7 +282,7 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board &board,
   uint64_t attacks = kingAttackTable[from] & ~ownPieces;
   for (uint64_t m = attacks; m; m &= m - 1) {
     int to = lsbIndex(m);
-    moves.push_back(indexToAlgebraic(from) + "-" + indexToAlgebraic(to));
+    moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
   }
 
   uint64_t allPieces = board.getWhitePieces() | board.getBlackPieces();
@@ -291,14 +292,14 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board &board,
         (board.getWhiteRooks() & (1ULL << 7)) && !isKingInCheck(board, true) &&
         !isSquareAttacked(board, 5, false) &&
         !isSquareAttacked(board, 6, false)) {
-      moves.push_back("e1-g1 (Castle Kingside)");
+      moves.push_back(encodeMove("e1-g1"));
     }
     if (board.canCastleWQ() && (from == 4) &&
         !(allPieces & ((1ULL << 1) | (1ULL << 2) | (1ULL << 3))) &&
         (board.getWhiteRooks() & (1ULL << 0)) && !isKingInCheck(board, true) &&
         !isSquareAttacked(board, 3, false) &&
         !isSquareAttacked(board, 2, false)) {
-      moves.push_back("e1-c1 (Castle Queenside)");
+      moves.push_back(encodeMove("e1-c1"));
     }
   } else {
     if (board.canCastleBK() && (from == 60) &&
@@ -306,24 +307,24 @@ std::vector<std::string> MoveGenerator::generateKingMoves(const Board &board,
         (board.getBlackRooks() & (1ULL << 63)) &&
         !isKingInCheck(board, false) && !isSquareAttacked(board, 61, true) &&
         !isSquareAttacked(board, 62, true)) {
-      moves.push_back("e8-g8 (Castle Kingside)");
+      moves.push_back(encodeMove("e8-g8"));
     }
     if (board.canCastleBQ() && (from == 60) &&
         !(allPieces & ((1ULL << 57) | (1ULL << 58) | (1ULL << 59))) &&
         (board.getBlackRooks() & (1ULL << 56)) &&
         !isKingInCheck(board, false) && !isSquareAttacked(board, 59, true) &&
         !isSquareAttacked(board, 58, true)) {
-      moves.push_back("e8-c8 (Castle Queenside)");
+      moves.push_back(encodeMove("e8-c8"));
     }
   }
 
   return moves;
 }
 
-std::vector<std::string> MoveGenerator::generateAllMoves(const Board &board,
-                                                         bool isWhite) const {
-  std::vector<std::string> all;
-  auto append = [&all](const std::vector<std::string> &mv) {
+std::vector<uint16_t> MoveGenerator::generateAllMoves(const Board &board,
+                                                      bool isWhite) const {
+  std::vector<uint16_t> all;
+  auto append = [&all](const std::vector<uint16_t> &mv) {
     all.insert(all.end(), mv.begin(), mv.end());
   };
   append(generatePawnMoves(board, isWhite));
@@ -335,12 +336,12 @@ std::vector<std::string> MoveGenerator::generateAllMoves(const Board &board,
   return all;
 }
 
-std::vector<std::string> MoveGenerator::generateLegalMoves(const Board &board,
-                                                           bool isWhite) const {
+std::vector<uint16_t> MoveGenerator::generateLegalMoves(const Board &board,
+                                                        bool isWhite) const {
   auto pseudo = generateAllMoves(board, isWhite);
-  std::vector<std::string> legal;
-  for (const auto &mv : pseudo) {
-    if (board.isMoveLegal(mv))
+  std::vector<uint16_t> legal;
+  for (auto mv : pseudo) {
+    if (board.isMoveLegal(decodeMove(mv)))
       legal.push_back(mv);
   }
   return legal;
