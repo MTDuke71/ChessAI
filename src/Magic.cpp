@@ -18,6 +18,8 @@ namespace Magic {
     std::array<int, 64> bishopShifts{};
     std::array<std::vector<U64>, 64> rookTable{};
     std::array<std::vector<U64>, 64> bishopTable{};
+    std::array<U64, 64> knightTable{};
+    std::array<U64, 64> kingTable{};
     bool initialized = false;
 
     //------------------------------------------------------------------------------
@@ -109,6 +111,29 @@ namespace Magic {
     }
 
     //------------------------------------------------------------------------------
+    // Generate knight and king attack bitboards for a given square.
+    //------------------------------------------------------------------------------
+    U64 generateKnightAttacks(int sq) {
+        U64 p = 1ULL << sq;
+        U64 l1 = (p >> 1) & 0x7f7f7f7f7f7f7f7fULL;
+        U64 l2 = (p >> 2) & 0x3f3f3f3f3f3f3f3fULL;
+        U64 r1 = (p << 1) & 0xfefefefefefefefeULL;
+        U64 r2 = (p << 2) & 0xfcfcfcfcfcfcfcfcULL;
+        U64 h1 = l1 | r1;
+        U64 h2 = l2 | r2;
+        return (h1 << 16) | (h1 >> 16) | (h2 << 8) | (h2 >> 8);
+    }
+
+    U64 generateKingAttacks(int sq) {
+        U64 p = 1ULL << sq;
+        U64 attacks = (p << 8) | (p >> 8);
+        U64 lr = ((p << 1) & 0xfefefefefefefefeULL) | ((p >> 1) & 0x7f7f7f7f7f7f7f7fULL);
+        attacks |= lr;
+        attacks |= (lr << 8) | (lr >> 8);
+        return attacks;
+    }
+
+    //------------------------------------------------------------------------------
     // Build an occupancy bitboard from an index and a list of attack squares.
     //------------------------------------------------------------------------------
     U64 setOccupancy(int index, int bits, const std::vector<int>& squares) {
@@ -165,6 +190,9 @@ namespace Magic {
             rookMasks[sq] = maskRook(sq);
             bishopMasks[sq] = maskBishop(sq);
 
+            knightTable[sq] = generateKnightAttacks(sq);
+            kingTable[sq] = generateKingAttacks(sq);
+
             int rBits = popcount(rookMasks[sq]);
             int bBits = popcount(bishopMasks[sq]);
             rookShifts[sq] = 64 - rBits;
@@ -216,5 +244,23 @@ namespace Magic {
         U64 masked = occ & bishopMasks[sq];
         int index = (int)((masked * bishopMagics[sq]) >> bishopShifts[sq]);
         return bishopTable[sq][index];
+    }
+
+    //------------------------------------------------------------------------------
+    // Retrieve knight and king attack bitboards from precomputed tables.
+    //------------------------------------------------------------------------------
+    U64 getKnightAttacks(int sq) {
+        return knightTable[sq];
+    }
+
+    U64 getKingAttacks(int sq) {
+        return kingTable[sq];
+    }
+
+    //------------------------------------------------------------------------------
+    // Retrieve queen attack bitboard by combining rook and bishop attacks.
+    //------------------------------------------------------------------------------
+    U64 getQueenAttacks(int sq, U64 occ) {
+        return getBishopAttacks(sq, occ) | getRookAttacks(sq, occ);
     }
 }
