@@ -37,8 +37,8 @@ uint16_t encodeMove(const std::string& move) {
             default: promoBits = 3; break;
         }
         code |= (promoBits & 0x3) << 12;
-    } else if ((from == 4 && (to == 6 || to == 2)) ||
-               (from == 60 && (to == 62 || to == 58))) {
+    } else if ((from == 4 && (to == 7 || to == 0)) ||
+               (from == 60 && (to == 63 || to == 56))) {
         special = 3; // castling
     }
     code |= (special & 0x3) << 14;

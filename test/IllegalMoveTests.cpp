@@ -31,11 +31,19 @@ void testKingIntoCheck() {
     assert(board.isMoveLegal("e3-h3"));
 }
 
+void testRookCaptureNotCastling() {
+    Board board;
+    board.loadFEN("r7/1p3p1p/2p2k2/3p4/8/8/PPP2P1P/2KBr1R1 b - - 10 36");
+    // Ensure a rook move from e1 to g1 is recognized as a normal capture, not castling.
+    assert(board.isMoveLegal("e1-g1"));
+}
+
 int main() {
     testIllegalMove();
     testLegalMove();
     testCheckDetection();
     testKingIntoCheck();
+    testRookCaptureNotCastling();
     std::cout << "\nIllegal move tests passed!\n";
     return 0;
 }
