@@ -1,5 +1,5 @@
 #pragma once
 #include <vector>
-#include <string>
+#include <cstdint>
 
-void printMoves(const std::vector<std::string>& moves);
+void printMoves(const std::vector<uint16_t>& moves);

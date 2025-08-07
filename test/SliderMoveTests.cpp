@@ -10,7 +10,7 @@ void testRookMoves() {
     board.setWhiteRooks(1ULL << 27); // d4
 
     MoveGenerator gen;
-    auto moves = gen.generateRookMoves(board, true);
+    std::vector<uint16_t> moves = gen.generateRookMoves(board, true);
     std::cout << "\n[?] Rook Moves\n";
     printMoves(moves);
     assert(moves.size() == 14);
@@ -22,7 +22,7 @@ void testBishopMoves() {
     board.setWhiteBishops(1ULL << 27); // d4
 
     MoveGenerator gen;
-    auto moves = gen.generateBishopMoves(board, true);
+    std::vector<uint16_t> moves = gen.generateBishopMoves(board, true);
     std::cout << "\n[?] Bishop Moves\n";
     printMoves(moves);
     assert(moves.size() == 13);
@@ -34,7 +34,7 @@ void testQueenMoves() {
     board.setWhiteQueens(1ULL << 27); // d4
 
     MoveGenerator gen;
-    auto moves = gen.generateQueenMoves(board, true);
+    std::vector<uint16_t> moves = gen.generateQueenMoves(board, true);
     std::cout << "\n[?] Queen Moves\n";
     printMoves(moves);
     assert(moves.size() == 27);

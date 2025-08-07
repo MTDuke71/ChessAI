@@ -10,7 +10,7 @@ void testCenterKnightMoves() {
     board.setWhiteKnights(1ULL << 27); // Knight on d4
 
     MoveGenerator gen;
-    std::vector<std::string> moves = gen.generateKnightMoves(board, true);
+    std::vector<uint16_t> moves = gen.generateKnightMoves(board, true);
     std::cout << "\n[?] Center Knight Moves\n";
     printMoves(moves);
     assert(moves.size() == 8);
@@ -22,7 +22,7 @@ void testCornerKnightMoves() {
     board.setWhiteKnights(1ULL << 0); // Knight on a1
 
     MoveGenerator gen;
-    std::vector<std::string> moves = gen.generateKnightMoves(board, true);
+    std::vector<uint16_t> moves = gen.generateKnightMoves(board, true);
     std::cout << "\n[?] Corner Knight Moves\n";
     printMoves(moves);
     assert(moves.size() == 2);

@@ -1,6 +1,7 @@
 #include "Board.h"
 #include "MoveGenerator.h"
 #include "PrintMoves.h"
+#include "MoveEncoding.h"
 #include <cassert>
 #include <iostream>
 
@@ -18,16 +19,18 @@ void testPinnedRook() {
 
 
     bool hasIllegal = false;
-    for (const auto& m : pseudo) {
-        if (m.rfind("b1-", 0) == 0 && m != "b1-a1") {
+    for (auto m : pseudo) {
+        std::string s = decodeMove(m);
+        if (s.rfind("b1-", 0) == 0 && s != "b1-a1") {
             hasIllegal = true;
             break;
         }
     }
     assert(hasIllegal);
 
-    for (const auto& m : legal) {
-        if (m.rfind("b1-", 0) == 0 && m != "b1-a1") {
+    for (auto m : legal) {
+        std::string s = decodeMove(m);
+        if (s.rfind("b1-", 0) == 0 && s != "b1-a1") {
             assert(false && "illegal move returned by generateLegalMoves");
         }
     }
