@@ -28,6 +28,7 @@ public:
         bool castleWK, castleWQ, castleBK, castleBQ;
         int halfmoveClock;
         int fullmoveNumber;
+        uint64_t zobristKey;  // Hash of the position after the move
     };
 
     enum class Color { None, White, Black };
