@@ -581,10 +581,12 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
                           std::chrono::steady_clock::now() - depthStart)
                           .count();
         std::string pvUCI;
+        int pvCount = 0;
         {
             std::istringstream iss(bestPV);
             std::string token;
             while (iss >> token) {
+                ++pvCount;
                 uint16_t mv = encodeMove(token);
                 if (!pvUCI.empty()) pvUCI += " ";
                 pvUCI += toUCIMove(mv);
@@ -594,10 +596,18 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
         uint64_t nodeCount = nodes.load();
         uint64_t nps = elapsed > 0 ? (nodeCount * 1000 / elapsed) : nodeCount;
         if (!lastDepthComplete) break;
-        std::cout << "info depth " << depth << " score cp "
-                  << (board.isWhiteToMove() ? bestScore : -bestScore)
-                  << " nodes " << nodeCount << " nps " << nps
-                  << " hashfull " << hashPercent << " time " << elapsed;
+        int displayScore = board.isWhiteToMove() ? bestScore : -bestScore;
+        if (displayScore >= 900000 || displayScore <= -900000) {
+            int mateMoves = (pvCount + 1) / 2;
+            if (displayScore < 0) mateMoves = -mateMoves;
+            std::cout << "info depth " << depth << " score mate " << mateMoves
+                      << " nodes " << nodeCount << " nps " << nps
+                      << " hashfull " << hashPercent << " time " << elapsed;
+        } else {
+            std::cout << "info depth " << depth << " score cp " << displayScore
+                      << " nodes " << nodeCount << " nps " << nps
+                      << " hashfull " << hashPercent << " time " << elapsed;
+        }
         if (!pvUCI.empty())
             std::cout << " pv " << pvUCI;
         std::cout << '\n';
