@@ -7,11 +7,11 @@ inline constexpr int GAME_PHASE_OPENING_THRESHOLD = 24;
 inline constexpr int GAME_PHASE_MIDDLEGAME_THRESHOLD = 12;
 
 inline constexpr int PAWN_VALUE = 100;
-inline constexpr int KNIGHT_VALUE = 320;
-inline constexpr int BISHOP_VALUE = 330;
+inline constexpr int KNIGHT_VALUE = 300;
+inline constexpr int BISHOP_VALUE = 350;
 inline constexpr int ROOK_VALUE = 500;
-inline constexpr int QUEEN_VALUE = 900;
-inline constexpr int KING_VALUE = 20000;
+inline constexpr int QUEEN_VALUE = 1000;
+inline constexpr int KING_VALUE = 10000;
 
 inline constexpr int WHITE_KNIGHT_OUTPOST_MIN_RANK = 3;
 inline constexpr int BLACK_KNIGHT_OUTPOST_MAX_RANK = 4;
