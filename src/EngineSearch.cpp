@@ -169,9 +169,9 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
                        const std::chrono::steady_clock::time_point& end,
                        const std::atomic<bool>& stop) {
     if (stop || std::chrono::steady_clock::now() >= end)
-        return evaluate(board);
+        return (board.isWhiteToMove() ? 1 : -1) * evaluate(board);
     nodes++;
-    int standPat = evaluate(board);
+    int standPat = (board.isWhiteToMove() ? 1 : -1) * evaluate(board);
     if (maximizing) {
         if (standPat >= beta) return standPat;
         if (standPat > alpha) alpha = standPat;
@@ -268,7 +268,7 @@ std::pair<int, std::string> Engine::minimax(
                     historyTable[s][f][t] = 0;
     }
     if (stop || std::chrono::steady_clock::now() >= end)
-        return {evaluate(board), ""};
+        return {(board.isWhiteToMove() ? 1 : -1) * evaluate(board), ""};
     if (board.isFiftyMoveDraw() || board.isThreefoldRepetition())
         return {0, ""};
     uint64_t key = Zobrist::hashBoard(board);
