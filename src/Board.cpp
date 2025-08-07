@@ -420,12 +420,16 @@ bool Board::isMoveLegal(uint16_t move) const {
   uint64_t opp = isWhite ? getBlackPieces() : getWhitePieces();
   uint64_t occ = own | opp;
 
-  // Allow castling even though the destination square contains our rook
+  // Allow castling even though the destination square contains our rook.
+  // Only a king may make such a move; otherwise moving onto a friendly piece
+  // is always illegal.
   if (!(own & fromMask))
     return false;
   if (own & toMask) {
-    if (!(special == 3 && ((from == 4 && (to == 7 || to == 0)) ||
-                           (from == 60 && (to == 63 || to == 56)))))
+    bool kingAtFrom = (whiteKing | blackKing) & fromMask;
+    if (!(special == 3 && kingAtFrom &&
+          ((from == 4 && (to == 7 || to == 0)) ||
+           (from == 60 && (to == 63 || to == 56)))))
       return false;
   }
 
