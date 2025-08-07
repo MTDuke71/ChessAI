@@ -7,6 +7,7 @@
 #include <sstream>
 #include <cctype>
 #include <cstdlib>
+#include <array>
 
 namespace {
     const int directions[8][2] = {
@@ -33,6 +34,19 @@ namespace {
         attacks |= (lr << 8) | (lr >> 8);
         return attacks;
     }
+
+    const std::array<int, 256 * 256> squareIndexLookup = [] {
+        std::array<int, 256 * 256> arr{};
+        arr.fill(-1);
+        for (int i = 0; i < 64; ++i) {
+            char file = 'a' + (i % 8);
+            char rank = '1' + (i / 8);
+            unsigned key = (static_cast<unsigned char>(file) << 8) |
+                            static_cast<unsigned char>(rank);
+            arr[key] = i;
+        }
+        return arr;
+    }();
 }
 
 //------------------------------------------------------------------------------
@@ -301,10 +315,10 @@ std::string Board::getFEN() const {
 }
 
 int algebraicToIndex(const std::string& sq) {
-    if (sq.size() < 2) return -1;
-    int file = sq[0] - 'a';
-    int rank = sq[1] - '1';
-    return rank * 8 + file;
+    if (sq.size() != 2) return -1;
+    unsigned key = (static_cast<unsigned char>(sq[0]) << 8) |
+                   static_cast<unsigned char>(sq[1]);
+    return squareIndexLookup[key];
 }
 
 Board::Color Board::pieceColorAt(int index) const {
