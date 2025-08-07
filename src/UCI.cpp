@@ -7,9 +7,24 @@
 #include "Board.h"
 #include "Engine.h"
 
-static std::string toInternalMove(const std::string& uci) {
+static std::string toInternalMove(const std::string& uci, const Board& board) {
     if (uci.size() < 4) return "";
-    std::string move = uci.substr(0,2) + "-" + uci.substr(2,2);
+    std::string from = uci.substr(0,2);
+    std::string to = uci.substr(2,2);
+    int file = from[0] - 'a';
+    int rank = from[1] - '1';
+    int fromIdx = rank * 8 + file;
+    uint64_t fromMask = 1ULL << fromIdx;
+    bool kingAtFrom = (board.getWhiteKing() | board.getBlackKing()) & fromMask;
+
+    if (kingAtFrom) {
+        if (uci == "e1g1") to = "h1";
+        else if (uci == "e1c1") to = "a1";
+        else if (uci == "e8g8") to = "h8";
+        else if (uci == "e8c8") to = "a8";
+    }
+
+    std::string move = from + "-" + to;
     if (uci.size() >= 5)
         move += std::string(1, static_cast<char>(std::tolower(uci[4])));
     return move;
@@ -100,7 +115,7 @@ int main() {
             }
             if (iss >> token && token == "moves") {
                 while (iss >> token) {
-                    std::string internal = toInternalMove(token);
+                    std::string internal = toInternalMove(token, board);
                     if (!board.isMoveLegal(internal)) {
                         std::cout << "info string Illegal move in position command: " << token << '\n';
                         break;

@@ -25,8 +25,8 @@ void testCastling() {
     bool hasK = false, hasQ = false;
     for (auto m : wmoves) {
         std::string s = decodeMove(m);
-        if (s == "e1-g1") hasK = true;
-        if (s == "e1-c1") hasQ = true;
+        if (s == "e1-h1") hasK = true;
+        if (s == "e1-a1") hasQ = true;
     }
     assert(hasK && hasQ);
 
@@ -34,8 +34,8 @@ void testCastling() {
     bool bK = false, bQ = false;
     for (auto m : bmoves) {
         std::string s = decodeMove(m);
-        if (s == "e8-g8") bK = true;
-        if (s == "e8-c8") bQ = true;
+        if (s == "e8-h8") bK = true;
+        if (s == "e8-a8") bQ = true;
     }
     assert(bK && bQ);
 }
@@ -53,7 +53,7 @@ void testNoCastlingWhileInCheck() {
     std::vector<uint16_t> moves = g.generateKingMoves(b, true);
     for (auto m : moves) {
         std::string s = decodeMove(m);
-        assert(s != "e1-g1" && s != "e1-c1");
+        assert(s != "e1-h1" && s != "e1-a1");
     }
 }
 
@@ -69,7 +69,7 @@ void testNoCastlingThroughCheck() {
     std::vector<uint16_t> moves = g.generateKingMoves(b, true);
     for (auto m : moves) {
         std::string s = decodeMove(m);
-        assert(s != "e1-g1");
+        assert(s != "e1-h1");
     }
 }
 
@@ -81,7 +81,7 @@ void testRookMoveDisablesCastling() {
     std::vector<uint16_t> moves = g.generateKingMoves(b, true);
     for (auto m : moves) {
         std::string s = decodeMove(m);
-        assert(s != "e1-g1");
+        assert(s != "e1-h1");
     }
 }
 
