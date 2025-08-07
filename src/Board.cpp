@@ -2,10 +2,17 @@
 #include "MoveGenerator.h"
 #include "MoveEncoding.h"
 #include "Zobrist.h"
+#include "Magic.h"
 #include <iostream>
 #include <sstream>
 #include <cctype>
 #include <cstdlib>
+
+namespace {
+    const int directions[8][2] = {
+        {1,0},{-1,0},{0,1},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}
+    };
+}
 
 //------------------------------------------------------------------------------
 // Default constructor initializes the board to the standard starting position.
@@ -26,6 +33,102 @@ void Board::clearBoard() {
     halfmoveClock = 0;
     fullmoveNumber = 1;
     repetitionTable.clear();
+    attackMaps[0] = attackMaps[1] = 0;
+    squareAttacks.fill(0);
+}
+
+uint64_t Board::computeAttacks(int sq) const {
+    uint64_t occ = getWhitePieces() | getBlackPieces();
+    uint64_t mask = 1ULL << sq;
+    if (whitePawns & mask)
+        return ((mask << 7) & 0x7F7F7F7F7F7F7F7FULL) |
+               ((mask << 9) & 0xFEFEFEFEFEFEFEFEULL);
+    if (blackPawns & mask)
+        return ((mask >> 7) & 0xFEFEFEFEFEFEFEFEULL) |
+               ((mask >> 9) & 0x7F7F7F7F7F7F7F7FULL);
+
+    // Knight moves
+    if ((whiteKnights | blackKnights) & mask) {
+        const int offsets[8][2] = {
+            {1,2},{2,1},{-1,2},{-2,1},{1,-2},{2,-1},{-1,-2},{-2,-1}
+        };
+        int r = sq / 8, f = sq % 8;
+        uint64_t attacks = 0ULL;
+        for (auto &o : offsets) {
+            int tr = r + o[1], tf = f + o[0];
+            if (tr>=0 && tr<8 && tf>=0 && tf<8)
+                attacks |= 1ULL << (tr*8 + tf);
+        }
+        return attacks;
+    }
+
+    // Bishop
+    if ((whiteBishops | blackBishops) & mask)
+        return Magic::getBishopAttacks(sq, occ);
+
+    // Rook
+    if ((whiteRooks | blackRooks) & mask)
+        return Magic::getRookAttacks(sq, occ);
+
+    // Queen
+    if ((whiteQueens | blackQueens) & mask)
+        return Magic::getBishopAttacks(sq, occ) | Magic::getRookAttacks(sq, occ);
+
+    // King
+    if ((whiteKing | blackKing) & mask) {
+        int r = sq / 8, f = sq % 8;
+        uint64_t attacks = 0ULL;
+        for (int dr = -1; dr <= 1; ++dr) {
+            for (int df = -1; df <= 1; ++df) {
+                if (dr == 0 && df == 0) continue;
+                int tr = r + dr, tf = f + df;
+                if (tr>=0 && tr<8 && tf>=0 && tf<8)
+                    attacks |= 1ULL << (tr*8 + tf);
+            }
+        }
+        return attacks;
+    }
+
+    return 0ULL;
+}
+
+void Board::updateLines(int sq) {
+    if (sq < 0) return;
+    uint64_t occ = getWhitePieces() | getBlackPieces();
+    int r = sq / 8, f = sq % 8;
+    for (auto &d : directions) {
+        int tr = r + d[0];
+        int tf = f + d[1];
+        while (tr >=0 && tr <8 && tf>=0 && tf<8) {
+            int idx = tr*8 + tf;
+            uint64_t bit = 1ULL << idx;
+            if (occ & bit) {
+                int side = (getWhitePieces() & bit) ? 0 : 1;
+                attackMaps[side] &= ~squareAttacks[idx];
+                squareAttacks[idx] = computeAttacks(idx);
+                attackMaps[side] |= squareAttacks[idx];
+                break;
+            }
+            tr += d[0];
+            tf += d[1];
+        }
+    }
+}
+
+void Board::recalculateAttacks() {
+    static bool magicInit = false;
+    if (!magicInit) { Magic::init(); magicInit = true; }
+    attackMaps[0] = attackMaps[1] = 0;
+    squareAttacks.fill(0);
+    uint64_t occ = getWhitePieces() | getBlackPieces();
+    for (int sq = 0; sq < 64; ++sq) {
+        uint64_t bit = 1ULL << sq;
+        if (occ & bit) {
+            squareAttacks[sq] = computeAttacks(sq);
+            int side = (getWhitePieces() & bit) ? 0 : 1;
+            attackMaps[side] |= squareAttacks[sq];
+        }
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -119,6 +222,7 @@ bool Board::loadFEN(const std::string& fen) {
     fullmoveNumber = full;
     repetitionTable.clear();
     repetitionTable[Zobrist::hashBoard(*this)] = 1;
+    recalculateAttacks();
 
     return true;
 }
@@ -240,6 +344,9 @@ void Board::makeMove(const std::string& move, MoveState& state) {
     state.castleBQ = castleBQ;
     state.halfmoveClock = halfmoveClock;
     state.fullmoveNumber = fullmoveNumber;
+    state.whiteAttacks = attackMaps[0];
+    state.blackAttacks = attackMaps[1];
+    state.squareAttacks = squareAttacks;
 
     applyMove(move);
     state.zobristKey = Zobrist::hashBoard(*this);
@@ -274,6 +381,9 @@ void Board::unmakeMove(const MoveState& state) {
     castleBQ = state.castleBQ;
     halfmoveClock = state.halfmoveClock;
     fullmoveNumber = state.fullmoveNumber;
+    attackMaps[0] = state.whiteAttacks;
+    attackMaps[1] = state.blackAttacks;
+    squareAttacks = state.squareAttacks;
 }
 
 //------------------------------------------------------------------------------
@@ -315,6 +425,17 @@ void Board::applyMove(const std::string& move) {
         capture = true;
     }
 
+    int side = whiteToMove ? 0 : 1;
+    int oppSide = 1 - side;
+    int capturedSquare = enPassantCapture ? (whiteToMove ? to - 8 : to + 8)
+                                          : (capture ? to : -1);
+    attackMaps[side] &= ~squareAttacks[from];
+    squareAttacks[from] = 0;
+    if (capturedSquare >= 0) {
+        attackMaps[oppSide] &= ~squareAttacks[capturedSquare];
+        squareAttacks[capturedSquare] = 0;
+    }
+
     // Update castling rights if rooks are captured
     if (toMask & whiteRooks) {
         if (to == 0) castleWQ = false;
@@ -349,21 +470,45 @@ void Board::applyMove(const std::string& move) {
     if (movedWhiteKing) {
         castleWK = castleWQ = false;
         if (from == 4 && to == 6) {
+            attackMaps[0] &= ~squareAttacks[7];
+            squareAttacks[7] = 0;
             whiteRooks &= ~(1ULL<<7);
             whiteRooks |= (1ULL<<5);
+            squareAttacks[5] = computeAttacks(5);
+            attackMaps[0] |= squareAttacks[5];
+            updateLines(7);
+            updateLines(5);
         } else if (from == 4 && to == 2) {
+            attackMaps[0] &= ~squareAttacks[0];
+            squareAttacks[0] = 0;
             whiteRooks &= ~(1ULL<<0);
             whiteRooks |= (1ULL<<3);
+            squareAttacks[3] = computeAttacks(3);
+            attackMaps[0] |= squareAttacks[3];
+            updateLines(0);
+            updateLines(3);
         }
     }
     if (movedBlackKing) {
         castleBK = castleBQ = false;
         if (from == 60 && to == 62) {
+            attackMaps[1] &= ~squareAttacks[63];
+            squareAttacks[63] = 0;
             blackRooks &= ~(1ULL<<63);
             blackRooks |= (1ULL<<61);
+            squareAttacks[61] = computeAttacks(61);
+            attackMaps[1] |= squareAttacks[61];
+            updateLines(63);
+            updateLines(61);
         } else if (from == 60 && to == 58) {
+            attackMaps[1] &= ~squareAttacks[56];
+            squareAttacks[56] = 0;
             blackRooks &= ~(1ULL<<56);
             blackRooks |= (1ULL<<59);
+            squareAttacks[59] = computeAttacks(59);
+            attackMaps[1] |= squareAttacks[59];
+            updateLines(56);
+            updateLines(59);
         }
     }
 
@@ -397,6 +542,12 @@ void Board::applyMove(const std::string& move) {
             }
         }
     }
+
+    squareAttacks[to] = computeAttacks(to);
+    attackMaps[side] |= squareAttacks[to];
+    updateLines(from);
+    updateLines(to);
+    if (capturedSquare >= 0) updateLines(capturedSquare);
 
     // Set en passant target if a pawn moved two squares
     if (pawnMove && std::abs(to - from) == 16) {

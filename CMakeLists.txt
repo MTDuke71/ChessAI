@@ -147,6 +147,11 @@ add_executable(OpeningBookPolyglotTest
     test/OpeningBookPolyglotTest.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+add_executable(IncrementalAttackUpdateTest
+    test/IncrementalAttackUpdateTest.cpp
+    src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
+target_include_directories(IncrementalAttackUpdateTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
 # Example programs
 add_executable(CreatePosition examples/create_position.cpp
     src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
@@ -219,6 +224,7 @@ add_test(NAME ActivityBonusEvaluationTest COMMAND ActivityBonusEvaluationTest)
 add_test(NAME KingSafetyEvaluationTest COMMAND KingSafetyEvaluationTest)
 add_test(NAME PawnStructureEvaluationTest COMMAND PawnStructureEvaluationTest)
 add_test(NAME OpeningBookPolyglotTest COMMAND OpeningBookPolyglotTest)
+add_test(NAME IncrementalAttackUpdateTest COMMAND IncrementalAttackUpdateTest)
 
 
 
