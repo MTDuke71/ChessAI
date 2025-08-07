@@ -39,32 +39,4 @@ void printBitboard(uint64_t bitboard, const std::string& label) {
     std::cout << "==========================\n";
 }
 
-void debugEnPassant(const Board& board, bool isWhite) {
-    std::cout << "=== En Passant Mask Debug Info ===\n";
-    std::cout << "En Passant Square Index: " << board.getEnPassantSquare() << "\n";
-    std::cout << "En Passant Square Bitboard: " << std::hex
-              << (1ULL << board.getEnPassantSquare()) << "\n";
 
-    uint64_t whitePawns = board.getWhitePawns();
-    uint64_t blackPawns = board.getBlackPawns();
-    uint64_t ep = 1ULL << board.getEnPassantSquare();
-
-    printBitboard(whitePawns, "White Pawns");
-    printBitboard(blackPawns, "Black Pawns");
-
-    uint64_t fromMask = isWhite
-        ? ((ep >> 9) & whitePawns & 0xFEFEFEFEFEFEFEFEULL) |
-          ((ep >> 7) & whitePawns & 0x7F7F7F7F7F7F7F7FULL)
-        : ((ep << 7) & blackPawns & 0xFEFEFEFEFEFEFEFEULL) |
-          ((ep << 9) & blackPawns & 0x7F7F7F7F7F7F7F7FULL);
-
-    std::cout << "Eligible Pawns Bitboard: " << std::hex << fromMask << "\n";
-    printBitboard(fromMask, "Eligible Pawns");
-
-    if (fromMask)
-        std::cout << "Valid En Passant Capture Found!\n";
-    else
-        std::cout << "No valid en passant capture found.\n";
-
-    std::cout << "==================================\n";
-}
