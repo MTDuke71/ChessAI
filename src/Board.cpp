@@ -246,6 +246,14 @@ void Board::makeMove(const std::string& move, MoveState& state) {
 }
 
 void Board::unmakeMove(const MoveState& state) {
+    // Decrement count for the current position before restoring the previous one
+    uint64_t currentKey = Zobrist::hashBoard(*this);
+    auto it = repetitionTable.find(currentKey);
+    if (it != repetitionTable.end()) {
+        if (--it->second == 0)
+            repetitionTable.erase(it);
+    }
+
     whitePawns = state.whitePawns;
     whiteKnights = state.whiteKnights;
     whiteBishops = state.whiteBishops;
@@ -266,12 +274,6 @@ void Board::unmakeMove(const MoveState& state) {
     castleBQ = state.castleBQ;
     halfmoveClock = state.halfmoveClock;
     fullmoveNumber = state.fullmoveNumber;
-
-    auto it = repetitionTable.find(state.zobristKey);
-    if (it != repetitionTable.end()) {
-        if (--it->second == 0)
-            repetitionTable.erase(it);
-    }
 }
 
 //------------------------------------------------------------------------------
