@@ -165,8 +165,8 @@ std::vector<std::string> MoveGenerator::generatePawnMoves(const Board &board,
     uint64_t epSquare = 1ULL << board.getEnPassantSquare();
     uint64_t fromMask;
     if (isWhite) {
-      fromMask = ((epSquare >> 9) & pawns & 0xFEFEFEFEFEFEFEFEULL) |
-                 ((epSquare >> 7) & pawns & 0x7F7F7F7F7F7F7F7FULL);
+      fromMask = ((epSquare >> 9) & pawns & 0x7F7F7F7F7F7F7F7FULL) |
+                 ((epSquare >> 7) & pawns & 0xFEFEFEFEFEFEFEFEULL);
     } else {
       // Mirror the masks used for white so file wrapping is handled correctly
       // for black pawns capturing en passant from either side.
