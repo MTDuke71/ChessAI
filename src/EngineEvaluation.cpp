@@ -351,5 +351,8 @@ int Engine::evaluate(const Board &b) const {
       score += stuckPenalty;
   }
 
-  return score;
+  // Return the evaluation from the perspective of the side to move so that
+  // the score is symmetric regardless of whose turn it is. Positive values
+  // always mean the side to move is favored.
+  return b.isWhiteToMove() ? score : -score;
 }
