@@ -420,17 +420,13 @@ bool Board::isMoveLegal(uint16_t move) const {
   uint64_t opp = isWhite ? getBlackPieces() : getWhitePieces();
   uint64_t occ = own | opp;
 
-  // Allow castling even though the destination square contains our rook.
-  // Only a king may make such a move; otherwise moving onto a friendly piece
-  // is always illegal.
+  // Check if there's a piece to move
   if (!(own & fromMask))
     return false;
+
+  // For non-castling moves, check if moving onto own piece
   if (own & toMask) {
-    bool kingAtFrom = (whiteKing | blackKing) & fromMask;
-    if (!(special == 3 && kingAtFrom &&
-          ((from == 4 && (to == 7 || to == 0)) ||
-           (from == 60 && (to == 63 || to == 56)))))
-      return false;
+    return false;
   }
 
   bool pseudo = false;
@@ -489,26 +485,26 @@ bool Board::isMoveLegal(uint16_t move) const {
         return false;
     } else if (special == 3) {
       if (isWhite) {
-        if (from == 4 && to == 7 && castleWK &&
+        if (from == 4 && to == 6 && castleWK &&
             !(occ & ((1ULL << 5) | (1ULL << 6))) &&
             !gen.isSquareAttacked(*this, 4, false) &&
             !gen.isSquareAttacked(*this, 5, false) &&
             !gen.isSquareAttacked(*this, 6, false))
           pseudo = true;
-        else if (from == 4 && to == 0 && castleWQ &&
+        else if (from == 4 && to == 2 && castleWQ &&
                  !(occ & ((1ULL << 1) | (1ULL << 2) | (1ULL << 3))) &&
                  !gen.isSquareAttacked(*this, 4, false) &&
                  !gen.isSquareAttacked(*this, 3, false) &&
                  !gen.isSquareAttacked(*this, 2, false))
           pseudo = true;
       } else {
-        if (from == 60 && to == 63 && castleBK &&
+        if (from == 60 && to == 62 && castleBK &&
             !(occ & ((1ULL << 61) | (1ULL << 62))) &&
             !gen.isSquareAttacked(*this, 60, true) &&
             !gen.isSquareAttacked(*this, 61, true) &&
             !gen.isSquareAttacked(*this, 62, true))
           pseudo = true;
-        else if (from == 60 && to == 56 && castleBQ &&
+        else if (from == 60 && to == 58 && castleBQ &&
                  !(occ & ((1ULL << 57) | (1ULL << 58) | (1ULL << 59))) &&
                  !gen.isSquareAttacked(*this, 60, true) &&
                  !gen.isSquareAttacked(*this, 59, true) &&

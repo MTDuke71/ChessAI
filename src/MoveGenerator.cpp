@@ -303,14 +303,14 @@ std::vector<uint16_t> MoveGenerator::generateKingMoves(const Board &board,
         (board.getWhiteRooks() & (1ULL << 7)) && !isKingInCheck(board, true) &&
         !isSquareAttacked(board, 5, false) &&
         !isSquareAttacked(board, 6, false)) {
-      moves.push_back(encodeMove("e1-h1"));
+      moves.push_back(encodeMove("e1-g1"));
     }
     if (board.canCastleWQ() && (from == 4) &&
         !(allPieces & ((1ULL << 1) | (1ULL << 2) | (1ULL << 3))) &&
         (board.getWhiteRooks() & (1ULL << 0)) && !isKingInCheck(board, true) &&
         !isSquareAttacked(board, 3, false) &&
         !isSquareAttacked(board, 2, false)) {
-      moves.push_back(encodeMove("e1-a1"));
+      moves.push_back(encodeMove("e1-c1"));
     }
   } else {
     if (board.canCastleBK() && (from == 60) &&
@@ -318,14 +318,14 @@ std::vector<uint16_t> MoveGenerator::generateKingMoves(const Board &board,
         (board.getBlackRooks() & (1ULL << 63)) &&
         !isKingInCheck(board, false) && !isSquareAttacked(board, 61, true) &&
         !isSquareAttacked(board, 62, true)) {
-      moves.push_back(encodeMove("e8-h8"));
+      moves.push_back(encodeMove("e8-g8"));
     }
     if (board.canCastleBQ() && (from == 60) &&
         !(allPieces & ((1ULL << 57) | (1ULL << 58) | (1ULL << 59))) &&
         (board.getBlackRooks() & (1ULL << 56)) &&
         !isKingInCheck(board, false) && !isSquareAttacked(board, 59, true) &&
         !isSquareAttacked(board, 58, true)) {
-      moves.push_back(encodeMove("e8-a8"));
+      moves.push_back(encodeMove("e8-c8"));
     }
   }
 

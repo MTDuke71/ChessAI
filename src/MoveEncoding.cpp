@@ -62,10 +62,10 @@ uint16_t encodeMove(const std::string& move, bool isWhiteToMove) {
             default: promoBits = 3; break;
         }
         code |= (promoBits & 0x3) << 12;
-    } else if ((from == 4 && (to == 6 || to == 2)) ||
-               (from == 60 && (to == 62 || to == 58))) {
-        special = 3; // castling
     }
+    // Note: Removed erroneous castling detection here
+    // Castling should only be encoded via "O-O" and "O-O-O" notation,
+    // not by guessing based on square positions
     code |= (special & 0x3) << 14;
     return code;
 }

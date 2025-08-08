@@ -120,6 +120,18 @@ add_executable(PerftSuiteTest
     src/MoveGenerator.cpp
     src/Perft.cpp ${ENGINE_SOURCES})
 
+add_executable(TestPosition2
+    test/TestPosition2.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/Perft.cpp ${ENGINE_SOURCES})
+
+add_executable(InvestigatePosition3
+    test/InvestigatePosition3.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/Perft.cpp ${ENGINE_SOURCES})
+
 add_executable(MVVLVAArrayTest
     test/MVVLVAArrayTest.cpp)
 
