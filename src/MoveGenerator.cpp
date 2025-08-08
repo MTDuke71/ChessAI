@@ -4,6 +4,7 @@
 #include "Magic.h"
 #include "MoveEncoding.h"
 #include <vector>
+#include <cmath>
 #if defined(_MSC_VER)
 #include <intrin.h>
 #else
@@ -182,7 +183,13 @@ std::vector<uint16_t> MoveGenerator::generatePawnMoves(const Board &board,
     for (uint64_t mask = fromMask; mask; mask &= mask - 1) {
       int from = lsbIndex(mask);
       int to = board.getEnPassantSquare();
-      moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
+      
+      // Check adjacency - pawns can only capture en passant on adjacent files
+      int fromFile = from % 8;
+      int epFile = to % 8;
+      if (abs(fromFile - epFile) == 1) {
+        moves.push_back(encodeMove(indexToAlgebraic(from) + "-" + indexToAlgebraic(to)));
+      }
     }
   }
 

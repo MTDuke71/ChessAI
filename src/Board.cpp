@@ -531,7 +531,7 @@ bool Board::isMoveLegal(uint16_t move) const {
 //------------------------------------------------------------------------------
 // Validate and apply a move, printing an error if the move is illegal.
 //------------------------------------------------------------------------------
-void Board::makeMove(const std::string &move) { makeMove(encodeMove(move)); }
+void Board::makeMove(const std::string &move) { makeMove(encodeMove(move, whiteToMove)); }
 
 void Board::makeMove(uint16_t move) {
   if (!isMoveLegal(move)) {
@@ -542,7 +542,7 @@ void Board::makeMove(uint16_t move) {
 }
 
 void Board::makeMove(const std::string &move, MoveState &state) {
-  makeMove(encodeMove(move), state);
+  makeMove(encodeMove(move, whiteToMove), state);
 }
 
 void Board::makeMove(uint16_t move, MoveState &state) {
@@ -718,7 +718,7 @@ void Board::applyMove(uint16_t move) {
 
   if (movedWhiteKing) {
     castleWK = castleWQ = false;
-    if (from == 4 && to == 7) {
+    if (from == 4 && to == 6) {  // Kingside castling: e1-g1
       attackMaps[0] &= ~squareAttacks[7];
       squareAttacks[7] = 0;
       whiteRooks &= ~(1ULL << 7);
@@ -727,7 +727,7 @@ void Board::applyMove(uint16_t move) {
       attackMaps[0] |= squareAttacks[5];
       updateLines(7);
       updateLines(5);
-    } else if (from == 4 && to == 0) {
+    } else if (from == 4 && to == 2) {  // Queenside castling: e1-c1
       attackMaps[0] &= ~squareAttacks[0];
       squareAttacks[0] = 0;
       whiteRooks &= ~(1ULL << 0);
@@ -740,7 +740,7 @@ void Board::applyMove(uint16_t move) {
   }
   if (movedBlackKing) {
     castleBK = castleBQ = false;
-    if (from == 60 && to == 63) {
+    if (from == 60 && to == 62) {  // Kingside castling: e8-g8
       attackMaps[1] &= ~squareAttacks[63];
       squareAttacks[63] = 0;
       blackRooks &= ~(1ULL << 63);
@@ -749,7 +749,7 @@ void Board::applyMove(uint16_t move) {
       attackMaps[1] |= squareAttacks[61];
       updateLines(63);
       updateLines(61);
-    } else if (from == 60 && to == 56) {
+    } else if (from == 60 && to == 58) {  // Queenside castling: e8-c8
       attackMaps[1] &= ~squareAttacks[56];
       squareAttacks[56] = 0;
       blackRooks &= ~(1ULL << 56);
