@@ -50,7 +50,19 @@ uint16_t encodeMove(const std::string& move, bool isWhiteToMove) {
     if (from < 0 || to < 0) return 0;
     uint16_t code = static_cast<uint16_t>((to & 0x3f) | ((from & 0x3f) << 6));
     int special = 0;
-    if (move.size() > dash + 3) {
+    
+    // Detect castling moves (king to rook square)
+    if ((from == 4 && to == 7) || (from == 4 && to == 0) ||   // White castling
+        (from == 60 && to == 63) || (from == 60 && to == 56)) { // Black castling
+        special = 3;
+        // Convert to king's target square for internal representation
+        if (from == 4 && to == 7) to = 6;      // e1-h1 -> e1-g1
+        else if (from == 4 && to == 0) to = 2; // e1-a1 -> e1-c1
+        else if (from == 60 && to == 63) to = 62; // e8-h8 -> e8-g8
+        else if (from == 60 && to == 56) to = 58; // e8-a8 -> e8-c8
+        code = static_cast<uint16_t>((to & 0x3f) | ((from & 0x3f) << 6));
+    }
+    else if (move.size() > dash + 3) {
         special = 1;
         char promo = std::tolower(move.back());
         int promoBits = 0;
@@ -63,9 +75,7 @@ uint16_t encodeMove(const std::string& move, bool isWhiteToMove) {
         }
         code |= (promoBits & 0x3) << 12;
     }
-    // Note: Removed erroneous castling detection here
-    // Castling should only be encoded via "O-O" and "O-O-O" notation,
-    // not by guessing based on square positions
+    
     code |= (special & 0x3) << 14;
     return code;
 }
