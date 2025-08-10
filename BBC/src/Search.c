@@ -1,6 +1,21 @@
 #include "Search.h"
 #include "Perft.h"
 
+// most valuable victim & less valuable attacker
+
+/*
+                          
+    (Victims) Pawn Knight Bishop   Rook  Queen   King
+  (Attackers)
+        Pawn   105    205    305    405    505    605
+      Knight   104    204    304    404    504    604
+      Bishop   103    203    303    403    503    603
+        Rook   102    202    302    402    502    602
+       Queen   101    201    301    401    501    601
+        King   100    200    300    400    500    600
+
+*/
+
 // MVV LVA [attacker][victim]
 int mvv_lva[12][12] = {
  	105, 205, 305, 405, 505, 605,  105, 205, 305, 405, 505, 605,
@@ -26,6 +41,28 @@ int history_moves[12][64];
 
 // PV length [ply]
 int pv_length[max_ply];
+
+/*
+      ================================
+            Triangular PV table
+      --------------------------------
+        PV line: e2e4 e7e5 g1f3 b8c6
+      ================================
+
+           0    1    2    3    4    5
+      
+      0    m1   m2   m3   m4   m5   m6
+      
+      1    0    m2   m3   m4   m5   m6 
+      
+      2    0    0    m3   m4   m5   m6
+      
+      3    0    0    0    m4   m5   m6
+       
+      4    0    0    0    0    m5   m6
+      
+      5    0    0    0    0    0    m6
+*/
 
 // PV table [ply][ply]
 int pv_table[max_ply][max_ply];
@@ -139,6 +176,18 @@ void enable_pv_scoring(moves *move_list)
         }
     }
 }
+
+/*  =======================
+         Move ordering
+    =======================
+    
+    1. PV move
+    2. Captures in MVV/LVA
+    3. 1st killer move
+    4. 2nd killer move
+    5. History moves
+    6. Unsorted moves
+*/
 
 // score moves
 int score_move(int move)

@@ -7,6 +7,11 @@
 #include "TimeControl.h"
 #include "Hash.h"
 
+/* 
+     These are the score bounds for the range of the mating scores
+   [-infinity, -mate_value ... -mate_score, ... score ... mate_score ... mate_value, infinity]
+*/
+
 // Search constants
 #define infinity 50000
 #define mate_value 49000

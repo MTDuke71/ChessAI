@@ -11,6 +11,17 @@ int stoptime = 0; // UCI "stoptime" command time holder
 int timeset = 0; // variable to flag time control availability
 int stopped = 0; // variable to flag when the time is up
 
+
+/**********************************\
+ ==================================
+ 
+       Miscellaneous functions
+          forked from VICE
+         by Richard Allbert
+ 
+ ==================================
+\**********************************/
+
 // get time in milliseconds
 int get_time_ms()
 {
