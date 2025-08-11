@@ -257,6 +257,7 @@ add_executable(OriginalMoveTest
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(OriginalMoveTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -269,6 +270,7 @@ add_executable(SystemComparison
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(SystemComparison PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -282,6 +284,7 @@ add_executable(PerftDivideComparison
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
     src/Perft.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(PerftDivideComparison PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -294,6 +297,7 @@ add_executable(DebugD3Perft
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(DebugD3Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -306,6 +310,7 @@ add_executable(DebugFastMoves
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(DebugFastMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -319,6 +324,7 @@ add_executable(FastMoveGeneratorIntegrationTest
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(FastMoveGeneratorIntegrationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -425,6 +431,7 @@ add_executable(RawFastMoveTest
     src/Zobrist.cpp
     src/FastMoveGenerator.cpp
     src/MoveEncoding.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(RawFastMoveTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
@@ -436,6 +443,7 @@ add_executable(MoveConstructorTest
     src/Zobrist.cpp
     src/FastMoveGenerator.cpp
     src/MoveEncoding.cpp
+    src/IncrementalBoard.cpp
 )
 target_include_directories(MoveConstructorTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 

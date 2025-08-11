@@ -30,7 +30,15 @@ static std::string toInternalMove(const std::string& uci, const Board& board) {
     return move;
 }
 
-static std::string toUCIMove(const std::string& move) {
+static std::string toUCIMove(const std::string& move, bool isWhiteToMove) {
+    // Handle castling notation
+    if (move == "O-O") {
+        return isWhiteToMove ? "e1g1" : "e8g8";
+    }
+    if (move == "O-O-O") {
+        return isWhiteToMove ? "e1c1" : "e8c8";
+    }
+    
     auto dash = move.find('-');
     if (dash == std::string::npos) return move;
 
@@ -162,7 +170,7 @@ int main() {
             searchThread = std::thread([&, autoPrint]() {
                 bestMove = engine.searchBestMoveTimed(board, depth, timeLimit, stopFlag);
                 if (autoPrint && !stopFlag) {
-                    std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
+                    std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove, board.isWhiteToMove());
                     std::cout << "bestmove " << uci << '\n';
                 }
             });
@@ -170,7 +178,7 @@ int main() {
             if (searchThread.joinable() && pondering) {
                 stopFlag = true;
                 searchThread.join();
-                std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
+                std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove, board.isWhiteToMove());
                 std::cout << "bestmove " << uci << '\n';
                 pondering = false;
             }
@@ -179,7 +187,7 @@ int main() {
                 stopFlag = true;
                 searchThread.join();
                 if (!pondering) {
-                    std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove);
+                    std::string uci = bestMove.empty() ? "0000" : toUCIMove(bestMove, board.isWhiteToMove());
                     std::cout << "bestmove " << uci << '\n';
                 } else {
                     pondering = false;
