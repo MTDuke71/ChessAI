@@ -4358,9 +4358,17 @@ int main()
     // init all
     init_all();
     
-    // connect to GUI
-    uci_loop();
-
+    // set up starting position
+    parse_fen(start_position);
+    
+    // reset nodes counter
+    nodes = 0;
+    
+    // run perft test at depth 6
+    printf("BBC Monolithic Engine - Perft 6 Test\n");
+    printf("=====================================\n");
+    perft_test(6);
+    
     return 0;
 }
 
