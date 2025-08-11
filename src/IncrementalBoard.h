@@ -8,10 +8,6 @@ class IncrementalBoard {
 public:
     IncrementalBoard(const Board& board);
     
-    // BBC-style approach: Apply move incrementally, check legality, rollback if needed
-    bool isMoveLegal(int from, int to, int special = 0, int promotion = 0);
-    
-private:
     // Lightweight state for fast rollback
     struct MoveState {
         uint64_t capturedPiece;
@@ -20,6 +16,18 @@ private:
         int originalEnPassant;
         bool originalWhiteToMove;
     };
+    
+    // BBC-style approach: Apply move incrementally, check legality, rollback if needed
+    bool isMoveLegal(int from, int to, int special = 0, int promotion = 0);
+    
+    // Public BBC-style make/unmake for FastPerft
+    void applyMoveIncremental(int from, int to, int special, int promotion, MoveState& state);
+    void rollbackMove(const MoveState& state, int from, int to, int special, int promotion);
+    
+    // Access to side to move for perft
+    bool isWhiteToMove() const { return whiteToMove; }
+    
+private:
     
     // Core bitboards (copied from Board for speed)
     uint64_t whitePawns, whiteKnights, whiteBishops, whiteRooks, whiteQueens, whiteKing;
@@ -34,10 +42,6 @@ private:
     uint64_t getWhitePieces() const;
     uint64_t getBlackPieces() const;
     uint64_t getAllPieces() const;
-    
-    // BBC-style incremental move application
-    void applyMoveIncremental(int from, int to, int special, int promotion, MoveState& state);
-    void rollbackMove(const MoveState& state, int from, int to, int special, int promotion);
     
     // Ultra-fast attack checking (BBC-style)
     bool isSquareAttackedFast(int square, bool byWhite) const;
