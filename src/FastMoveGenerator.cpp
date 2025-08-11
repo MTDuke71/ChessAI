@@ -147,10 +147,32 @@ bool FastMoveGenerator::isMoveLegal(const Board& board, const Move& move, bool i
 bool FastMoveGenerator::isSquareAttacked(const Board& board, int square, bool byWhite) const {
     uint64_t allPieces = board.getWhitePieces() | board.getBlackPieces();
     
-    // Check pawn attacks (need to reverse the perspective)
+    // Check pawn attacks - need to find pawns that can attack this square
     uint64_t pawns = byWhite ? board.getWhitePawns() : board.getBlackPawns();
-    uint64_t pawnAttackMask = pawnAttacks[byWhite ? 0 : 1][square]; // Correct perspective 
-    if (pawns & pawnAttackMask) return true;
+    
+    // For pawn attacks, we need to check the reverse direction
+    // If we want to know if square is attacked by pawns, we check where pawns
+    // would need to be to attack this square
+    int rank = square / 8;
+    int file = square % 8;
+    
+    if (byWhite) {
+        // White pawns attack diagonally upward, so to attack 'square' they would be one rank below
+        if (rank > 0) { // Make sure we don't go off the board
+            uint64_t pawnSquares = 0ULL;
+            if (file > 0) pawnSquares |= 1ULL << ((rank - 1) * 8 + file - 1); // Left diagonal
+            if (file < 7) pawnSquares |= 1ULL << ((rank - 1) * 8 + file + 1); // Right diagonal
+            if (pawns & pawnSquares) return true;
+        }
+    } else {
+        // Black pawns attack diagonally downward, so to attack 'square' they would be one rank above
+        if (rank < 7) { // Make sure we don't go off the board
+            uint64_t pawnSquares = 0ULL;
+            if (file > 0) pawnSquares |= 1ULL << ((rank + 1) * 8 + file - 1); // Left diagonal
+            if (file < 7) pawnSquares |= 1ULL << ((rank + 1) * 8 + file + 1); // Right diagonal
+            if (pawns & pawnSquares) return true;
+        }
+    }
     
     // Check knight attacks
     uint64_t knights = byWhite ? board.getWhiteKnights() : board.getBlackKnights();

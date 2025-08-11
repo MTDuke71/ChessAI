@@ -361,6 +361,46 @@ add_executable(PerftDifferencesAnalyzer
 )
 target_include_directories(PerftDifferencesAnalyzer PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
+# Drill Down Analyzer
+add_executable(DrillDownAnalyzer 
+    test/DrillDownAnalyzer.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+    src/Perft.cpp
+)
+target_include_directories(DrillDownAnalyzer PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# King Safety Bug Test
+add_executable(KingSafetyBugTest 
+    test/KingSafetyBugTest.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(KingSafetyBugTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# Detailed Position Analysis
+add_executable(DetailedPositionAnalysis 
+    test/DetailedPositionAnalysis.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(DetailedPositionAnalysis PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
 # FastMoveGenerator Perft Validation Test
 add_executable(FastMoveGeneratorPerftValidation 
     test/FastMoveGeneratorPerftValidation.cpp
