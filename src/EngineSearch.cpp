@@ -2,6 +2,7 @@
 #include "BitUtils.h"
 #include "MVVLVA.h"
 #include "MoveEncoding.h"
+#include "BBCStyleEngine.h"
 #include <algorithm>
 #include <chrono>
 #include <atomic>
@@ -9,6 +10,47 @@
 #include <iostream>
 #include <sstream>
 #include <array>
+
+// -----------------------------------------------------------------------------
+// BBC-Style Engine Integration Helpers
+// -----------------------------------------------------------------------------
+
+// Convert Board to BBC-style format
+static void boardToBBC(const Board& board, BBCStyleEngine& bbc) {
+    std::string fen = board.getFEN();
+    bbc.loadFromFEN(fen.c_str());
+}
+
+// Convert BBC move to uint16_t format
+static uint16_t bbcMoveToUint16(const BBCStyleEngine::Move& bbcMove) {
+    // Convert BBC-style move to our internal format
+    int from = bbcMove.source();
+    int to = bbcMove.target();
+    int special = 0;
+    
+    if (bbcMove.castling()) special = 3;
+    else if (bbcMove.promoted()) special = 1;
+    
+    return (to & 0x3f) | ((from & 0x3f) << 6) | ((special & 0x3) << 14);
+}
+
+// Convert uint16_t move to BBC format (for compatibility)
+static BBCStyleEngine::Move uint16ToBBCMove(uint16_t move, const BBCStyleEngine& bbc) {
+    int from = (move >> 6) & 0x3f;
+    int to = move & 0x3f;
+    int special = (move >> 14) & 0x3;
+    
+    // Determine piece type from source square
+    int piece = 0;
+    for (int p = 0; p < 12; p++) {
+        if (get_bit(bbc.bitboards[p], from)) {
+            piece = p;
+            break;
+        }
+    }
+    
+    return BBCStyleEngine::Move(from, to, piece, 0, 0, 0, 0, (special == 3) ? 1 : 0);
+}
 
 // -----------------------------------------------------------------------------
 // Converts an encoded move into the compact UCI format (e.g., e2e4).
@@ -123,7 +165,7 @@ static int staticExchangeEval(const MoveGenerator& gen,
 // -----------------------------------------------------------------------------
 static int moveScore(Board& board,
                      uint16_t move,
-                     const MoveGenerator& gen) {
+                     BBCStyleEngine& bbcEngine) {
     int from = moveFrom(move);
     int to = moveTo(move);
     int capturedVal = pieceValueAt(board, to);
@@ -135,8 +177,8 @@ static int moveScore(Board& board,
         if (board.getEnPassantSquare() == to)
             victimType = MVVLVA::Pawn;
         int score = MVVLVA::Table[victimType][attackerType];
-        int seeVal = staticExchangeEval(gen, board, move);
-        return score * 10 + seeVal;
+        // Simplified SEE for BBC-style - just return basic MVV/LVA score
+        return score * 10;  // Scale up for better move ordering
     }
     return 0;
 }
@@ -167,12 +209,17 @@ int Engine::quiescence(Board& board, int alpha, int beta, bool maximizing,
         if (standPat < beta) beta = standPat;
     }
 
-    auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+    // Generate moves using BBC-style engine
+    boardToBBC(board, bbcEngine);
+    BBCStyleEngine::MoveList bbcMoves;
+    bbcEngine.generateMoves(bbcMoves);
+    
     std::vector<uint16_t> moves;
-    for (auto mv : pseudoMoves) {
-        if (board.isMoveLegal(mv) && isCaptureMove(board, mv) &&
-            staticExchangeEval(generator, board, mv) >= 0)
-            moves.push_back(mv);
+    for (int i = 0; i < bbcMoves.count; i++) {
+        uint16_t move = bbcMoveToUint16(bbcMoves.moves[i]);
+        if (board.isMoveLegal(move) && isCaptureMove(board, move)) {
+            moves.push_back(move);
+        }
     }
 
     for (auto m : moves) {
@@ -205,16 +252,23 @@ int Engine::negamaxAlphaBeta(Board& board, int depth,
     if (depth == 0)
         return color * evaluate(board);
 
-    auto pseudo = generator.generateAllMoves(board, board.isWhiteToMove());
+    // Generate moves using BBC-style engine
+    boardToBBC(board, bbcEngine);
+    BBCStyleEngine::MoveList bbcMoves;
+    bbcEngine.generateMoves(bbcMoves);
+    
     std::vector<uint16_t> moves;
-    for (auto mv : pseudo) {
-        std::string sm = decodeMove(mv);
-        if (board.isMoveLegal(sm))
-            moves.push_back(mv);
+    for (int i = 0; i < bbcMoves.count; i++) {
+        uint16_t move = bbcMoveToUint16(bbcMoves.moves[i]);
+        if (board.isMoveLegal(move))
+            moves.push_back(move);
     }
 
     if (moves.empty()) {
-        if (generator.isKingInCheck(board, board.isWhiteToMove()))
+        boardToBBC(board, bbcEngine);
+        int kingSq = board.isWhiteToMove() ? __builtin_ctzll(board.getWhiteKing()) : __builtin_ctzll(board.getBlackKing());
+        bool inCheck = bbcEngine.isSquareAttacked(kingSq, board.isWhiteToMove() ? black : white);
+        if (inCheck)
             return -1000000 * color;
         return 0;
     }
@@ -278,8 +332,13 @@ std::pair<int, std::string> Engine::minimax(
     uint64_t otherPieces =
             ((board.getWhitePieces() | board.getBlackPieces()) &
              ~(board.getWhiteKing() | board.getBlackKing()));
-    if (depth >= 3 && otherPieces &&
-        !generator.isKingInCheck(board, board.isWhiteToMove())) {
+    if (depth >= 3 && otherPieces) {
+        // Simplified null move check - BBC-style engines handle this internally
+        boardToBBC(board, bbcEngine);
+        int kingSq = board.isWhiteToMove() ? __builtin_ctzll(board.getWhiteKing()) : __builtin_ctzll(board.getBlackKing());
+        bool inCheck = bbcEngine.isSquareAttacked(kingSq, board.isWhiteToMove() ? black : white);
+        
+        if (!inCheck) {
         Board nullBoard = board;
         nullBoard.setWhiteToMove(!board.isWhiteToMove());
         nullBoard.setEnPassantSquare(-1);
@@ -297,17 +356,24 @@ std::pair<int, std::string> Engine::minimax(
             if (nullRes.first <= alpha)
                 return {nullRes.first, ""};
         }
+        }
     }
-    auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+    
+    // Generate moves using BBC-style engine
+    boardToBBC(board, bbcEngine);
+    BBCStyleEngine::MoveList bbcMoves;
+    bbcEngine.generateMoves(bbcMoves);
+    
     std::vector<uint16_t> moves;
-    for (auto mv : pseudoMoves) {
-        if (board.isMoveLegal(mv))
-            moves.push_back(mv);
+    for (int i = 0; i < bbcMoves.count; i++) {
+        uint16_t move = bbcMoveToUint16(bbcMoves.moves[i]);
+        if (board.isMoveLegal(move))
+            moves.push_back(move);
     }
     int sideIndex = board.isWhiteToMove() ? 0 : 1;
     std::sort(moves.begin(), moves.end(), [&](uint16_t a, uint16_t b) {
-        int scoreA = (a == ttMove) ? 1000000 : moveScore(board, a, generator);
-        int scoreB = (b == ttMove) ? 1000000 : moveScore(board, b, generator);
+        int scoreA = (a == ttMove) ? 1000000 : moveScore(board, a, bbcEngine);
+        int scoreB = (b == ttMove) ? 1000000 : moveScore(board, b, bbcEngine);
         if (scoreA == 0 && a != ttMove) {
             if (killerMoves[ply][0] == a) scoreA = 900;
             else if (killerMoves[ply][1] == a) scoreA = 800;
@@ -329,7 +395,10 @@ std::pair<int, std::string> Engine::minimax(
         return scoreA > scoreB;
     });
     if (moves.empty()) {
-        if (generator.isKingInCheck(board, board.isWhiteToMove())) {
+        boardToBBC(board, bbcEngine);
+        int kingSq = board.isWhiteToMove() ? __builtin_ctzll(board.getWhiteKing()) : __builtin_ctzll(board.getBlackKing());
+        bool inCheck = bbcEngine.isSquareAttacked(kingSq, board.isWhiteToMove() ? black : white);
+        if (inCheck) {
             int mateScore = board.isWhiteToMove() ? -1000000 : 1000000;
             return {mateScore, ""};
         }
@@ -461,14 +530,19 @@ std::string Engine::searchBestMove(Board& board, int depth) {
     uint16_t bestMove = 0;
 
     for (int d = 1; d <= depth; ++d) {
-        auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+        // Generate moves using BBC-style engine
+        boardToBBC(board, bbcEngine);
+        BBCStyleEngine::MoveList bbcMoves;
+        bbcEngine.generateMoves(bbcMoves);
+        
         std::vector<uint16_t> moves;
-        for (auto mv : pseudoMoves) {
-            if (board.isMoveLegal(mv))
-                moves.push_back(mv);
+        for (int i = 0; i < bbcMoves.count; i++) {
+            uint16_t move = bbcMoveToUint16(bbcMoves.moves[i]);
+            if (board.isMoveLegal(move))
+                moves.push_back(move);
         }
         std::sort(moves.begin(), moves.end(), [&](uint16_t a, uint16_t b) {
-            return moveScore(board, a, generator) > moveScore(board, b, generator);
+            return moveScore(board, a, bbcEngine) > moveScore(board, b, bbcEngine);
         });
         if (d > 1 && bestMove) {
             auto it = std::find(moves.begin(), moves.end(), bestMove);
@@ -535,14 +609,20 @@ std::string Engine::searchBestMoveTimed(Board& board, int maxDepth,
     for (int depth = 1; maxDepth == 0 || depth <= maxDepth; ++depth) {
         nodes = 0;
         auto depthStart = std::chrono::steady_clock::now();
-        auto pseudoMoves = generator.generateAllMoves(board, board.isWhiteToMove());
+        
+        // Generate moves using BBC-style engine
+        boardToBBC(board, bbcEngine);
+        BBCStyleEngine::MoveList bbcMoves;
+        bbcEngine.generateMoves(bbcMoves);
+        
         std::vector<uint16_t> moves;
-        for (auto mv : pseudoMoves) {
-            if (board.isMoveLegal(mv))
-                moves.push_back(mv);
+        for (int i = 0; i < bbcMoves.count; i++) {
+            uint16_t move = bbcMoveToUint16(bbcMoves.moves[i]);
+            if (board.isMoveLegal(move))
+                moves.push_back(move);
         }
         std::sort(moves.begin(), moves.end(), [&](uint16_t a, uint16_t b) {
-            return moveScore(board, a, generator) > moveScore(board, b, generator);
+            return moveScore(board, a, bbcEngine) > moveScore(board, b, bbcEngine);
         });
         if (depth > 1 && completedMove) {
             auto it = std::find(moves.begin(), moves.end(), completedMove);

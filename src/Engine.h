@@ -1,6 +1,6 @@
 #pragma once
 #include "Board.h"
-#include "MoveGenerator.h"
+#include "BBCStyleEngine.h"
 #include "TranspositionTable.h"
 #include "Zobrist.h"
 #include "OpeningBook.h"
@@ -46,7 +46,7 @@ private:
     int quiescence(Board& board, int alpha, int beta, bool maximizing,
                    const std::chrono::steady_clock::time_point& end,
                    const std::atomic<bool>& stop);
-    MoveGenerator generator;
+    BBCStyleEngine bbcEngine;  // Ultra-fast BBC-style engine
     std::atomic<uint64_t> nodes = 0;
     TranspositionTable tt;
     OpeningBook book;

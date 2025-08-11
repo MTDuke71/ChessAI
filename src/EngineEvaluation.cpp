@@ -1,7 +1,7 @@
 #include "BitUtils.h"
 #include "Engine.h"
 #include "EvalParams.h"
-#include "MoveGenerator.h"
+#include "BBCStyleEngine.h"
 
 // -----------------------------------------------------------------------------
 // Determines the phase of the game (opening, middlegame, endgame) based on the
@@ -255,10 +255,23 @@ int Engine::evaluate(const Board &b) const {
     developBonus = DEVELOP_BONUS_ENDGAME;
   }
 
-  int whiteMobility =
-      static_cast<int>(generator.generateAllMoves(b, true).size());
-  int blackMobility =
-      static_cast<int>(generator.generateAllMoves(b, false).size());
+  // Calculate mobility using BBC-style engine
+  BBCStyleEngine tempEngine;
+  std::string fen = b.getFEN();
+  tempEngine.loadFromFEN(fen.c_str());
+  
+  // White mobility
+  tempEngine.side = white;
+  BBCStyleEngine::MoveList whiteMoves;
+  tempEngine.generateMoves(whiteMoves);
+  int whiteMobility = whiteMoves.count;
+  
+  // Black mobility  
+  tempEngine.side = black;
+  BBCStyleEngine::MoveList blackMoves;
+  tempEngine.generateMoves(blackMoves);
+  int blackMobility = blackMoves.count;
+  
   score += mobilityWeight * (whiteMobility - blackMobility);
 
   auto countDeveloped = [](uint64_t pieces,
@@ -314,10 +327,15 @@ int Engine::evaluate(const Board &b) const {
     int shieldCount = popcount64(pawns & shield);
     int score = KING_SHIELD_MULTIPLIER * shieldCount;
     uint64_t area = kingAttackMask(sq);
+    // Calculate attacked squares using BBC-style engine
+    BBCStyleEngine tempEngine2;
+    std::string fen2 = b.getFEN();
+    tempEngine2.loadFromFEN(fen2.c_str());
+    
     int attacked = 0;
     for (uint64_t m = area; m; m &= m - 1) {
       int s = popLSBIndex(m);
-      if (generator.isSquareAttacked(b, s, !white))
+      if (tempEngine2.isSquareAttacked(s, !white ? white : black))
         ++attacked;
     }
     score -= KING_ATTACK_PENALTY * attacked;

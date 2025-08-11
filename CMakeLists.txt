@@ -28,7 +28,8 @@ set(ENGINE_SOURCES
     src/OpeningBook.cpp
     src/Tablebase.cpp
     src/FastMoveGenerator.cpp
-    src/IncrementalBoard.cpp)
+    src/IncrementalBoard.cpp
+    src/BBCStyleEngine.cpp)
 
 add_executable(Example src/Example.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(BoardTest test/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})
