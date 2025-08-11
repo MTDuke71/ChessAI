@@ -403,6 +403,41 @@ add_executable(DetailedPositionAnalysis
 )
 target_include_directories(DetailedPositionAnalysis PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
+# Pawn Promotion Test
+add_executable(PawnPromotionTest2 
+    test/PawnPromotionTest2.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(PawnPromotionTest2 PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# Raw Fast Move Test
+add_executable(RawFastMoveTest 
+    test/RawFastMoveTest.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+)
+target_include_directories(RawFastMoveTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# Move Constructor Test
+add_executable(MoveConstructorTest 
+    test/MoveConstructorTest.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+)
+target_include_directories(MoveConstructorTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
 # FastMoveGenerator Perft Validation Test
 add_executable(FastMoveGeneratorPerftValidation 
     test/FastMoveGeneratorPerftValidation.cpp

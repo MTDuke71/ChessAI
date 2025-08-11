@@ -7,7 +7,7 @@ class FastMoveGenerator {
 public:
     // Use integer move encoding like BBC instead of strings
     struct Move {
-        uint16_t data;
+        uint32_t data; // Changed from uint16_t to uint32_t to accommodate all fields
         
         Move() : data(0) {} // Default constructor
         

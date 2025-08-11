@@ -28,9 +28,11 @@ PerftResult parsePerftDebugFile(const std::string& filename) {
         return result;
     }
     
-    // Read FEN (first non-empty line)
+    // Read FEN (first non-empty line that looks like a FEN)
     while (std::getline(file, line)) {
-        if (!line.empty() && line.find("rnbqkbnr") != std::string::npos) {
+        if (!line.empty() && 
+            (line.find("/") != std::string::npos && 
+             (line.find(" w ") != std::string::npos || line.find(" b ") != std::string::npos))) {
             result.fen = line;
             break;
         }
