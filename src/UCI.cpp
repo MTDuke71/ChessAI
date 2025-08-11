@@ -130,7 +130,7 @@ int main() {
                         std::cout << "info string Illegal move in position command: " << token << '\n';
                         break;
                     }
-                    board.makeMove(internal);
+                    board.makeMove(moveCode);
 
                 }
                 board.printBoard();

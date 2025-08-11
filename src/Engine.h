@@ -31,6 +31,17 @@ public:
                          const std::atomic<bool>& stop);
 
     std::string searchBestMove(Board& board, int depth);
+    
+    // BBC-style ultra-fast search functions
+    std::string searchBestMoveBBC(Board& board, int depth);
+    std::string searchBestMoveTimedBBC(Board& board, int maxDepth,
+                                       int timeLimitMs,
+                                       std::atomic<bool>& stopFlag);
+    
+    // Helper for recursive search
+    int miniMaxRecursive(Board& board, int depth, int alpha, int beta, bool maximizing,
+                        const std::chrono::steady_clock::time_point& endTime,
+                        const std::atomic<bool>& stopFlag);
 
     std::string searchBestMoveTimed(Board& board, int maxDepth,
                                     int timeLimitMs,
@@ -46,6 +57,12 @@ private:
     int quiescence(Board& board, int alpha, int beta, bool maximizing,
                    const std::chrono::steady_clock::time_point& end,
                    const std::atomic<bool>& stop);
+                   
+    // BBC-style ultra-fast search core
+    int bbcMinimax(BBCStyleEngine& bbc, int depth, int alpha, int beta, bool maximizing,
+                   const std::chrono::steady_clock::time_point& end,
+                   const std::atomic<bool>& stop, int ply = 0);
+    
     BBCStyleEngine bbcEngine;  // Ultra-fast BBC-style engine
     std::atomic<uint64_t> nodes = 0;
     TranspositionTable tt;
