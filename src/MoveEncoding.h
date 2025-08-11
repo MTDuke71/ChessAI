@@ -4,6 +4,7 @@
 
 uint16_t encodeMove(const std::string& move);
 uint16_t encodeMove(const std::string& move, bool isWhiteToMove);
+uint16_t encodeMove(const std::string& move, bool isWhiteToMove, bool enableCastlingDetection);
 std::string decodeMove(uint16_t move);
 
 // Helpers to work with encoded moves without converting to strings

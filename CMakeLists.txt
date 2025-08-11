@@ -102,6 +102,12 @@ add_executable(CheckmateTest
     src/MoveGenerator.cpp
     src/PrintMoves.cpp ${ENGINE_SOURCES})
 
+add_executable(UCICastlingRegressionTest
+    test/UCICastlingRegressionTest.cpp
+    src/Board.cpp
+    src/MoveGenerator.cpp
+    src/PrintMoves.cpp ${ENGINE_SOURCES})
+
 add_executable(PerftTest
     test/PerftTest.cpp
     src/Board.cpp
@@ -194,6 +200,7 @@ target_include_directories(DrawRuleTests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(LegalMoveGenerationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(StalemateTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(CheckmateTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(UCICastlingRegressionTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(CreatePosition PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(GenerateMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(SearchBestMove PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -229,6 +236,7 @@ add_test(NAME DrawRuleTests COMMAND DrawRuleTests)
 add_test(NAME LegalMoveGenerationTest COMMAND LegalMoveGenerationTest)
 add_test(NAME StalemateTest COMMAND StalemateTest)
 add_test(NAME CheckmateTest COMMAND CheckmateTest)
+add_test(NAME UCICastlingRegressionTest COMMAND UCICastlingRegressionTest)
 add_test(NAME MVVLVAArrayTest COMMAND MVVLVAArrayTest)
 add_test(NAME TranspositionTableResizeTest COMMAND TranspositionTableResizeTest)
 add_test(NAME PassedPawnEvaluationTest COMMAND PassedPawnEvaluationTest)

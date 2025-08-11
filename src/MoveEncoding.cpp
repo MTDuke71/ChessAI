@@ -18,11 +18,15 @@ std::string indexToSquare(int idx) {
 }
 
 uint16_t encodeMove(const std::string& move) {
-    // Default to white for backward compatibility
-    return encodeMove(move, true);
+    // Default: no castling detection to avoid affecting Perft
+    return encodeMove(move, true, false);
 }
 
 uint16_t encodeMove(const std::string& move, bool isWhiteToMove) {
+    return encodeMove(move, isWhiteToMove, true); // Enable castling detection
+}
+
+uint16_t encodeMove(const std::string& move, bool isWhiteToMove, bool enableCastlingDetection) {
     // Handle castling notation first
     if (move == "O-O") {
         if (isWhiteToMove) {
@@ -48,21 +52,23 @@ uint16_t encodeMove(const std::string& move, bool isWhiteToMove) {
     int from = squareToIndex(move.substr(0, 2));
     int to = squareToIndex(move.substr(dash + 1, 2));
     if (from < 0 || to < 0) return 0;
+    
+    // Check for castling moves based on king position and destination
+    bool isCastling = false;
+    if (enableCastlingDetection &&
+        ((from == 4 && to == 6) ||   // White kingside: e1-g1
+         (from == 4 && to == 2) ||   // White queenside: e1-c1
+         (from == 60 && to == 62) || // Black kingside: e8-g8
+         (from == 60 && to == 58))) { // Black queenside: e8-c8
+        isCastling = true;
+    }
+    
     uint16_t code = static_cast<uint16_t>((to & 0x3f) | ((from & 0x3f) << 6));
     int special = 0;
     
-    // Detect castling moves (king to rook square)
-    if ((from == 4 && to == 7) || (from == 4 && to == 0) ||   // White castling
-        (from == 60 && to == 63) || (from == 60 && to == 56)) { // Black castling
-        special = 3;
-        // Convert to king's target square for internal representation
-        if (from == 4 && to == 7) to = 6;      // e1-h1 -> e1-g1
-        else if (from == 4 && to == 0) to = 2; // e1-a1 -> e1-c1
-        else if (from == 60 && to == 63) to = 62; // e8-h8 -> e8-g8
-        else if (from == 60 && to == 56) to = 58; // e8-a8 -> e8-c8
-        code = static_cast<uint16_t>((to & 0x3f) | ((from & 0x3f) << 6));
-    }
-    else if (move.size() > dash + 3) {
+    if (isCastling) {
+        special = 3; // Mark as castling
+    } else if (move.size() > dash + 3) {
         special = 1;
         char promo = std::tolower(move.back());
         int promoBits = 0;
@@ -75,7 +81,6 @@ uint16_t encodeMove(const std::string& move, bool isWhiteToMove) {
         }
         code |= (promoBits & 0x3) << 12;
     }
-    
     code |= (special & 0x3) << 14;
     return code;
 }

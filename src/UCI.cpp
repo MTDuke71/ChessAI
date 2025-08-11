@@ -6,6 +6,7 @@
 #include <chrono>
 #include "Board.h"
 #include "Engine.h"
+#include "MoveEncoding.h"
 
 static std::string toInternalMove(const std::string& uci, const Board& board) {
     if (uci.size() < 4) return "";
@@ -18,10 +19,9 @@ static std::string toInternalMove(const std::string& uci, const Board& board) {
     bool kingAtFrom = (board.getWhiteKing() | board.getBlackKing()) & fromMask;
 
     if (kingAtFrom) {
-        if (uci == "e1g1") to = "h1";
-        else if (uci == "e1c1") to = "a1";
-        else if (uci == "e8g8") to = "h8";
-        else if (uci == "e8c8") to = "a8";
+        // For castling moves, UCI notation matches internal notation
+        // e1g1 -> e1-g1, e1c1 -> e1-c1, e8g8 -> e8-g8, e8c8 -> e8-c8
+        // No conversion needed
     }
 
     std::string move = from + "-" + to;
@@ -116,7 +116,9 @@ int main() {
             if (iss >> token && token == "moves") {
                 while (iss >> token) {
                     std::string internal = toInternalMove(token, board);
-                    if (!board.isMoveLegal(internal)) {
+                    // For UCI moves, use castling-aware encoding
+                    uint16_t moveCode = encodeMove(internal, board.isWhiteToMove(), true);
+                    if (!board.isMoveLegal(moveCode)) {
                         std::cout << "info string Illegal move in position command: " << token << '\n';
                         break;
                     }
