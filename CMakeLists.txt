@@ -347,6 +347,20 @@ add_executable(FastMoveGenPerformance
 )
 target_include_directories(FastMoveGenPerformance PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
+# Perft Differences Analyzer
+add_executable(PerftDifferencesAnalyzer 
+    test/PerftDifferencesAnalyzer.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+    src/Perft.cpp
+)
+target_include_directories(PerftDifferencesAnalyzer PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
 # FastMoveGenerator Perft Validation Test
 add_executable(FastMoveGeneratorPerftValidation 
     test/FastMoveGeneratorPerftValidation.cpp
