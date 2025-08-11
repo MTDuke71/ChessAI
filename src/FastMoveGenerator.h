@@ -77,6 +77,10 @@ private:
     
     void initAttackTables();
     
+    // Fast legal move checking helpers  
+    bool isMoveLegalDirect(const Board& board, const Move& move, bool isWhite, int kingSquare) const;
+    bool isKingInCheckAfterMove(const Board& board, int kingSquare, bool byWhite, uint64_t newOccupancy) const;
+    
     // Inline helper functions for performance
     inline int lsbIndex(uint64_t bb) const {
 #ifdef _MSC_VER

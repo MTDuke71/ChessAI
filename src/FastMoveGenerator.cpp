@@ -99,16 +99,31 @@ void FastMoveGenerator::generateMoves(const Board& board, bool isWhite, MoveList
 }
 
 void FastMoveGenerator::generateLegalMoves(const Board& board, bool isWhite, MoveList& moveList) const {
-    // Generate pseudo-legal moves first
-    generateMoves(board, isWhite, moveList);
+    // BBC-style approach: Generate pseudo-legal moves and filter with direct checking
+    // This avoids the expensive makeMove/unmakeMove approach entirely
     
-    // Filter out illegal moves using efficient checks
+    moveList.clear();
+    
+    // Generate all pseudo-legal moves first
+    generatePawnMoves(board, isWhite, moveList);
+    generateKnightMoves(board, isWhite, moveList);
+    generateBishopMoves(board, isWhite, moveList);
+    generateRookMoves(board, isWhite, moveList);
+    generateQueenMoves(board, isWhite, moveList);
+    generateKingMoves(board, isWhite, moveList);
+    generateCastlingMoves(board, isWhite, moveList);
+    
+    // Now filter out illegal moves using direct checking (BBC approach)
     MoveList legalMoves;
+    
+    uint64_t kingBitboard = isWhite ? board.getWhiteKing() : board.getBlackKing();
+    if (kingBitboard == 0) return; // No king, no legal moves
+    int kingSquare = lsbIndex(kingBitboard);
     
     for (int i = 0; i < moveList.count; ++i) {
         const Move& move = moveList.moves[i];
         
-        if (isMoveLegal(board, move, isWhite)) {
+        if (isMoveLegalDirect(board, move, isWhite, kingSquare)) {
             legalMoves.add(move);
         }
     }
@@ -117,31 +132,13 @@ void FastMoveGenerator::generateLegalMoves(const Board& board, bool isWhite, Mov
 }
 
 bool FastMoveGenerator::isMoveLegal(const Board& board, const Move& move, bool isWhite) const {
-    // Use the existing Board's makeMove mechanism to test legality
-    // This is similar to BBC's approach but uses our existing infrastructure
+    // This is kept for compatibility but now delegates to isMoveLegalDirect
+    // Get king position
+    uint64_t kingBitboard = isWhite ? board.getWhiteKing() : board.getBlackKing();
+    if (kingBitboard == 0) return false;
+    int kingSquare = lsbIndex(kingBitboard);
     
-    std::string moveStr = move.toAlgebraic();
-    
-    // Create a copy of the board to test the move
-    // Since we can't easily copy Board, we'll use the const_cast approach
-    // but be very careful to unmake the move
-    Board& mutableBoard = const_cast<Board&>(board);
-    
-    try {
-        Board::MoveState state;
-        mutableBoard.makeMove(moveStr, state);
-        
-        // Check if our king is in check after this move
-        bool legal = !isKingInCheck(mutableBoard, isWhite);
-        
-        // Always unmake the move
-        mutableBoard.unmakeMove(state);
-        
-        return legal;
-    } catch (...) {
-        // If makeMove throws an exception, the move is illegal
-        return false;
-    }
+    return isMoveLegalDirect(board, move, isWhite, kingSquare);
 }
 
 bool FastMoveGenerator::isSquareAttacked(const Board& board, int square, bool byWhite) const {
@@ -454,4 +451,92 @@ void FastMoveGenerator::generateCastlingMoves(const Board& board, bool isWhite, 
             }
         }
     }
+}
+
+// Direct legal move checking - BBC style approach
+bool FastMoveGenerator::isMoveLegalDirect(const Board& board, const Move& move, bool isWhite, int kingSquare) const {
+    // This is the core optimization: check legality directly without makeMove/unmakeMove
+    // Based on BBC's approach but adapted for our board representation
+    
+    int from = move.from();
+    int to = move.to();
+    
+    // Special handling for king moves
+    if (from == kingSquare) {
+        // King move - check if destination is attacked
+        // For castling, we need special logic
+        if (move.isCastling()) {
+            // Castling legality is already checked in generateCastlingMoves
+            // If it was generated, it's legal
+            return true;
+        }
+        
+        // Regular king move - check if destination square is attacked
+        return !isSquareAttacked(board, to, !isWhite);
+    }
+    
+    // Special handling for en passant
+    if (move.isEnPassant()) {
+        // En passant requires checking if removing both pawns exposes king
+        // For now, fall back to the existing method for this complex case
+        return isMoveLegal(board, move, isWhite);
+    }
+    
+    // Regular piece move - check if it leaves king in check
+    // This is the key: simulate the move in bitboards without full board state
+    
+    uint64_t allPieces = board.getWhitePieces() | board.getBlackPieces();
+    uint64_t friendlyPieces = isWhite ? board.getWhitePieces() : board.getBlackPieces();
+    uint64_t enemyPieces = isWhite ? board.getBlackPieces() : board.getWhitePieces();
+    
+    // Create new occupancy with the move applied
+    uint64_t newOccupancy = allPieces;
+    newOccupancy &= ~(1ULL << from);  // Remove piece from source
+    newOccupancy |= (1ULL << to);     // Add piece to destination
+    
+    // Check if king would be in check with this new occupancy
+    return !isKingInCheckAfterMove(board, kingSquare, !isWhite, newOccupancy);
+}
+
+bool FastMoveGenerator::isKingInCheckAfterMove(const Board& board, int kingSquare, bool byWhite, uint64_t newOccupancy) const {
+    // Check if king is attacked using the modified occupancy
+    // This avoids the expensive makeMove/unmakeMove
+    
+    // Check pawn attacks
+    uint64_t enemyPawns = byWhite ? board.getWhitePawns() : board.getBlackPawns();
+    int rank = kingSquare / 8;
+    int file = kingSquare % 8;
+    
+    if (byWhite) {
+        // White pawns attack diagonally upward
+        if (rank > 0) {
+            if (file > 0 && (enemyPawns & (1ULL << ((rank - 1) * 8 + file - 1)))) return true;
+            if (file < 7 && (enemyPawns & (1ULL << ((rank - 1) * 8 + file + 1)))) return true;
+        }
+    } else {
+        // Black pawns attack diagonally downward  
+        if (rank < 7) {
+            if (file > 0 && (enemyPawns & (1ULL << ((rank + 1) * 8 + file - 1)))) return true;
+            if (file < 7 && (enemyPawns & (1ULL << ((rank + 1) * 8 + file + 1)))) return true;
+        }
+    }
+    
+    // Check knight attacks
+    uint64_t enemyKnights = byWhite ? board.getWhiteKnights() : board.getBlackKnights();
+    if (enemyKnights & knightAttacks[kingSquare]) return true;
+    
+    // Check sliding piece attacks using the new occupancy
+    uint64_t enemyBishopsQueens = byWhite ? (board.getWhiteBishops() | board.getWhiteQueens()) : 
+                                           (board.getBlackBishops() | board.getBlackQueens());
+    if (enemyBishopsQueens & Magic::getBishopAttacks(kingSquare, newOccupancy)) return true;
+    
+    uint64_t enemyRooksQueens = byWhite ? (board.getWhiteRooks() | board.getWhiteQueens()) : 
+                                         (board.getBlackRooks() | board.getBlackQueens());
+    if (enemyRooksQueens & Magic::getRookAttacks(kingSquare, newOccupancy)) return true;
+    
+    // Check king attacks
+    uint64_t enemyKing = byWhite ? board.getWhiteKing() : board.getBlackKing();
+    if (enemyKing & kingAttacks[kingSquare]) return true;
+    
+    return false;
 }
