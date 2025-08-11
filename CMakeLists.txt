@@ -326,6 +326,7 @@ add_executable(OriginalMoveGenPerformance
     src/Board.cpp
     src/Magic.cpp
     src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
