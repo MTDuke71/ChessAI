@@ -26,7 +26,8 @@ set(ENGINE_SOURCES
     src/MoveGeneratorUtils.cpp
     src/MoveEncoding.cpp
     src/OpeningBook.cpp
-    src/Tablebase.cpp)
+    src/Tablebase.cpp
+    src/FastMoveGenerator.cpp)
 
 add_executable(Example src/Example.cpp src/Board.cpp src/MoveGenerator.cpp src/PrintMoves.cpp ${ENGINE_SOURCES})
 add_executable(BoardTest test/BoardTest.cpp src/Board.cpp  src/PrintMoves.cpp src/MoveGenerator.cpp ${ENGINE_SOURCES})
@@ -245,6 +246,120 @@ add_test(NAME KingSafetyEvaluationTest COMMAND KingSafetyEvaluationTest)
 add_test(NAME PawnStructureEvaluationTest COMMAND PawnStructureEvaluationTest)
 add_test(NAME OpeningBookPolyglotTest COMMAND OpeningBookPolyglotTest)
 add_test(NAME IncrementalAttackUpdateTest COMMAND IncrementalAttackUpdateTest)
+
+add_executable(OriginalMoveTest
+    test/OriginalMoveTest.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(OriginalMoveTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+add_executable(SystemComparison
+    test/SystemComparison.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(SystemComparison PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+add_executable(PerftDivideComparison
+    test/PerftDivideComparison.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+    src/Perft.cpp
+)
+target_include_directories(PerftDivideComparison PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+add_executable(DebugD3Perft
+    test/DebugD3Perft.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(DebugD3Perft PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+add_executable(DebugFastMoves
+    test/DebugFastMoves.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(DebugFastMoves PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# FastMoveGenerator Integration Test
+add_executable(FastMoveGeneratorIntegrationTest 
+    test/FastMoveGeneratorIntegrationTest.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+)
+target_include_directories(FastMoveGeneratorIntegrationTest PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# Original MoveGenerator Performance Test
+add_executable(OriginalMoveGenPerformance 
+    test/OriginalMoveGenPerformance.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+    src/Perft.cpp
+)
+target_include_directories(OriginalMoveGenPerformance PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# FastMoveGenerator Performance Test
+add_executable(FastMoveGenPerformance 
+    test/FastMoveGenPerformance.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+    src/Perft.cpp
+)
+target_include_directories(FastMoveGenPerformance PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+# FastMoveGenerator Perft Validation Test
+add_executable(FastMoveGeneratorPerftValidation 
+    test/FastMoveGeneratorPerftValidation.cpp
+    src/Board.cpp
+    src/Magic.cpp
+    src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
+    src/MoveEncoding.cpp
+    src/MoveGenerator.cpp
+    src/MoveGeneratorUtils.cpp
+    src/Perft.cpp
+)
+target_include_directories(FastMoveGeneratorPerftValidation PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 
 
