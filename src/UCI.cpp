@@ -66,7 +66,7 @@ int main() {
 
     while (std::getline(std::cin, line)) {
         if (line == "uci") {
-            std::cout << "id name Aphelion 1.0" << '\n';
+            std::cout << "id name Aphelion 1.1" << '\n';
             std::cout << "id author Matt LaDuke ChatGPT and Claude" << '\n';
             std::cout << "option name OwnBook type check default false" << '\n';
             std::cout << "uciok" << '\n';
