@@ -252,6 +252,7 @@ add_executable(OriginalMoveTest
     src/Board.cpp
     src/Magic.cpp
     src/Zobrist.cpp
+    src/FastMoveGenerator.cpp
     src/MoveEncoding.cpp
     src/MoveGenerator.cpp
     src/MoveGeneratorUtils.cpp
