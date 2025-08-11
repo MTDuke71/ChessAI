@@ -1,5 +1,6 @@
 #pragma once
 #include "Board.h"
+#include "IncrementalBoard.h"
 #include <vector>
 #include <cstdint>
 

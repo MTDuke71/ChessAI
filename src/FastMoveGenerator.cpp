@@ -99,9 +99,7 @@ void FastMoveGenerator::generateMoves(const Board& board, bool isWhite, MoveList
 }
 
 void FastMoveGenerator::generateLegalMoves(const Board& board, bool isWhite, MoveList& moveList) const {
-    // BBC-style approach: Generate pseudo-legal moves and filter with direct checking
-    // This avoids the expensive makeMove/unmakeMove approach entirely
-    
+    // BBC-style approach: Use incremental board for ultra-fast legal checking
     moveList.clear();
     
     // Generate all pseudo-legal moves first
@@ -113,17 +111,17 @@ void FastMoveGenerator::generateLegalMoves(const Board& board, bool isWhite, Mov
     generateKingMoves(board, isWhite, moveList);
     generateCastlingMoves(board, isWhite, moveList);
     
-    // Now filter out illegal moves using direct checking (BBC approach)
+    // Filter with BBC-style incremental checking
     MoveList legalMoves;
-    
-    uint64_t kingBitboard = isWhite ? board.getWhiteKing() : board.getBlackKing();
-    if (kingBitboard == 0) return; // No king, no legal moves
-    int kingSquare = lsbIndex(kingBitboard);
+    IncrementalBoard incBoard(board);
     
     for (int i = 0; i < moveList.count; ++i) {
         const Move& move = moveList.moves[i];
         
-        if (isMoveLegalDirect(board, move, isWhite, kingSquare)) {
+        // BBC-style ultra-fast legality check
+        if (incBoard.isMoveLegal(move.from(), move.to(), 
+                                move.isCastling() ? 3 : (move.promotion() ? 1 : 0), 
+                                move.promotion())) {
             legalMoves.add(move);
         }
     }

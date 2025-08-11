@@ -12,13 +12,44 @@ std::vector<uint16_t> MoveGenerator::convertMoves(const FastMoveGenerator::MoveL
     for (int i = 0; i < moveList.count; i++) {
         const auto& move = moveList.moves[i];
         
-        // Convert FastMoveGenerator::Move to uint16_t using the standard encoding
-        std::string algebraic = move.toAlgebraic();
-        uint16_t encoded = encodeMove(algebraic);
+        // Direct conversion from FastMoveGenerator::Move to uint16_t
+        // This eliminates the expensive string conversion bottleneck
+        uint16_t encoded = convertMoveDirect(move);
         result.push_back(encoded);
     }
     
     return result;
+}
+
+uint16_t MoveGenerator::convertMoveDirect(const FastMoveGenerator::Move& move) const {
+    // Direct conversion from FastMoveGenerator::Move to uint16_t encoding
+    // This bypasses the expensive string conversion bottleneck
+    
+    int from = move.from();
+    int to = move.to();
+    uint16_t encoded = (to & 0x3f) | ((from & 0x3f) << 6);
+    
+    int special = 0;
+    
+    if (move.isCastling()) {
+        special = 3; // Castling flag
+    } else if (move.promotion() != 0) {
+        special = 1; // Promotion flag
+        // Convert piece type to promotion bits
+        int promoBits = 0;
+        switch (move.promotion()) {
+            case 1: promoBits = 0; break; // Knight
+            case 2: promoBits = 1; break; // Bishop  
+            case 3: promoBits = 2; break; // Rook
+            case 4: promoBits = 3; break; // Queen
+            default: promoBits = 3; break; // Default to queen
+        }
+        encoded |= (promoBits & 0x3) << 12;
+    }
+    // Note: En passant is handled as a regular move in this encoding
+    
+    encoded |= (special & 0x3) << 14;
+    return encoded;
 }
 
 std::vector<uint16_t> MoveGenerator::generateLegalMoves(const Board& board, bool isWhite) const {

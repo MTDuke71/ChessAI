@@ -38,6 +38,9 @@ private:
     
     // Helper function to convert FastMoveGenerator moves to uint16_t format
     std::vector<uint16_t> convertMoves(const FastMoveGenerator::MoveList& moveList) const;
+    
+    // Direct conversion from FastMoveGenerator::Move to uint16_t (bypasses string conversion)
+    uint16_t convertMoveDirect(const FastMoveGenerator::Move& move) const;
 };
 
 // Utility function for converting square indices to algebraic notation
