@@ -12,6 +12,32 @@ endif()
 
 find_package(Threads REQUIRED)
 
+# Add Google Test - use system installed version
+find_package(PkgConfig)
+if(PKG_CONFIG_FOUND)
+    pkg_check_modules(GTEST gtest)
+    pkg_check_modules(GTEST_MAIN gtest_main)
+endif()
+
+# Fallback to manually specify paths if pkg-config doesn't work
+if(NOT GTEST_FOUND)
+    set(GTEST_ROOT "/usr/share/miniconda")
+    find_path(GTEST_INCLUDE_DIR gtest/gtest.h
+        HINTS ${GTEST_ROOT}/include
+        PATH_SUFFIXES gtest)
+    find_library(GTEST_LIBRARY gtest
+        HINTS ${GTEST_ROOT}/lib)
+    find_library(GTEST_MAIN_LIBRARY gtest_main
+        HINTS ${GTEST_ROOT}/lib)
+    
+    if(GTEST_INCLUDE_DIR AND GTEST_LIBRARY AND GTEST_MAIN_LIBRARY)
+        set(GTEST_FOUND TRUE)
+        set(GTEST_LIBRARIES ${GTEST_LIBRARY})
+        set(GTEST_MAIN_LIBRARIES ${GTEST_MAIN_LIBRARY})
+        set(GTEST_INCLUDE_DIRS ${GTEST_INCLUDE_DIR})
+    endif()
+endif()
+
 include(CTest)
 enable_testing()
 
@@ -248,6 +274,42 @@ add_test(NAME KingSafetyEvaluationTest COMMAND KingSafetyEvaluationTest)
 add_test(NAME PawnStructureEvaluationTest COMMAND PawnStructureEvaluationTest)
 add_test(NAME OpeningBookPolyglotTest COMMAND OpeningBookPolyglotTest)
 add_test(NAME IncrementalAttackUpdateTest COMMAND IncrementalAttackUpdateTest)
+
+# Google Test example (only if Google Test is found)
+if(GTEST_FOUND)
+    add_executable(gtest_example
+        test/gtest_example.cpp
+        src/Board.cpp
+        src/MoveGenerator.cpp
+        src/PrintMoves.cpp ${ENGINE_SOURCES})
+    target_include_directories(gtest_example PRIVATE 
+        ${CMAKE_SOURCE_DIR}/src 
+        ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(gtest_example 
+        ${GTEST_LIBRARIES} 
+        ${GTEST_MAIN_LIBRARIES} 
+        ${CMAKE_THREAD_LIBS_INIT})
+    add_test(NAME gtest_example COMMAND gtest_example)
+    
+    # Convert BoardTest to Google Test version
+    add_executable(BoardTestGtest
+        test/BoardTestGtest.cpp
+        src/Board.cpp
+        src/MoveGenerator.cpp
+        src/PrintMoves.cpp ${ENGINE_SOURCES})
+    target_include_directories(BoardTestGtest PRIVATE 
+        ${CMAKE_SOURCE_DIR}/src 
+        ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(BoardTestGtest 
+        ${GTEST_LIBRARIES} 
+        ${GTEST_MAIN_LIBRARIES} 
+        ${CMAKE_THREAD_LIBS_INIT})
+    add_test(NAME BoardTestGtest COMMAND BoardTestGtest)
+    
+    message(STATUS "Google Test found and configured successfully")
+else()
+    message(WARNING "Google Test not found - gtest_example will not be built")
+endif()
 
 add_executable(OriginalMoveTest
     test/OriginalMoveTest.cpp
